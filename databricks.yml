@@ -1,0 +1,65 @@
+# Databricks Asset Bundle: agentic AI for a chiropractic clinic (leads, retention, pricing).
+# Built for Databricks Free Edition: serverless jobs, one SQL warehouse, one App, Foundation Model APIs.
+#
+#   databricks bundle validate            # check config
+#   databricks bundle deploy              # deploy to the dev target (default)
+#   databricks bundle run chiro_setup     # create schema, seed data, train models, grant app access
+#   databricks bundle run clinic_copilot  # start the app
+#   databricks bundle run chiro_daily_agents
+bundle:
+  name: chiro_agents
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    description: Unity Catalog catalog (Free Edition ships with `workspace`).
+    default: workspace
+  schema:
+    description: Schema holding all clinic tables.
+    default: chiro
+  source_catalog:
+    description: Catalog holding the real clinic dataset the setup job links into the landing layer.
+    default: workspace
+  source_schema:
+    description: Schema holding the real clinic dataset (leads, patients, visits, appointments, ...).
+    default: chiro_hackathon
+  data_source:
+    description: real links the clinic dataset in the source schema; synthetic uses the built-in generator.
+    default: real
+  llm_endpoint:
+    description: >-
+      Foundation Model API endpoint with tool calling. Any chat endpoint listed under Serving
+      that supports function calling works (e.g. a databricks-claude-* or databricks-gpt-oss-* endpoint).
+    default: databricks-meta-llama-3-3-70b-instruct
+  clinic_name:
+    description: Clinic name used in prompts and the app.
+    default: Northside Chiropractic
+  warehouse_id:
+    description: SQL warehouse used by the App and the registered agent.
+    lookup:
+      warehouse: Serverless Starter Warehouse
+  max_items:
+    description: Max leads / patients / price changes each agent handles per run.
+    default: "10"
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-73a010ae-8ccc.cloud.databricks.com
+    variables:
+      schema: chiro_dev
+
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-73a010ae-8ccc.cloud.databricks.com
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+    permissions:
+      - user_name: ${workspace.current_user.userName}
+        level: CAN_MANAGE
+    variables:
+      schema: chiro

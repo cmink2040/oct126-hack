@@ -1,0 +1,17 @@
+resources:
+  jobs:
+    chiro_register_copilot:
+      name: chiro-register-copilot
+      description: Optional - log, evaluate and register the Copilot as an MLflow ResponsesAgent in Unity Catalog.
+      parameters:
+        - {name: catalog, default: "${var.catalog}"}
+        - {name: schema, default: "${var.schema}"}
+        - {name: llm_endpoint, default: "${var.llm_endpoint}"}
+        - {name: clinic_name, default: "${var.clinic_name}"}
+        - {name: warehouse_id, default: "${var.warehouse_id}"}
+        - {name: experiment, default: "${resources.experiments.agent_traces.name}"}
+        - {name: deploy, default: "false"}
+      tasks:
+        - task_key: register_copilot
+          notebook_task:
+            notebook_path: ../src/notebooks/40_register_copilot_agent.py

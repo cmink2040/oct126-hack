@@ -1,0 +1,3 @@
+# Installed by job notebooks on serverless compute (pandas/numpy/scikit-learn/mlflow are preinstalled).
+openai>=1.40
+databricks-sdk>=0.40

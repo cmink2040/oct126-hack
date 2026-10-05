@@ -1,0 +1,23 @@
+resources:
+  apps:
+    clinic_copilot:
+      name: chiro-copilot
+      description: Clinic Copilot - chat with the clinic agent and approve what the agents queued.
+      source_code_path: ../src
+      config:
+        command: ["streamlit", "run", "app/app.py", "--server.headless", "true"]
+        env:
+          - {name: CHIRO_CATALOG, value: "${var.catalog}"}
+          - {name: CHIRO_SCHEMA, value: "${var.schema}"}
+          - {name: CLINIC_NAME, value: "${var.clinic_name}"}
+          - {name: DATABRICKS_WAREHOUSE_ID, value_from: sql-warehouse}
+          - {name: LLM_ENDPOINT, value_from: llm-endpoint}
+      resources:
+        - name: sql-warehouse
+          sql_warehouse:
+            id: ${var.warehouse_id}
+            permission: CAN_USE
+        - name: llm-endpoint
+          serving_endpoint:
+            name: ${var.llm_endpoint}
+            permission: CAN_QUERY

@@ -1,0 +1,13 @@
+resources:
+  pipelines:
+    clinic_lakehouse:
+      name: chiro-lakehouse
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      serverless: true
+      photon: true
+      channel: CURRENT
+      continuous: false
+      libraries:
+        - file: {path: ../src/pipeline/01_silver.sql}
+        - file: {path: ../src/pipeline/02_gold.sql}

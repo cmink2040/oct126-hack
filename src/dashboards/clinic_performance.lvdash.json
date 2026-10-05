@@ -1,0 +1,872 @@
+{
+  "datasets": [
+    {
+      "name": "kpi_30d",
+      "displayName": "KPIs - last 30 days",
+      "queryLines": [
+        "SELECT MEASURE(revenue) AS revenue, MEASURE(contribution_margin) AS contribution_margin,\n",
+        "       MEASURE(active_patients) AS active_patients, MEASURE(no_show_rate) AS no_show_rate\n",
+        "FROM clinic_visit_metrics WHERE visit_date >= date_sub(current_date(), 30)\n"
+      ]
+    },
+    {
+      "name": "lead_kpi",
+      "displayName": "Lead KPIs - last 180 days",
+      "queryLines": [
+        "SELECT MEASURE(leads) AS leads, MEASURE(conversion_rate) AS conversion_rate\n",
+        "FROM clinic_lead_metrics WHERE created_date >= date_sub(current_date(), 180)\n"
+      ]
+    },
+    {
+      "name": "monthly",
+      "displayName": "Monthly revenue and margin",
+      "queryLines": [
+        "SELECT visit_month, MEASURE(revenue) AS revenue, MEASURE(contribution_margin) AS contribution_margin,\n",
+        "       MEASURE(active_patients) AS active_patients\n",
+        "FROM clinic_visit_metrics WHERE visit_date >= add_months(current_date(), -24) GROUP BY ALL\n"
+      ]
+    },
+    {
+      "name": "service_mix",
+      "displayName": "Revenue by service",
+      "queryLines": [
+        "SELECT visit_month, service_name, MEASURE(revenue) AS revenue\n",
+        "FROM clinic_visit_metrics WHERE visit_date >= add_months(current_date(), -12) GROUP BY ALL\n"
+      ]
+    },
+    {
+      "name": "lead_source",
+      "displayName": "Lead conversion by source",
+      "queryLines": [
+        "SELECT source, MEASURE(leads) AS leads, MEASURE(conversion_rate) AS conversion_rate\n",
+        "FROM clinic_lead_metrics WHERE created_date >= date_sub(current_date(), 365) GROUP BY ALL\n"
+      ]
+    },
+    {
+      "name": "lead_intent",
+      "displayName": "AI-classified lead intent",
+      "queryLines": [
+        "SELECT ai_intent, MEASURE(leads) AS leads\n",
+        "FROM clinic_lead_metrics WHERE created_date >= date_sub(current_date(), 90) GROUP BY ALL\n"
+      ]
+    },
+    {
+      "name": "response",
+      "displayName": "Conversion by response time",
+      "queryLines": [
+        "SELECT response_band, MEASURE(conversion_rate) AS conversion_rate, MEASURE(closed_leads) AS closed_leads\n",
+        "FROM clinic_lead_metrics WHERE response_band <> 'not yet' GROUP BY ALL\n"
+      ]
+    },
+    {
+      "name": "cohort",
+      "displayName": "Cohort retention curve",
+      "queryLines": [
+        "SELECT months_since_first_visit, ROUND(AVG(retention_rate), 3) AS avg_retention\n",
+        "FROM gold_cohort_retention WHERE months_since_first_visit BETWEEN 0 AND 12 GROUP BY ALL\n"
+      ]
+    },
+    {
+      "name": "payer",
+      "displayName": "Revenue by payer",
+      "queryLines": [
+        "SELECT visit_month, payer, MEASURE(revenue) AS revenue\n",
+        "FROM clinic_visit_metrics WHERE visit_date >= add_months(current_date(), -12) GROUP BY ALL\n"
+      ]
+    },
+    {
+      "name": "queues",
+      "displayName": "Agent review queues",
+      "queryLines": [
+        "SELECT 'lead' AS queue, status, COUNT(*) AS items FROM lead_actions GROUP BY ALL\n",
+        "UNION ALL SELECT 'retention', status, COUNT(*) FROM retention_actions GROUP BY ALL\n",
+        "UNION ALL SELECT 'price', status, COUNT(*) FROM price_recommendations GROUP BY ALL\n"
+      ]
+    },
+    {
+      "name": "risk",
+      "displayName": "Churn risk distribution",
+      "queryLines": [
+        "SELECT CASE WHEN churn_risk >= 0.75 THEN '4 critical' WHEN churn_risk >= 0.5 THEN '3 high'\n",
+        "            WHEN churn_risk >= 0.25 THEN '2 medium' ELSE '1 low' END AS risk_band,\n",
+        "       COUNT(*) AS patients, ROUND(SUM(churn_risk * ltv_annual), 0) AS expected_annual_loss\n",
+        "FROM patient_churn_risk GROUP BY ALL\n"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "overview",
+      "displayName": "Clinic overview",
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layout": [
+        {
+          "widget": {
+            "name": "c_rev",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "kpi_30d",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "revenue",
+                      "expression": "`revenue`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "revenue",
+                  "displayName": "Revenue (30d)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue (30d)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_margin",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "kpi_30d",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "contribution_margin",
+                      "expression": "`contribution_margin`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "contribution_margin",
+                  "displayName": "Contribution margin (30d)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Contribution margin (30d)"
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 0,
+            "width": 1,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_active",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "kpi_30d",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "active_patients",
+                      "expression": "`active_patients`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "active_patients",
+                  "displayName": "Active patients (30d)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Active patients (30d)"
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 0,
+            "width": 1,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_noshow",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "kpi_30d",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "no_show_rate",
+                      "expression": "`no_show_rate`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "no_show_rate",
+                  "displayName": "No-show rate (30d)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "No-show rate (30d)"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 1,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_leads",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "lead_kpi",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "leads",
+                      "expression": "`leads`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "leads",
+                  "displayName": "Leads (180d)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Leads (180d)"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
+            "width": 1,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_conv",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "lead_kpi",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "conversion_rate",
+                      "expression": "`conversion_rate`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "conversion_rate",
+                  "displayName": "Lead conversion (180d)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Lead conversion (180d)"
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 0,
+            "width": 1,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "l_revenue",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "monthly",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "visit_month",
+                      "expression": "`visit_month`"
+                    },
+                    {
+                      "name": "revenue",
+                      "expression": "`revenue`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "visit_month",
+                  "scale": {
+                    "type": "temporal"
+                  },
+                  "displayName": "visit month"
+                },
+                "y": {
+                  "fieldName": "revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "revenue"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Monthly revenue"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "b_mix",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "service_mix",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "visit_month",
+                      "expression": "`visit_month`"
+                    },
+                    {
+                      "name": "revenue",
+                      "expression": "`revenue`"
+                    },
+                    {
+                      "name": "service_name",
+                      "expression": "`service_name`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "visit_month",
+                  "scale": {
+                    "type": "temporal"
+                  },
+                  "displayName": "visit month"
+                },
+                "y": {
+                  "fieldName": "revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "revenue"
+                },
+                "color": {
+                  "fieldName": "service_name",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "service name"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue by service"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 3,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "b_payer",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "payer",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "visit_month",
+                      "expression": "`visit_month`"
+                    },
+                    {
+                      "name": "revenue",
+                      "expression": "`revenue`"
+                    },
+                    {
+                      "name": "payer",
+                      "expression": "`payer`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "visit_month",
+                  "scale": {
+                    "type": "temporal"
+                  },
+                  "displayName": "visit month"
+                },
+                "y": {
+                  "fieldName": "revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "revenue"
+                },
+                "color": {
+                  "fieldName": "payer",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "payer"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue by payer"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 9,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "l_cohort",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "cohort",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "months_since_first_visit",
+                      "expression": "`months_since_first_visit`"
+                    },
+                    {
+                      "name": "avg_retention",
+                      "expression": "`avg_retention`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "months_since_first_visit",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "months since first visit"
+                },
+                "y": {
+                  "fieldName": "avg_retention",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "avg retention"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Retention curve (avg of monthly cohorts)"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 9,
+            "width": 3,
+            "height": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "growth",
+      "displayName": "Growth, retention & agents",
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layout": [
+        {
+          "widget": {
+            "name": "b_source",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "lead_source",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "source",
+                      "expression": "`source`"
+                    },
+                    {
+                      "name": "conversion_rate",
+                      "expression": "`conversion_rate`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "source",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "source"
+                },
+                "y": {
+                  "fieldName": "conversion_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "conversion rate"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Lead conversion by source"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "b_response",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "response",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "response_band",
+                      "expression": "`response_band`"
+                    },
+                    {
+                      "name": "conversion_rate",
+                      "expression": "`conversion_rate`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "response_band",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "response band"
+                },
+                "y": {
+                  "fieldName": "conversion_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "conversion rate"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Conversion by first-response time"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "b_intent",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "lead_intent",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "ai_intent",
+                      "expression": "`ai_intent`"
+                    },
+                    {
+                      "name": "leads",
+                      "expression": "`leads`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "ai_intent",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "ai intent"
+                },
+                "y": {
+                  "fieldName": "leads",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "leads"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Lead intent (Databricks AI Functions, 90d)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "b_risk",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "risk",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "risk_band",
+                      "expression": "`risk_band`"
+                    },
+                    {
+                      "name": "expected_annual_loss",
+                      "expression": "`expected_annual_loss`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "risk_band",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "risk band"
+                },
+                "y": {
+                  "fieldName": "expected_annual_loss",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "expected annual loss"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue at risk by churn band"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 6,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "b_queue",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "queues",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "queue",
+                      "expression": "`queue`"
+                    },
+                    {
+                      "name": "items",
+                      "expression": "`items`"
+                    },
+                    {
+                      "name": "status",
+                      "expression": "`status`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "queue",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "queue"
+                },
+                "y": {
+                  "fieldName": "items",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "items"
+                },
+                "color": {
+                  "fieldName": "status",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "status"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Agent review queues"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 6,
+            "height": 5
+          }
+        }
+      ]
+    }
+  ]
+}

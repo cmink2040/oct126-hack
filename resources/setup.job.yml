@@ -1,0 +1,44 @@
+resources:
+  jobs:
+    chiro_setup:
+      name: chiro-setup
+      description: >-
+        One-off bootstrap: schema + audit tables -> seed landing data -> Lakeflow pipeline (full refresh)
+        -> ML models + semantic layer -> grant the App least-privilege access.
+      max_concurrent_runs: 1
+      parameters:
+        - {name: catalog, default: "${var.catalog}"}
+        - {name: schema, default: "${var.schema}"}
+        - {name: source_catalog, default: "${var.source_catalog}"}
+        - {name: source_schema, default: "${var.source_schema}"}
+        - {name: data_source, default: "${var.data_source}"}
+        - {name: experiment, default: "${resources.experiments.agent_traces.name}"}
+      tasks:
+        - task_key: create_schema
+          notebook_task:
+            notebook_path: ../src/notebooks/00_setup.py
+        - task_key: seed_data
+          depends_on: [{task_key: create_schema}]
+          notebook_task:
+            notebook_path: ../src/notebooks/01_seed_data.py
+        - task_key: lakehouse_pipeline
+          depends_on: [{task_key: seed_data}]
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.clinic_lakehouse.id}
+            full_refresh: true  # reseeding rewrites the streaming source
+        - task_key: refresh_models
+          depends_on: [{task_key: lakehouse_pipeline}]
+          notebook_task:
+            notebook_path: ../src/notebooks/03_refresh_models.py
+        - task_key: semantic_layer
+          depends_on: [{task_key: lakehouse_pipeline}]
+          notebook_task:
+            notebook_path: ../src/notebooks/04_semantic_layer.py
+        - task_key: grant_app_access
+          depends_on:  # table-level grants need every table to exist
+            - {task_key: refresh_models}
+            - {task_key: semantic_layer}
+          notebook_task:
+            notebook_path: ../src/notebooks/30_grant_app_access.py
+            base_parameters:
+              app_name: ${resources.apps.clinic_copilot.name}

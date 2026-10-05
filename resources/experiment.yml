@@ -1,0 +1,4 @@
+resources:
+  experiments:
+    agent_traces:
+      name: /Users/${workspace.current_user.userName}/chiro-agents-${bundle.target}

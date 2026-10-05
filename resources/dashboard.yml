@@ -1,0 +1,10 @@
+resources:
+  dashboards:
+    clinic_performance:
+      # Lakeview rejects parentheses in display names (its validation error misleadingly says '/').
+      display_name: Clinic Performance - AI BI
+      file_path: ../src/dashboards/clinic_performance.lvdash.json
+      warehouse_id: ${var.warehouse_id}
+      # Datasets use unqualified names; the bundle points them at this target's catalog/schema.
+      dataset_catalog: ${var.catalog}
+      dataset_schema: ${var.schema}

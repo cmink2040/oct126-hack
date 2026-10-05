@@ -1,0 +1,62 @@
+resources:
+  jobs:
+    chiro_daily_agents:
+      name: chiro-daily-agents
+      description: >-
+        Daily agent loop: ingest/simulate activity -> Lakeflow pipeline (incremental, AI-enriched leads)
+        -> refresh ML scores -> lead, retention and pricing
+        agents work in parallel -> briefing agent summarises for the owner. All actions land as pending_review.
+      max_concurrent_runs: 1
+      schedule:
+        quartz_cron_expression: "0 30 6 * * ?"  # 06:30 every day, before the clinic opens
+        timezone_id: America/Los_Angeles
+        pause_status: PAUSED  # unpause once you are happy with the agents' drafts
+      parameters:
+        - {name: catalog, default: "${var.catalog}"}
+        - {name: schema, default: "${var.schema}"}
+        - {name: source_catalog, default: "${var.source_catalog}"}
+        - {name: source_schema, default: "${var.source_schema}"}
+        - {name: data_source, default: "${var.data_source}"}
+        - {name: llm_endpoint, default: "${var.llm_endpoint}"}
+        - {name: clinic_name, default: "${var.clinic_name}"}
+        - {name: max_items, default: "${var.max_items}"}
+        - {name: experiment, default: "${resources.experiments.agent_traces.name}"}
+        - {name: simulate_activity, default: "true"}
+      tasks:
+        - task_key: ingest_activity
+          notebook_task:
+            notebook_path: ../src/notebooks/02_simulate_day.py
+        - task_key: lakehouse_pipeline
+          depends_on: [{task_key: ingest_activity}]
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.clinic_lakehouse.id}
+        - task_key: refresh_models
+          depends_on: [{task_key: lakehouse_pipeline}]
+          notebook_task:
+            notebook_path: ../src/notebooks/03_refresh_models.py
+
+        - task_key: lead_agent
+          depends_on: [{task_key: refresh_models}]
+          notebook_task:
+            notebook_path: ../src/notebooks/10_run_agent.py
+            base_parameters: {agent: lead}
+        - task_key: retention_agent
+          depends_on: [{task_key: refresh_models}]
+          notebook_task:
+            notebook_path: ../src/notebooks/10_run_agent.py
+            base_parameters: {agent: retention}
+        - task_key: pricing_agent
+          depends_on: [{task_key: refresh_models}]
+          notebook_task:
+            notebook_path: ../src/notebooks/10_run_agent.py
+            base_parameters: {agent: pricing}
+
+        - task_key: briefing_agent
+          depends_on:
+            - {task_key: lead_agent}
+            - {task_key: retention_agent}
+            - {task_key: pricing_agent}
+          run_if: ALL_DONE  # brief the owner even if one agent failed
+          notebook_task:
+            notebook_path: ../src/notebooks/10_run_agent.py
+            base_parameters: {agent: briefing}
