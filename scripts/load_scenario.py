@@ -86,8 +86,9 @@ def load_care(db, s, providers: dict[str, list[str]], today: dt.date, seed: int,
     intake = Intake(db, s)
     if not intake.log_in(DEMO_EMAIL, DEMO_PASSWORD):
         intake.create_account(DEMO_EMAIL, DEMO_PASSWORD, "Demo", "", True, True, True)
-    db.execute(f"UPDATE {s.table('patient_accounts')} SET patient_id = :p WHERE email = :e",
-               {"p": stalled, "e": DEMO_EMAIL})
+    db.execute(f"""UPDATE {s.table('patient_accounts')} SET patient_id = :p,
+                   first_name = (SELECT first_name FROM {s.table('patients')} WHERE patient_id = :p)
+                   WHERE email = :e""", {"p": stalled, "e": DEMO_EMAIL})
     print(f"demo portal account {DEMO_EMAIL} / {DEMO_PASSWORD} -> {stalled} (stalled plan)")
 
 

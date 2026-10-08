@@ -1,0 +1,45 @@
+# Shared look for Clinic Copilot and the patient portal (Databricks Apps run from src/; the repo-root
+# .streamlit symlinks here for local runs). Chart colors are the validated reference palette (see ui/__init__.py).
+
+[client]
+toolbarMode = "minimal"
+
+[server]
+runOnSave = true
+
+[theme]
+baseRadius = "0.65rem"
+buttonRadius = "0.55rem"
+showWidgetBorder = true
+headingFontWeights = [700, 650, 600, 600, 600, 600]
+headingFontSizes = ["2rem", "1.4rem", "1.1rem", "1rem", "0.95rem", "0.9rem"]
+metricValueFontSize = "1.75rem"
+metricValueFontWeight = 600
+
+[theme.light]
+primaryColor = "#0f766e"
+backgroundColor = "#fcfcfb"
+secondaryBackgroundColor = "#f3f2ee"
+textColor = "#1c1c1a"
+borderColor = "#e4e2db"
+linkColor = "#0f766e"
+dataframeHeaderBackgroundColor = "#f3f2ee"
+chartCategoricalColors = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]
+
+[theme.light.sidebar]
+backgroundColor = "#f3f2ee"
+secondaryBackgroundColor = "#e9e7e1"
+
+[theme.dark]
+primaryColor = "#3cc3b2"
+backgroundColor = "#141413"
+secondaryBackgroundColor = "#1f1f1d"
+textColor = "#f1f0ea"
+borderColor = "#34332f"
+linkColor = "#3cc3b2"
+dataframeHeaderBackgroundColor = "#1f1f1d"
+chartCategoricalColors = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"]
+
+[theme.dark.sidebar]
+backgroundColor = "#1a1a19"
+secondaryBackgroundColor = "#242422"

@@ -5,101 +5,175 @@
       "displayName": "KPIs - last 30 days",
       "queryLines": [
         "SELECT MEASURE(revenue) AS revenue, MEASURE(contribution_margin) AS contribution_margin,\n",
-        "       MEASURE(active_patients) AS active_patients, MEASURE(no_show_rate) AS no_show_rate\n",
+        "       MEASURE(active_patients) AS active_patients, MEASURE(no_show_rate) AS no_show_rate,\n",
+        "       MEASURE(revenue_per_visit) AS revenue_per_visit\n",
         "FROM clinic_visit_metrics WHERE visit_date >= date_sub(current_date(), 30)\n"
       ]
     },
     {
-      "name": "lead_kpi",
-      "displayName": "Lead KPIs - last 180 days",
+      "name": "weekly",
+      "displayName": "Weekly revenue (complete weeks)",
       "queryLines": [
-        "SELECT MEASURE(leads) AS leads, MEASURE(conversion_rate) AS conversion_rate\n",
-        "FROM clinic_lead_metrics WHERE created_date >= date_sub(current_date(), 180)\n"
+        "SELECT visit_week, MEASURE(revenue) AS revenue, MEASURE(completed_visits) AS completed_visits\n",
+        "FROM clinic_visit_metrics\n",
+        "WHERE visit_date >= date_sub(current_date(), 182) AND visit_week < date_trunc('WEEK', current_date())\n",
+        "  AND visit_week > date_sub(current_date(), 182)\n",
+        "GROUP BY ALL\n"
       ]
     },
     {
-      "name": "monthly",
-      "displayName": "Monthly revenue and margin",
+      "name": "payer",
+      "displayName": "Monthly revenue by payer",
       "queryLines": [
-        "SELECT visit_month, MEASURE(revenue) AS revenue, MEASURE(contribution_margin) AS contribution_margin,\n",
-        "       MEASURE(active_patients) AS active_patients\n",
-        "FROM clinic_visit_metrics WHERE visit_date >= add_months(current_date(), -24) GROUP BY ALL\n"
+        "SELECT visit_month, payer, MEASURE(revenue) AS revenue\n",
+        "FROM clinic_visit_metrics\n",
+        "WHERE visit_date >= add_months(date_trunc('MONTH', current_date()), -12) AND visit_month < date_trunc('MONTH', current_date())\n",
+        "GROUP BY ALL\n"
       ]
     },
     {
       "name": "service_mix",
-      "displayName": "Revenue by service",
+      "displayName": "Revenue by service, last 90 days",
       "queryLines": [
-        "SELECT visit_month, service_name, MEASURE(revenue) AS revenue\n",
-        "FROM clinic_visit_metrics WHERE visit_date >= add_months(current_date(), -12) GROUP BY ALL\n"
+        "SELECT service_name, MEASURE(revenue) AS revenue, MEASURE(completed_visits) AS visits\n",
+        "FROM clinic_visit_metrics WHERE visit_date >= date_sub(current_date(), 90) GROUP BY ALL\n"
+      ]
+    },
+    {
+      "name": "cohort",
+      "displayName": "Retention curve",
+      "queryLines": [
+        "SELECT months_since_first_visit, ROUND(AVG(retention_rate), 3) AS avg_retention\n",
+        "FROM gold_cohort_retention WHERE months_since_first_visit BETWEEN 1 AND 12 GROUP BY ALL\n"
+      ]
+    },
+    {
+      "name": "lead_kpi",
+      "displayName": "Lead KPIs",
+      "queryLines": [
+        "SELECT\n",
+        "  (SELECT count(*) FROM leads_raw WHERE status = 'new' AND first_response_hours IS NULL\n",
+        "     AND created_at > current_timestamp() - INTERVAL 30 DAYS) AS open_leads,\n",
+        "  (SELECT count(*) FROM leads_raw WHERE created_at > current_timestamp() - INTERVAL 30 DAYS) AS leads_30d,\n",
+        "  (SELECT MEASURE(conversion_rate) FROM clinic_lead_metrics\n",
+        "     WHERE created_date >= date_sub(current_date(), 180)) AS conversion_rate\n"
       ]
     },
     {
       "name": "lead_source",
-      "displayName": "Lead conversion by source",
+      "displayName": "Lead conversion by source, 12 months",
       "queryLines": [
-        "SELECT source, MEASURE(leads) AS leads, MEASURE(conversion_rate) AS conversion_rate\n",
+        "SELECT replace(source, '_', ' ') AS source, MEASURE(leads) AS leads, MEASURE(conversion_rate) AS conversion_rate\n",
         "FROM clinic_lead_metrics WHERE created_date >= date_sub(current_date(), 365) GROUP BY ALL\n"
       ]
     },
     {
       "name": "lead_intent",
-      "displayName": "AI-classified lead intent",
+      "displayName": "AI-classified lead intent, 90 days",
       "queryLines": [
-        "SELECT ai_intent, MEASURE(leads) AS leads\n",
-        "FROM clinic_lead_metrics WHERE created_date >= date_sub(current_date(), 90) GROUP BY ALL\n"
+        "SELECT replace(ai_intent, '_', ' ') AS ai_intent, MEASURE(leads) AS leads\n",
+        "FROM clinic_lead_metrics WHERE created_date >= date_sub(current_date(), 90) AND ai_intent IS NOT NULL GROUP BY ALL\n"
       ]
     },
     {
       "name": "response",
-      "displayName": "Conversion by response time",
+      "displayName": "Conversion by first-response time",
       "queryLines": [
         "SELECT response_band, MEASURE(conversion_rate) AS conversion_rate, MEASURE(closed_leads) AS closed_leads\n",
         "FROM clinic_lead_metrics WHERE response_band <> 'not yet' GROUP BY ALL\n"
       ]
     },
     {
-      "name": "cohort",
-      "displayName": "Cohort retention curve",
+      "name": "sla",
+      "displayName": "Response times by urgency, 14 days",
       "queryLines": [
-        "SELECT months_since_first_visit, ROUND(AVG(retention_rate), 3) AS avg_retention\n",
-        "FROM gold_cohort_retention WHERE months_since_first_visit BETWEEN 0 AND 12 GROUP BY ALL\n"
+        "WITH l AS (\n",
+        "  SELECT r.lead_id, r.created_at, r.status, coalesce(s.urgency, 'routine') AS urgency,\n",
+        "         timestampadd(MINUTE, CAST(coalesce(s.respond_within_hours, 24) * 60 AS INT), r.created_at) AS respond_by,\n",
+        "         CASE WHEN r.first_response_hours IS NOT NULL\n",
+        "              THEN timestampadd(MINUTE, CAST(r.first_response_hours * 60 AS INT), r.created_at) END AS imported\n",
+        "  FROM leads_raw r LEFT JOIN lead_scores s USING (lead_id)\n",
+        "  WHERE r.created_at > current_timestamp() - INTERVAL 14 DAYS),\n",
+        "a AS (SELECT lead_id, min(CASE WHEN status = 'approved' THEN reviewed_at END) AS approved FROM lead_actions GROUP BY 1),\n",
+        "j AS (SELECT l.*, coalesce(a.approved, l.imported) AS responded_at FROM l LEFT JOIN a USING (lead_id))\n",
+        "SELECT urgency, count(*) AS leads,\n",
+        "       avg(CASE WHEN responded_at <= respond_by THEN 1.0 WHEN responded_at IS NOT NULL THEN 0.0 END) AS on_time,\n",
+        "       percentile(timestampdiff(MINUTE, created_at, responded_at) / 60.0, 0.5) AS median_hours,\n",
+        "       count_if(responded_at IS NULL AND status = 'new' AND current_timestamp() > respond_by) AS overdue_now\n",
+        "FROM j GROUP BY urgency\n"
       ]
     },
     {
-      "name": "payer",
-      "displayName": "Revenue by payer",
+      "name": "location_load",
+      "displayName": "Visits per open day by location, 12 weeks",
       "queryLines": [
-        "SELECT visit_month, payer, MEASURE(revenue) AS revenue\n",
-        "FROM clinic_visit_metrics WHERE visit_date >= add_months(current_date(), -12) GROUP BY ALL\n"
+        "SELECT location_id,\n",
+        "       count_if(status = 'Completed') / count(DISTINCT appointment_date) AS completed_per_day,\n",
+        "       count_if(status IN ('No-Show', 'Cancelled')) / count(*) AS lost_slot_rate\n",
+        "FROM appointments\n",
+        "WHERE appointment_date > date_sub(current_date(), 84) AND appointment_date <= current_date()\n",
+        "GROUP BY ALL\n"
+      ]
+    },
+    {
+      "name": "weekday",
+      "displayName": "Completed visits by weekday, 12 weeks",
+      "queryLines": [
+        "SELECT date_format(appointment_date, 'E') AS weekday, dayofweek(appointment_date) AS dow,\n",
+        "       count_if(status = 'Completed') / count(DISTINCT appointment_date) AS completed_per_day\n",
+        "FROM appointments\n",
+        "WHERE appointment_date > date_sub(current_date(), 84) AND appointment_date <= current_date()\n",
+        "GROUP BY ALL\n"
       ]
     },
     {
       "name": "queues",
       "displayName": "Agent review queues",
       "queryLines": [
-        "SELECT 'lead' AS queue, status, COUNT(*) AS items FROM lead_actions GROUP BY ALL\n",
-        "UNION ALL SELECT 'retention', status, COUNT(*) FROM retention_actions GROUP BY ALL\n",
-        "UNION ALL SELECT 'price', status, COUNT(*) FROM price_recommendations GROUP BY ALL\n"
+        "SELECT 'Leads' AS queue, status, COUNT(*) AS items FROM lead_actions GROUP BY ALL\n",
+        "UNION ALL SELECT 'Retention', status, COUNT(*) FROM retention_actions GROUP BY ALL\n",
+        "UNION ALL SELECT 'Pricing', status, COUNT(*) FROM price_recommendations GROUP BY ALL\n",
+        "UNION ALL SELECT 'Capacity', status, COUNT(*) FROM capacity_actions GROUP BY ALL\n",
+        "UNION ALL SELECT 'Care guidance', status, COUNT(*) FROM care_reports GROUP BY ALL\n"
       ]
     },
     {
-      "name": "risk",
-      "displayName": "Churn risk distribution",
+      "name": "care_kpi",
+      "displayName": "Care guidance KPIs",
       "queryLines": [
-        "SELECT CASE WHEN churn_risk >= 0.75 THEN '4 critical' WHEN churn_risk >= 0.5 THEN '3 high'\n",
-        "            WHEN churn_risk >= 0.25 THEN '2 medium' ELSE '1 low' END AS risk_band,\n",
-        "       COUNT(*) AS patients, ROUND(SUM(churn_risk * ltv_annual), 0) AS expected_annual_loss\n",
-        "FROM patient_churn_risk GROUP BY ALL\n"
+        "SELECT\n",
+        "  (SELECT count(DISTINCT patient_id) FROM care_reports WHERE status = 'approved') AS patients_with_guidance,\n",
+        "  (SELECT avg(CASE WHEN viewed_at IS NOT NULL THEN 1.0 ELSE 0.0 END) FROM care_reports WHERE status = 'approved')\n",
+        "    AS viewed_rate,\n",
+        "  (SELECT count(*) FROM (SELECT patient_id, item_key, max_by(response, created_at) AS r\n",
+        "                         FROM care_report_responses GROUP BY ALL) WHERE r = 'need_help') AS help_requests\n"
       ]
     }
   ],
   "pages": [
     {
       "name": "overview",
-      "displayName": "Clinic overview",
+      "displayName": "Overview",
       "pageType": "PAGE_TYPE_CANVAS",
       "layout": [
+        {
+          "widget": {
+            "name": "h_overview",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Clinic overview\n",
+                "\n",
+                "Money and visits from the governed Unity Catalog metric views - the same definitions the agents and Clinic Copilot use."
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 2
+          }
+        },
         {
           "widget": {
             "name": "c_rev",
@@ -124,19 +198,28 @@
               "encodings": {
                 "value": {
                   "fieldName": "revenue",
-                  "displayName": "Revenue (30d)"
+                  "displayName": "Revenue \u00b7 30 days",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Revenue (30d)"
+                "title": "Revenue \u00b7 30 days"
               }
             }
           },
           "position": {
             "x": 0,
-            "y": 0,
-            "width": 1,
+            "y": 2,
+            "width": 3,
             "height": 3
           }
         },
@@ -164,19 +247,28 @@
               "encodings": {
                 "value": {
                   "fieldName": "contribution_margin",
-                  "displayName": "Contribution margin (30d)"
+                  "displayName": "Contribution margin \u00b7 30 days",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Contribution margin (30d)"
+                "title": "Contribution margin \u00b7 30 days"
               }
             }
           },
           "position": {
-            "x": 1,
-            "y": 0,
-            "width": 1,
+            "x": 3,
+            "y": 2,
+            "width": 3,
             "height": 3
           }
         },
@@ -204,19 +296,75 @@
               "encodings": {
                 "value": {
                   "fieldName": "active_patients",
-                  "displayName": "Active patients (30d)"
+                  "displayName": "Active patients \u00b7 30 days",
+                  "format": {
+                    "type": "number",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Active patients (30d)"
+                "title": "Active patients \u00b7 30 days"
               }
             }
           },
           "position": {
-            "x": 2,
-            "y": 0,
-            "width": 1,
+            "x": 6,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_rpv",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "kpi_30d",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "revenue_per_visit",
+                      "expression": "`revenue_per_visit`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "revenue_per_visit",
+                  "displayName": "Revenue per visit",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "decimalPlaces": {
+                      "type": "exact",
+                      "places": 0
+                    }
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue per visit"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 2,
+            "width": 2,
             "height": 3
           }
         },
@@ -244,115 +392,42 @@
               "encodings": {
                 "value": {
                   "fieldName": "no_show_rate",
-                  "displayName": "No-show rate (30d)"
-                }
-              },
-              "frame": {
-                "showTitle": true,
-                "title": "No-show rate (30d)"
-              }
-            }
-          },
-          "position": {
-            "x": 3,
-            "y": 0,
-            "width": 1,
-            "height": 3
-          }
-        },
-        {
-          "widget": {
-            "name": "c_leads",
-            "queries": [
-              {
-                "name": "main_query",
-                "query": {
-                  "datasetName": "lead_kpi",
-                  "disaggregated": true,
-                  "fields": [
-                    {
-                      "name": "leads",
-                      "expression": "`leads`"
+                  "displayName": "No-show rate \u00b7 30 days",
+                  "format": {
+                    "type": "number-percent",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
                     }
-                  ]
-                }
-              }
-            ],
-            "spec": {
-              "version": 2,
-              "widgetType": "counter",
-              "encodings": {
-                "value": {
-                  "fieldName": "leads",
-                  "displayName": "Leads (180d)"
+                  }
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Leads (180d)"
+                "title": "No-show rate \u00b7 30 days"
               }
             }
           },
           "position": {
-            "x": 4,
-            "y": 0,
-            "width": 1,
+            "x": 10,
+            "y": 2,
+            "width": 2,
             "height": 3
           }
         },
         {
           "widget": {
-            "name": "c_conv",
+            "name": "l_weekly",
             "queries": [
               {
                 "name": "main_query",
                 "query": {
-                  "datasetName": "lead_kpi",
+                  "datasetName": "weekly",
                   "disaggregated": true,
                   "fields": [
                     {
-                      "name": "conversion_rate",
-                      "expression": "`conversion_rate`"
-                    }
-                  ]
-                }
-              }
-            ],
-            "spec": {
-              "version": 2,
-              "widgetType": "counter",
-              "encodings": {
-                "value": {
-                  "fieldName": "conversion_rate",
-                  "displayName": "Lead conversion (180d)"
-                }
-              },
-              "frame": {
-                "showTitle": true,
-                "title": "Lead conversion (180d)"
-              }
-            }
-          },
-          "position": {
-            "x": 5,
-            "y": 0,
-            "width": 1,
-            "height": 3
-          }
-        },
-        {
-          "widget": {
-            "name": "l_revenue",
-            "queries": [
-              {
-                "name": "main_query",
-                "query": {
-                  "datasetName": "monthly",
-                  "disaggregated": true,
-                  "fields": [
-                    {
-                      "name": "visit_month",
-                      "expression": "`visit_month`"
+                      "name": "visit_week",
+                      "expression": "`visit_week`"
                     },
                     {
                       "name": "revenue",
@@ -367,36 +442,47 @@
               "widgetType": "line",
               "encodings": {
                 "x": {
-                  "fieldName": "visit_month",
+                  "fieldName": "visit_week",
                   "scale": {
                     "type": "temporal"
                   },
-                  "displayName": "visit month"
+                  "displayName": "visit week"
                 },
                 "y": {
                   "fieldName": "revenue",
                   "scale": {
                     "type": "quantitative"
                   },
-                  "displayName": "revenue"
+                  "displayName": "Revenue",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Monthly revenue"
+                "title": "Weekly revenue",
+                "showDescription": true,
+                "description": "Complete weeks, last 26"
               }
             }
           },
           "position": {
             "x": 0,
-            "y": 3,
-            "width": 3,
+            "y": 5,
+            "width": 7,
             "height": 6
           }
         },
         {
           "widget": {
-            "name": "b_mix",
+            "name": "b_service",
             "queries": [
               {
                 "name": "main_query",
@@ -405,16 +491,12 @@
                   "disaggregated": true,
                   "fields": [
                     {
-                      "name": "visit_month",
-                      "expression": "`visit_month`"
+                      "name": "service_name",
+                      "expression": "`service_name`"
                     },
                     {
                       "name": "revenue",
                       "expression": "`revenue`"
-                    },
-                    {
-                      "name": "service_name",
-                      "expression": "`service_name`"
                     }
                   ]
                 }
@@ -425,37 +507,47 @@
               "widgetType": "bar",
               "encodings": {
                 "x": {
-                  "fieldName": "visit_month",
-                  "scale": {
-                    "type": "temporal"
-                  },
-                  "displayName": "visit month"
-                },
-                "y": {
                   "fieldName": "revenue",
                   "scale": {
                     "type": "quantitative"
                   },
-                  "displayName": "revenue"
+                  "displayName": "Revenue",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
                 },
-                "color": {
+                "y": {
                   "fieldName": "service_name",
                   "scale": {
-                    "type": "categorical"
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
                   },
                   "displayName": "service name"
+                },
+                "label": {
+                  "show": true
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Revenue by service"
+                "title": "Revenue by service",
+                "showDescription": true,
+                "description": "Last 90 days"
               }
             }
           },
           "position": {
-            "x": 3,
-            "y": 3,
-            "width": 3,
+            "x": 7,
+            "y": 5,
+            "width": 5,
             "height": 6
           }
         },
@@ -501,26 +593,49 @@
                   "scale": {
                     "type": "quantitative"
                   },
-                  "displayName": "revenue"
+                  "displayName": "Revenue",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
                 },
                 "color": {
                   "fieldName": "payer",
                   "scale": {
-                    "type": "categorical"
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "cash",
+                        "color": "#2a78d6"
+                      },
+                      {
+                        "value": "ppo",
+                        "color": "#eb6834"
+                      },
+                      {
+                        "value": "medicare",
+                        "color": "#1baf7a"
+                      }
+                    ]
                   },
                   "displayName": "payer"
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Revenue by payer"
+                "title": "Monthly revenue by payer"
               }
             }
           },
           "position": {
             "x": 0,
-            "y": 9,
-            "width": 3,
+            "y": 11,
+            "width": 7,
             "height": 6
           }
         },
@@ -562,43 +677,156 @@
                   "scale": {
                     "type": "quantitative"
                   },
-                  "displayName": "avg retention"
+                  "displayName": "Still visiting",
+                  "format": {
+                    "type": "number-percent",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 0
+                    }
+                  }
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Retention curve (avg of monthly cohorts)"
+                "title": "Share of patients still visiting, by months since first visit",
+                "showDescription": true,
+                "description": "Average across monthly cohorts"
               }
             }
           },
           "position": {
-            "x": 3,
-            "y": 9,
-            "width": 3,
+            "x": 7,
+            "y": 11,
+            "width": 5,
             "height": 6
           }
         }
       ]
     },
     {
-      "name": "growth",
-      "displayName": "Growth, retention & agents",
+      "name": "leads",
+      "displayName": "Leads & response",
       "pageType": "PAGE_TYPE_CANVAS",
       "layout": [
         {
           "widget": {
-            "name": "b_source",
+            "name": "h_leads",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Leads & response\n",
+                "\n",
+                "Where leads come from, what they want, and how fast the team responds. Urgency sets the response target (emergency 15 min, urgent 1 h, soon 4 h, routine 24 h), never the price."
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "c_open",
             "queries": [
               {
                 "name": "main_query",
                 "query": {
-                  "datasetName": "lead_source",
+                  "datasetName": "lead_kpi",
                   "disaggregated": true,
                   "fields": [
                     {
-                      "name": "source",
-                      "expression": "`source`"
-                    },
+                      "name": "open_leads",
+                      "expression": "`open_leads`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "open_leads",
+                  "displayName": "Open leads awaiting a first response"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Open leads awaiting a first response",
+                "showDescription": true,
+                "description": "Last 30 days"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 4,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_leads30",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "lead_kpi",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "leads_30d",
+                      "expression": "`leads_30d`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "leads_30d",
+                  "displayName": "New leads \u00b7 30 days",
+                  "format": {
+                    "type": "number",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "New leads \u00b7 30 days"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 2,
+            "width": 4,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_conv",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "lead_kpi",
+                  "disaggregated": true,
+                  "fields": [
                     {
                       "name": "conversion_rate",
                       "expression": "`conversion_rate`"
@@ -608,35 +836,121 @@
               }
             ],
             "spec": {
-              "version": 3,
-              "widgetType": "bar",
+              "version": 2,
+              "widgetType": "counter",
               "encodings": {
-                "x": {
-                  "fieldName": "source",
-                  "scale": {
-                    "type": "categorical"
-                  },
-                  "displayName": "source"
-                },
-                "y": {
+                "value": {
                   "fieldName": "conversion_rate",
-                  "scale": {
-                    "type": "quantitative"
-                  },
-                  "displayName": "conversion rate"
+                  "displayName": "Lead conversion \u00b7 180 days",
+                  "format": {
+                    "type": "number-percent",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 0
+                    }
+                  }
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Lead conversion by source"
+                "title": "Lead conversion \u00b7 180 days"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 2,
+            "width": 4,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "t_sla",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "sla",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "urgency",
+                      "expression": "`urgency`"
+                    },
+                    {
+                      "name": "leads",
+                      "expression": "`leads`"
+                    },
+                    {
+                      "name": "on_time",
+                      "expression": "`on_time`"
+                    },
+                    {
+                      "name": "median_hours",
+                      "expression": "`median_hours`"
+                    },
+                    {
+                      "name": "overdue_now",
+                      "expression": "`overdue_now`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "urgency",
+                    "displayName": "Urgency"
+                  },
+                  {
+                    "fieldName": "leads",
+                    "displayName": "Leads"
+                  },
+                  {
+                    "fieldName": "on_time",
+                    "displayName": "On time",
+                    "format": {
+                      "type": "number-percent",
+                      "decimalPlaces": {
+                        "type": "max",
+                        "places": 0
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "median_hours",
+                    "displayName": "Median hours to response",
+                    "format": {
+                      "type": "number",
+                      "abbreviation": "compact",
+                      "decimalPlaces": {
+                        "type": "max",
+                        "places": 1
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "overdue_now",
+                    "displayName": "Overdue now"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Response times by urgency \u00b7 14 days"
               }
             }
           },
           "position": {
             "x": 0,
-            "y": 0,
-            "width": 3,
-            "height": 6
+            "y": 5,
+            "width": 6,
+            "height": 5
           }
         },
         {
@@ -668,7 +982,16 @@
                 "x": {
                   "fieldName": "response_band",
                   "scale": {
-                    "type": "categorical"
+                    "type": "categorical",
+                    "sort": {
+                      "by": "custom-order",
+                      "orderedValues": [
+                        "< 1h",
+                        "1-4h",
+                        "4-24h",
+                        "24h+"
+                      ]
+                    }
                   },
                   "displayName": "response band"
                 },
@@ -677,7 +1000,17 @@
                   "scale": {
                     "type": "quantitative"
                   },
-                  "displayName": "conversion rate"
+                  "displayName": "Converted",
+                  "format": {
+                    "type": "number-percent",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 0
+                    }
+                  }
+                },
+                "label": {
+                  "show": true
                 }
               },
               "frame": {
@@ -687,9 +1020,78 @@
             }
           },
           "position": {
-            "x": 3,
-            "y": 0,
-            "width": 3,
+            "x": 6,
+            "y": 5,
+            "width": 6,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "b_source",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "lead_source",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "source",
+                      "expression": "`source`"
+                    },
+                    {
+                      "name": "conversion_rate",
+                      "expression": "`conversion_rate`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "conversion_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Converted",
+                  "format": {
+                    "type": "number-percent",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 0
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "source",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  },
+                  "displayName": "source"
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Lead conversion by source",
+                "showDescription": true,
+                "description": "Last 12 months"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 10,
+            "width": 6,
             "height": 6
           }
         },
@@ -720,50 +1122,210 @@
               "widgetType": "bar",
               "encodings": {
                 "x": {
-                  "fieldName": "ai_intent",
-                  "scale": {
-                    "type": "categorical"
-                  },
-                  "displayName": "ai intent"
-                },
-                "y": {
                   "fieldName": "leads",
                   "scale": {
                     "type": "quantitative"
                   },
-                  "displayName": "leads"
+                  "displayName": "Leads"
+                },
+                "y": {
+                  "fieldName": "ai_intent",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  },
+                  "displayName": "ai intent"
+                },
+                "label": {
+                  "show": true
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Lead intent (Databricks AI Functions, 90d)"
+                "title": "What new leads want",
+                "showDescription": true,
+                "description": "Classified by Databricks AI Functions, last 90 days"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 10,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "capacity",
+      "displayName": "Capacity & care",
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layout": [
+        {
+          "widget": {
+            "name": "h_capacity",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Capacity & care\n",
+                "\n",
+                "Where visits happen, where slots are lost, what the agents have queued for approval, and how patients are engaging with their care guidance."
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "c_guidance",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "care_kpi",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "patients_with_guidance",
+                      "expression": "`patients_with_guidance`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "patients_with_guidance",
+                  "displayName": "Patients with approved care guidance"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Patients with approved care guidance"
               }
             }
           },
           "position": {
             "x": 0,
-            "y": 6,
-            "width": 3,
-            "height": 6
+            "y": 2,
+            "width": 4,
+            "height": 3
           }
         },
         {
           "widget": {
-            "name": "b_risk",
+            "name": "c_viewed",
             "queries": [
               {
                 "name": "main_query",
                 "query": {
-                  "datasetName": "risk",
+                  "datasetName": "care_kpi",
                   "disaggregated": true,
                   "fields": [
                     {
-                      "name": "risk_band",
-                      "expression": "`risk_band`"
+                      "name": "viewed_rate",
+                      "expression": "`viewed_rate`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "viewed_rate",
+                  "displayName": "Guidance opened in the portal",
+                  "format": {
+                    "type": "number-percent",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 0
+                    }
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Guidance opened in the portal"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 2,
+            "width": 4,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_help",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "care_kpi",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "help_requests",
+                      "expression": "`help_requests`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "help_requests",
+                  "displayName": "Items patients need help with"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Items patients need help with"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 2,
+            "width": 4,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "b_load",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "location_load",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "location_id",
+                      "expression": "`location_id`"
                     },
                     {
-                      "name": "expected_annual_loss",
-                      "expression": "`expected_annual_loss`"
+                      "name": "completed_per_day",
+                      "expression": "`completed_per_day`"
                     }
                   ]
                 }
@@ -774,30 +1336,185 @@
               "widgetType": "bar",
               "encodings": {
                 "x": {
-                  "fieldName": "risk_band",
-                  "scale": {
-                    "type": "categorical"
-                  },
-                  "displayName": "risk band"
-                },
-                "y": {
-                  "fieldName": "expected_annual_loss",
+                  "fieldName": "completed_per_day",
                   "scale": {
                     "type": "quantitative"
                   },
-                  "displayName": "expected annual loss"
+                  "displayName": "Visits / day",
+                  "format": {
+                    "type": "number",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "location_id",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  },
+                  "displayName": "location id"
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Revenue at risk by churn band"
+                "title": "Completed visits per open day",
+                "showDescription": true,
+                "description": "By location, last 12 weeks"
               }
             }
           },
           "position": {
-            "x": 3,
-            "y": 6,
-            "width": 3,
+            "x": 0,
+            "y": 5,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "b_lost",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "location_load",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "location_id",
+                      "expression": "`location_id`"
+                    },
+                    {
+                      "name": "lost_slot_rate",
+                      "expression": "`lost_slot_rate`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "lost_slot_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Lost",
+                  "format": {
+                    "type": "number-percent",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 0
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "location_id",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  },
+                  "displayName": "location id"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Bookings lost to no-shows and cancellations",
+                "showDescription": true,
+                "description": "By location, last 12 weeks"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 5,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "b_weekday",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "weekday",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "name": "weekday",
+                      "expression": "`weekday`"
+                    },
+                    {
+                      "name": "completed_per_day",
+                      "expression": "`completed_per_day`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "weekday",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "custom-order",
+                      "orderedValues": [
+                        "Mon",
+                        "Tue",
+                        "Wed",
+                        "Thu",
+                        "Fri",
+                        "Sat",
+                        "Sun"
+                      ]
+                    }
+                  },
+                  "displayName": "weekday"
+                },
+                "y": {
+                  "fieldName": "completed_per_day",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Visits / day",
+                  "format": {
+                    "type": "number",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Completed visits by weekday",
+                "showDescription": true,
+                "description": "All locations, last 12 weeks"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 13,
+            "width": 5,
             "height": 6
           }
         },
@@ -832,41 +1549,96 @@
               "widgetType": "bar",
               "encodings": {
                 "x": {
+                  "fieldName": "items",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Items"
+                },
+                "y": {
                   "fieldName": "queue",
                   "scale": {
                     "type": "categorical"
                   },
                   "displayName": "queue"
                 },
-                "y": {
-                  "fieldName": "items",
-                  "scale": {
-                    "type": "quantitative"
-                  },
-                  "displayName": "items"
-                },
                 "color": {
                   "fieldName": "status",
                   "scale": {
-                    "type": "categorical"
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "pending_review",
+                        "color": "#eda100"
+                      },
+                      {
+                        "value": "approved",
+                        "color": "#1baf7a"
+                      },
+                      {
+                        "value": "rejected",
+                        "color": "#a8a69e"
+                      },
+                      {
+                        "value": "superseded",
+                        "color": "#d6d4cc"
+                      }
+                    ]
                   },
                   "displayName": "status"
                 }
               },
               "frame": {
                 "showTitle": true,
-                "title": "Agent review queues"
+                "title": "Agent drafts by review status",
+                "showDescription": true,
+                "description": "Everything agents draft waits for a person to approve it"
               }
             }
           },
           "position": {
-            "x": 0,
-            "y": 12,
-            "width": 6,
-            "height": 5
+            "x": 5,
+            "y": 13,
+            "width": 7,
+            "height": 6
           }
         }
       ]
     }
-  ]
+  ],
+  "uiSettings": {
+    "theme": {
+      "canvasBackgroundColor": {
+        "light": "#f3f2ee",
+        "dark": "#141413"
+      },
+      "widgetBackgroundColor": {
+        "light": "#fcfcfb",
+        "dark": "#1f1f1d"
+      },
+      "widgetBorderColor": {
+        "light": "#e4e2db",
+        "dark": "#34332f"
+      },
+      "fontColor": {
+        "light": "#1c1c1a",
+        "dark": "#f1f0ea"
+      },
+      "selectionColor": {
+        "light": "#0f766e",
+        "dark": "#3cc3b2"
+      },
+      "visualizationColors": [
+        "#2a78d6",
+        "#eb6834",
+        "#1baf7a",
+        "#eda100",
+        "#e87ba4",
+        "#008300",
+        "#4a3aa7",
+        "#e34948"
+      ],
+      "widgetHeaderAlignment": "LEFT"
+    }
+  }
 }
