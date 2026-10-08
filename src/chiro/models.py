@@ -66,6 +66,22 @@ def _lead_reasons(row) -> str:
     return ", ".join(reasons) or "no strong signals"
 
 
+def triage_frame(leads: pd.DataFrame, llm_triage: dict[str, dict | None] | None = None) -> pd.DataFrame:
+    """Urgency tier, reasons, response target and red flags for any leads (open or not)."""
+    leads = leads.reset_index(drop=True)
+    llm_triage = llm_triage or {}
+    intents = leads["ai_intent"] if "ai_intent" in leads else [None] * len(leads)
+    triage = [urgency.triage(m, c, i, llm_triage.get(lid), lid in llm_triage)
+              for lid, m, c, i in zip(leads["lead_id"], leads["message"], leads["complaint"], intents)]
+    return pd.DataFrame({
+        "lead_id": leads["lead_id"],
+        "red_flags": [", ".join(detect_red_flags(m)) for m in leads["message"]],
+        "urgency": [t for t, _ in triage],
+        "urgency_reasons": [", ".join(r) for _, r in triage],
+        "respond_within_hours": [urgency.RESPOND_WITHIN_HOURS[t] for t, _ in triage],
+    })
+
+
 def score_leads(model, leads: pd.DataFrame, llm_triage: dict[str, dict | None] | None = None) -> pd.DataFrame:
     """Score open leads. `llm_triage` holds LLM second opinions for the leads it was run on ({lead_id: result
     or None if the call failed}); leads not in it are triaged by rules alone."""
@@ -76,17 +92,60 @@ def score_leads(model, leads: pd.DataFrame, llm_triage: dict[str, dict | None] |
     out = open_leads[["lead_id"]].copy()
     out["score"] = model.predict_proba(X)[:, 1].round(4)
     out["reasons"] = [_lead_reasons(r) for r in open_leads.itertuples()]
-    out["red_flags"] = [", ".join(detect_red_flags(m)) for m in open_leads["message"]]
-    intents = open_leads["ai_intent"] if "ai_intent" in open_leads else [None] * len(open_leads)
-    llm_triage = llm_triage or {}
-    triage = [urgency.triage(m, c, i, llm_triage.get(lid), lid in llm_triage)
-              for lid, m, c, i in zip(open_leads["lead_id"], open_leads["message"], open_leads["complaint"], intents)]
-    out["urgency"] = [t for t, _ in triage]
-    out["urgency_reasons"] = [", ".join(r) for _, r in triage]
-    out["respond_within_hours"] = [urgency.RESPOND_WITHIN_HOURS[t] for t, _ in triage]
-    out["priority"] = [round(urgency.priority_key(t, s), 4) for (t, _), s in zip(triage, out["score"])]
+    out = out.merge(triage_frame(open_leads, llm_triage), on="lead_id")
+    out["priority"] = [round(urgency.priority_key(t, s), 4) for t, s in zip(out["urgency"], out["score"])]
     out["scored_at"] = pd.Timestamp.now()
     return out[LEAD_SCORE_COLUMNS]
+
+
+TRIAGE_COLUMNS = ["urgency", "urgency_reasons", "respond_within_hours"]
+
+
+def _in_window(leads: pd.DataFrame, active_days: int, now: pd.Timestamp) -> pd.Series:
+    created = pd.to_datetime(leads["created_at"], utc=True).dt.tz_localize(None)
+    return created >= now - pd.Timedelta(days=active_days)
+
+
+def leads_needing_triage(previous: pd.DataFrame | None, leads: pd.DataFrame, active_days: int,
+                         now: pd.Timestamp | None = None) -> pd.DataFrame:
+    """Leads in the active window (any status) that have never been given an urgency tier."""
+    now = now or pd.Timestamp.now()
+    triaged = set() if previous is None or previous.empty else set(previous.loc[previous["urgency"].notna(), "lead_id"])
+    return leads[_in_window(leads, active_days, now) & ~leads["lead_id"].isin(triaged)]
+
+
+def refresh_lead_scores(previous: pd.DataFrame | None, model, leads: pd.DataFrame,
+                        llm_triage: dict[str, dict | None] | None = None, active_days: int = 30,
+                        now: pd.Timestamp | None = None) -> pd.DataFrame:
+    """The next lead_scores table.
+
+    Conversion scores are recomputed for open leads every run. The urgency tier is assigned once, the first
+    time a lead is seen, and then kept: a lead's response deadline must not move after it arrives, and the
+    SLA report judges answered leads by the tier they had when they came in. Leads that were answered before
+    any refresh saw them still get a tier (with no conversion score). Earlier rows are never dropped."""
+    now = now or pd.Timestamp.now()
+    scored = score_leads(model, leads, llm_triage).set_index("lead_id")
+    late = leads_needing_triage(previous, leads, active_days, now)
+    late = late[~late["lead_id"].isin(scored.index)]
+    if not late.empty:
+        extra = triage_frame(late, llm_triage).set_index("lead_id")
+        extra["score"], extra["reasons"], extra["scored_at"] = None, "", now
+        scored = pd.concat([scored, extra])
+    prev = (pd.DataFrame(columns=LEAD_SCORE_COLUMNS) if previous is None else previous)
+    if "scored_at" in prev and len(prev):
+        prev = prev.sort_values("scored_at", na_position="first")
+    prev = prev.drop_duplicates("lead_id", keep="last").set_index("lead_id")
+    # Keep the first tier a lead was given.
+    kept = prev.loc[prev.index.intersection(scored.index), TRIAGE_COLUMNS]
+    kept = kept[kept["urgency"].notna()]
+    scored.loc[kept.index, TRIAGE_COLUMNS] = kept
+    out = pd.concat([prev.drop(index=scored.index, errors="ignore"), scored]).reset_index(names="lead_id")
+    has_score = out["score"].notna() & out["urgency"].notna()
+    out.loc[has_score, "priority"] = [round(urgency.priority_key(t, s), 4)
+                                      for t, s in zip(out.loc[has_score, "urgency"], out.loc[has_score, "score"])]
+    out = out[LEAD_SCORE_COLUMNS]
+    # Real nulls, not NaN: Spark stores NaN as a value that compares greater than every number.
+    return out.astype(object).where(out.notna(), None)
 
 
 # ---------------------------------------------------------------- churn

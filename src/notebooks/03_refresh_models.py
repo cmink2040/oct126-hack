@@ -60,12 +60,13 @@ def log_model(model, X_example, name, metrics):
 with mlflow.start_run(run_name=f"refresh-{today}"):
     lead_model, lead_metrics = models.train_lead_model(leads)
     log_model(lead_model, models.lead_features(leads)[lead_model.feature_columns_], "lead_scoring", lead_metrics)
-    # LLM second opinion on urgency for leads still in the active window (older ones are nurture, not triage).
-    active = leads[(leads["status"] == "new")
-                   & (pd.to_datetime(leads["created_at"]) >= pd.Timestamp.now() - pd.Timedelta(days=ACTIVE_LEAD_DAYS))]
-    llm = urgency.llm_triage_many(get_llm_client(), settings.llm_endpoint, dict(zip(active["lead_id"], active["message"])))
-    mlflow.log_metric("llm_triage_failures", sum(v is None for v in llm.values()))
-    write("lead_scores", models.score_leads(lead_model, leads, llm))
+    # Tiers are assigned once and kept, so only leads never triaged before get the LLM second opinion.
+    previous = read("lead_scores") if spark.catalog.tableExists(settings.table("lead_scores").replace("`", "")) else None
+    todo = models.leads_needing_triage(previous, leads, ACTIVE_LEAD_DAYS)
+    llm = urgency.llm_triage_many(get_llm_client(), settings.llm_endpoint, dict(zip(todo["lead_id"], todo["message"])))
+    mlflow.log_metrics({"llm_triaged": len(llm), "llm_triage_failures": sum(v is None for v in llm.values())})
+    # Materialise before overwriting the table we just read from.
+    write("lead_scores", models.refresh_lead_scores(previous, lead_model, leads, llm, ACTIVE_LEAD_DAYS).copy())
 
     churn_model, churn_metrics = models.train_churn_model(patients, visits, today)
     churn_X = models.churn_features(patients, visits, today)[models.CHURN_FEATURES].astype(float)

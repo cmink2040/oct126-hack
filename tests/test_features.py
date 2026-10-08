@@ -345,3 +345,48 @@ def test_care_report_needs_staff_notes_and_rejects_persistent_violations():
     bad = json.dumps(dict(GOOD, staff_summary="Diagnosis: lumbar disorder"))
     assert "rejected" in care.CareReports(db, Settings()).draft(LLM([bad, bad]), "m", PROFILE)["error"]
     assert not db.writes
+
+
+# ---------------------------------------------------------------- lead_scores refresh
+def _lead(lid, status="new", days_ago=1, msg="Neck stiff for a few days, getting worse"):
+    now = pd.Timestamp("2026-10-08 12:00")
+    return {"lead_id": lid, "status": status, "created_at": now - pd.Timedelta(days=days_ago), "source": "website_form",
+            "complaint": "neck_pain", "insurance_type": "cash", "distance_miles": 3.0, "message": msg}
+
+
+def test_refresh_keeps_first_tier_and_scores_open_leads():
+    from chiro import models
+    now = pd.Timestamp("2026-10-08 12:00")
+    model = NS(feature_columns_=["distance_miles"], predict_proba=lambda X: np.array([[0.3, 0.7]] * len(X)))
+    previous = pd.DataFrame([
+        # Answered since the last run: tier must survive, row must not disappear.
+        {"lead_id": "ANSWERED", "score": 0.5, "reasons": "r", "red_flags": "", "urgency": "urgent",
+         "urgency_reasons": "LLM: urgent", "respond_within_hours": 1.0, "priority": 3.5, "scored_at": now},
+        # Still open: score refreshes, tier stays even though rules would now say 'soon'.
+        {"lead_id": "OPEN", "score": 0.1, "reasons": "r", "red_flags": "", "urgency": "urgent",
+         "urgency_reasons": "LLM: urgent", "respond_within_hours": 1.0, "priority": 3.1, "scored_at": now},
+        {"lead_id": "OLD", "score": 0.2, "reasons": "r", "red_flags": "", "urgency": "routine",
+         "urgency_reasons": "", "respond_within_hours": 24.0, "priority": 1.2, "scored_at": now},
+    ])
+    leads = pd.DataFrame([_lead("ANSWERED", "contacted"), _lead("OPEN"),
+                          _lead("FAST", "booked", msg="Threw my back out this morning, can't stand"),  # never seen open
+                          _lead("NEW"), _lead("OLD", "lost", days_ago=400)])
+    out = models.refresh_lead_scores(previous, model, leads, None, 30, now).set_index("lead_id")
+    assert set(out.index) == {"ANSWERED", "OPEN", "FAST", "NEW", "OLD"}
+    assert out.loc["ANSWERED", "urgency"] == "urgent" and out.loc["ANSWERED", "score"] == 0.5
+    assert out.loc["OPEN", "urgency"] == "urgent" and out.loc["OPEN", "score"] == 0.7
+    assert out.loc["OPEN", "priority"] == urgency.priority_key("urgent", 0.7)
+    assert out.loc["FAST", "urgency"] == "urgent" and out.loc["FAST", "score"] is None  # triaged late, no score
+    assert out.loc["NEW", "urgency"] == "soon" and out.loc["NEW", "score"] == 0.7
+    assert out.loc["OLD", "urgency"] == "routine"
+    assert all(v is None or v == v for col in out.columns for v in out[col])  # real nulls, never NaN
+
+
+def test_only_untriaged_leads_in_the_window_go_to_the_llm():
+    from chiro import models
+    now = pd.Timestamp("2026-10-08 12:00")
+    previous = pd.DataFrame([{"lead_id": "SEEN", "urgency": "soon"}, {"lead_id": "UNTRIAGED", "urgency": None}])
+    leads = pd.DataFrame([_lead("SEEN"), _lead("UNTRIAGED", "contacted"), _lead("BRAND_NEW"),
+                          _lead("ANCIENT", days_ago=90)])
+    todo = models.leads_needing_triage(previous, leads, 30, now)
+    assert sorted(todo["lead_id"]) == ["BRAND_NEW", "UNTRIAGED"]

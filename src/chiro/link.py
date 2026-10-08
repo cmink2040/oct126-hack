@@ -219,3 +219,13 @@ def link_statements(s: Settings) -> list[tuple[str, str]]:
     return [("leads_raw", leads), ("patients_raw", patients), ("visits_raw", visits),
             ("services", services), ("price_history", price_history), ("appointment_slots", slots),
             ("appointments", appointments)]
+
+
+def contacted_status_fix(s: Settings) -> str:
+    """Correct leads landed before Contacted / Qualified mapped to 'contacted' (they were landed as 'new').
+    Idempotent. leads_raw is the pipeline's streaming source, so follow this with a full refresh of the
+    `leads` table (scripts/migrate_lead_status.py does both)."""
+    return f"""
+    UPDATE {s.table('leads_raw')} SET status = 'contacted'
+    WHERE status = 'new'
+      AND lead_id IN (SELECT lead_id FROM {s.source_table('leads')} WHERE status IN ('Contacted', 'Qualified'))"""
