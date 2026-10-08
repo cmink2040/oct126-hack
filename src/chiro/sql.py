@@ -47,7 +47,8 @@ def _param_type(v: Any) -> str:
     if isinstance(v, bool):
         return "BOOLEAN"
     if isinstance(v, int):
-        return "BIGINT"
+        # INT when it fits, like Spark: date_add/date_sub reject BIGINT under ANSI mode
+        return "INT" if -2**31 <= v < 2**31 else "BIGINT"
     if isinstance(v, float):
         return "DOUBLE"
     return "STRING"

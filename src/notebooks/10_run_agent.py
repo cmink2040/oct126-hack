@@ -26,7 +26,7 @@ from chiro.tracing import setup_experiment
 from chiro.workflows import run_named_agent
 
 settings = Settings.from_widgets(dbutils)
-dbutils.widgets.dropdown("agent", "lead", ["lead", "retention", "pricing", "briefing"])
+dbutils.widgets.dropdown("agent", "lead", ["lead", "retention", "pricing", "capacity", "briefing"])
 dbutils.widgets.text("max_items", "10")
 dbutils.widgets.text("experiment", "")
 setup_experiment(dbutils.widgets.get("experiment"))

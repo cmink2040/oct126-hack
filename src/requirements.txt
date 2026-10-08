@@ -4,3 +4,4 @@ databricks-sdk>=0.40
 openai>=1.40
 pandas>=2.0
 numpy>=1.26
+scikit-learn>=1.3

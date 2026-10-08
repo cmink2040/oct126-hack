@@ -10,6 +10,7 @@ import json
 from dataclasses import dataclass, field
 from typing import Any, Callable
 
+from chiro.llm import max_output_tokens
 from chiro.tracing import span, trace
 
 MAX_TOOL_OUTPUT_CHARS = 12_000
@@ -104,10 +105,13 @@ def run_agent(client, model: str, system: str, user: str, registry: ToolRegistry
     for step in range(1, max_steps + 1):
         resp = client.chat.completions.create(
             model=model, messages=messages, tools=registry.specs() or None,
-            temperature=temperature, max_tokens=2048,
+            temperature=temperature, max_tokens=max_output_tokens(),
         )
         msg = resp.choices[0].message
         tool_calls = msg.tool_calls or []
+        if not tool_calls and getattr(resp.choices[0], "finish_reason", None) == "length":
+            return AgentResult("The model ran out of output tokens before answering; raise LLM_MAX_TOKENS.",
+                               "error", step, calls, messages)
         assistant: dict[str, Any] = {"role": "assistant", "content": msg.content or ""}
         if tool_calls:
             assistant["tool_calls"] = [

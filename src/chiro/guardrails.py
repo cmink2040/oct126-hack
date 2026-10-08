@@ -21,24 +21,51 @@ _BANNED_CLAIMS = {
 
 # Symptoms that need urgent medical evaluation rather than a marketing reply.
 _RED_FLAGS = {
-    r"bladder|bowel control|incontinen": "bladder/bowel dysfunction",
-    r"groin.{0,30}numb|numb.{0,30}groin|saddle (area|numb)": "saddle anesthesia",
-    r"worst headache|thunderclap": "sudden severe headache",
-    r"chest pain": "chest pain",
-    r"\bfever\b": "fever with pain",
-    r"(legs?|arms?) (keep |are )?(giving out|getting weaker)|progressive weakness": "progressive weakness",
-    r"unexplained weight loss": "unexplained weight loss",
-    r"passed out|lost consciousness|unconscious": "loss of consciousness",
+    r"bladder|bowel control|incontinen|(can'?t|trouble|difficulty|problems?) (pee|peeing|urinat)|"
+    r"wetting (myself|the bed)|leaking urine|lost control of my (bowels?|bladder)": "bladder/bowel dysfunction",
+    r"groin.{0,30}numb|numb.{0,30}groin|saddle (area|numb)|numb(ness)? (down there|in my (private|genital|buttocks?))|"
+    r"numb when i (sit|wipe)": "saddle anesthesia",
+    r"worst headache|thunderclap|thunderbolt|headache.{0,20}(out of nowhere|came on suddenly|like being hit)":
+        "sudden severe headache",
+    r"chest (pain|tightness|pressure)|chest (feels|is) (heavy|tight)|pressure in my chest": "chest pain",
+    r"\bfever\b|high temperature|running a temperature|\bchills\b|night sweats": "fever with pain",
+    r"(legs?|arms?) (keep |are |is )?(giving out|getting weaker)|progressive weakness|"
+    r"(arm|leg|hand|foot) is getting weaker|can'?t feel (my )?(legs?|feet|foot)|numb(ness)? in both (legs|feet)|"
+    r"(feet|legs) (feel|are|went|going) numb|foot drop": "progressive weakness",
+    r"unexplained weight loss|weight loss without trying|lost \d+ ?(pounds|lbs|kg) without trying":
+        "unexplained weight loss",
+    r"passed out|lost consciousness|unconscious|fainted": "loss of consciousness",
 }
+
+# NegEx-style negation: a cue shortly before the symptom, in the same clause, negates it ("no fever",
+# "I don't have any numbness"). Hedges ("not sure if it's a fever") are NOT negations - when in doubt,
+# keep the flag, because a missed red flag costs far more than a phone call.
+# Inability ("can't control my bladder", "couldn't feel my feet") is a symptom, not a negation, so only
+# denial forms count.
+_NEGATION_CUE = re.compile(r"\b(no|not|never|without|denies|deny|none|nor|neither|"
+                           r"(do|does|did|have|has|had|is|are|was|were)(n'?t| not))\b")
+_HEDGE = re.compile(r"\b(not sure|unsure|don'?t know|not certain|can'?t tell|maybe|might|possibly|think)\b")
+_CLAUSE_BREAK = re.compile(r"[.;!?\n]|\b(but|however|although|though|except|yet)\b")
+_NEGATION_WINDOW_WORDS = 5
 
 SMS_MAX_CHARS = 320
 EMAIL_MAX_CHARS = 1500
 SMS_OPT_OUT = "Reply STOP to opt out."
 
 
+def is_negated(text: str, start: int) -> bool:
+    """True when the term starting at `start` is negated within its clause (lower-cased text)."""
+    before = text[:start]
+    breaks = list(_CLAUSE_BREAK.finditer(before))
+    clause = before[breaks[-1].end():] if breaks else before
+    window = " ".join(clause.split()[-_NEGATION_WINDOW_WORDS:])
+    return bool(_NEGATION_CUE.search(window)) and not _HEDGE.search(window)
+
+
 def detect_red_flags(text: str | None) -> list[str]:
     text = (text or "").lower()
-    return [label for pattern, label in _RED_FLAGS.items() if re.search(pattern, text)]
+    return [label for pattern, label in _RED_FLAGS.items()
+            if any(not is_negated(text, m.start()) for m in re.finditer(pattern, text))]
 
 
 def check_message(message: str | None, channel: str) -> list[str]:

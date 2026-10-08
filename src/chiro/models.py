@@ -14,6 +14,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import train_test_split
 
+from chiro import urgency
 from chiro.guardrails import detect_red_flags
 
 _URGENT = re.compile(r"asap|barely|worse|this week|can't|killing|threw", re.I)
@@ -21,6 +22,8 @@ _URGENT = re.compile(r"asap|barely|worse|this week|can't|killing|threw", re.I)
 # ---------------------------------------------------------------- leads
 
 LEAD_CATEGORICAL = ["source", "complaint", "insurance_type"]
+LEAD_SCORE_COLUMNS = ["lead_id", "score", "reasons", "red_flags", "urgency", "urgency_reasons",
+                      "respond_within_hours", "priority", "scored_at"]
 
 
 def lead_features(leads: pd.DataFrame) -> pd.DataFrame:
@@ -63,17 +66,27 @@ def _lead_reasons(row) -> str:
     return ", ".join(reasons) or "no strong signals"
 
 
-def score_leads(model, leads: pd.DataFrame) -> pd.DataFrame:
+def score_leads(model, leads: pd.DataFrame, llm_triage: dict[str, dict | None] | None = None) -> pd.DataFrame:
+    """Score open leads. `llm_triage` holds LLM second opinions for the leads it was run on ({lead_id: result
+    or None if the call failed}); leads not in it are triaged by rules alone."""
     open_leads = leads[leads["status"] == "new"].reset_index(drop=True)
     if open_leads.empty:
-        return pd.DataFrame(columns=["lead_id", "score", "reasons", "red_flags", "scored_at"])
+        return pd.DataFrame(columns=LEAD_SCORE_COLUMNS)
     X = _align(lead_features(open_leads), model.feature_columns_)
     out = open_leads[["lead_id"]].copy()
     out["score"] = model.predict_proba(X)[:, 1].round(4)
     out["reasons"] = [_lead_reasons(r) for r in open_leads.itertuples()]
     out["red_flags"] = [", ".join(detect_red_flags(m)) for m in open_leads["message"]]
+    intents = open_leads["ai_intent"] if "ai_intent" in open_leads else [None] * len(open_leads)
+    llm_triage = llm_triage or {}
+    triage = [urgency.triage(m, c, i, llm_triage.get(lid), lid in llm_triage)
+              for lid, m, c, i in zip(open_leads["lead_id"], open_leads["message"], open_leads["complaint"], intents)]
+    out["urgency"] = [t for t, _ in triage]
+    out["urgency_reasons"] = [", ".join(r) for _, r in triage]
+    out["respond_within_hours"] = [urgency.RESPOND_WITHIN_HOURS[t] for t, _ in triage]
+    out["priority"] = [round(urgency.priority_key(t, s), 4) for (t, _), s in zip(triage, out["score"])]
     out["scored_at"] = pd.Timestamp.now()
-    return out
+    return out[LEAD_SCORE_COLUMNS]
 
 
 # ---------------------------------------------------------------- churn

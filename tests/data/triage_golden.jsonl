@@ -1,0 +1,50 @@
+{"message": "Lower back pain and now I can't control my bladder", "complaint": "low_back_pain", "tier": "emergency"}
+{"message": "My groin and inner thighs feel numb since I hurt my back", "complaint": "low_back_pain", "tier": "emergency"}
+{"message": "Sudden thunderclap headache an hour ago, worst ever", "complaint": "headaches", "tier": "emergency"}
+{"message": "neck pain plus chest tightness when I walk upstairs", "complaint": "neck_pain", "tier": "emergency"}
+{"message": "Back pain with a fever of 102 and chills", "complaint": "low_back_pain", "tier": "emergency"}
+{"message": "My legs keep giving out on me since the back pain started", "complaint": "sciatica", "tier": "emergency"}
+{"message": "I passed out yesterday after my neck cracked", "complaint": "neck_pain", "tier": "emergency"}
+{"message": "Lost 20 pounds without trying and my back aches at night", "complaint": "low_back_pain", "tier": "emergency"}
+{"message": "can't feel my feet properly and my lower back is killing me", "complaint": "sciatica", "tier": "emergency"}
+{"message": "not sure if it's a fever but I feel hot and my back hurts", "complaint": "low_back_pain", "tier": "emergency"}
+{"message": "I have trouble peeing since my back went out this morning", "complaint": "low_back_pain", "tier": "emergency"}
+{"message": "Fainted at work, now neck is stiff", "complaint": "neck_pain", "tier": "emergency"}
+{"message": "Threw out my back lifting a box this morning, can't stand up straight", "complaint": "low_back_pain", "tier": "urgent"}
+{"message": "Rear-ended yesterday, neck is locked up and I can't turn my head", "complaint": "auto_injury", "tier": "urgent"}
+{"message": "Pain shooting down my leg, 8/10, can't sleep", "complaint": "sciatica", "tier": "urgent"}
+{"message": "Tweaked my shoulder at the gym last night, excruciating to lift my arm", "complaint": "sports_injury", "tier": "urgent"}
+{"message": "My back spasmed out of nowhere and I can barely walk", "complaint": "low_back_pain", "tier": "urgent"}
+{"message": "Fell on the ice this morning, severe lower back pain", "complaint": "low_back_pain", "tier": "urgent"}
+{"message": "neck pain 9 out of 10 since today, can't work", "complaint": "neck_pain", "tier": "urgent"}
+{"message": "Car accident two days ago, now my neck and back are in agony", "complaint": "auto_injury", "tier": "urgent"}
+{"message": "I'm in tears, sciatica flared and I can't sit in the car", "complaint": "sciatica", "tier": "urgent"}
+{"message": "Slipped on stairs, back is unbearable, can't bend at all", "complaint": "low_back_pain", "tier": "urgent"}
+{"message": "No fever or numbness, but I threw my back out an hour ago and can't move", "complaint": "low_back_pain", "tier": "urgent"}
+{"message": "Hurt my back playing soccer yesterday, can barely get out of bed", "complaint": "sports_injury", "tier": "urgent"}
+{"message": "Neck has been getting worse this week", "complaint": "neck_pain", "tier": "soon"}
+{"message": "Hoping to get in ASAP, my lower back flared up again", "complaint": "low_back_pain", "tier": "soon"}
+{"message": "Sciatica the past few days, about 5/10", "complaint": "sciatica", "tier": "soon"}
+{"message": "Headaches keep coming back, three this week", "complaint": "headaches", "tier": "soon"}
+{"message": "Minor fender bender last week, neck is a little sore", "complaint": "auto_injury", "tier": "soon"}
+{"message": "Back pain is worse when I sit, started a few days ago", "complaint": "low_back_pain", "tier": "soon"}
+{"message": "Shoulder sore after tennis on the weekend, want to get it checked this week", "complaint": "sports_injury", "tier": "soon"}
+{"message": "My knee and hip have been aching more than usual lately, 4/10", "complaint": "sports_injury", "tier": "soon"}
+{"message": "Need an appointment as soon as possible for my back, it's stiff", "complaint": "low_back_pain", "tier": "soon"}
+{"message": "Pain in my neck started on Monday and isn't improving", "complaint": "neck_pain", "tier": "soon"}
+{"message": "Stiff back for years, looking for maintenance care", "complaint": "low_back_pain", "tier": "routine"}
+{"message": "How much is a first visit? Just looking for info", "complaint": "posture_wellness", "tier": "routine"}
+{"message": "Interested in posture correction for desk work", "complaint": "posture_wellness", "tier": "routine"}
+{"message": "Do you take PPO insurance? I get occasional tension headaches", "complaint": "headaches", "tier": "routine"}
+{"message": "General wellness adjustments, nothing hurts right now", "complaint": "posture_wellness", "tier": "routine"}
+{"message": "My neck has been tight for months, would like to start care", "complaint": "neck_pain", "tier": "routine"}
+{"message": "What are your rates for massage?", "complaint": "posture_wellness", "tier": "routine"}
+{"message": "Mild lower back stiffness in the mornings, 2/10, for a couple of years", "complaint": "low_back_pain", "tier": "routine"}
+{"message": "Runner looking for a sports chiro for performance, no injury", "complaint": "sports_injury", "tier": "routine"}
+{"message": "Is there parking near the clinic? My back is fine, just want a checkup", "complaint": "posture_wellness", "tier": "routine"}
+{"message": "I have no bladder or bowel problems, just a long-standing achy back", "complaint": "low_back_pain", "tier": "routine"}
+{"message": "No fever, no numbness - looking for help with old neck stiffness", "complaint": "neck_pain", "tier": "routine"}
+{"message": "Pregnant and wondering if you offer prenatal adjustments", "complaint": "posture_wellness", "tier": "routine"}
+{"message": "Can I book for next month? Mid-back tightness from desk work", "complaint": "posture_wellness", "tier": "routine"}
+{"message": "My doctor suggested chiropractic for chronic low back pain", "complaint": "low_back_pain", "tier": "routine"}
+{"message": "Old whiplash from years ago still bugs me sometimes", "complaint": "auto_injury", "tier": "routine"}

@@ -28,8 +28,11 @@ grants = [
     f"GRANT USE SCHEMA, SELECT ON SCHEMA {schema} TO `{sp}`",
     # Writes are limited to the review queues and the tables an approval updates.
     *[f"GRANT MODIFY ON TABLE {settings.table(t)} TO `{sp}`"
-      for t in ("lead_actions", "retention_actions", "price_recommendations",
+      for t in ("lead_actions", "retention_actions", "price_recommendations", "capacity_actions",
+                "care_notes", "care_reports", "patient_accounts",
                 "services", "service_pricing_stats", "price_history")],
+    # Capacity analysis and treatment themes read the linked source dataset directly.
+    f"GRANT USE SCHEMA, SELECT ON SCHEMA `{settings.source_catalog}`.`{settings.source_schema}` TO `{sp}`",
 ]
 for g in grants:
     try:

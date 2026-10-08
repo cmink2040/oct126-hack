@@ -14,6 +14,8 @@ import pandas as pd  # noqa: E402
 import streamlit as st  # noqa: E402
 
 from chiro import prompts  # noqa: E402
+from chiro.capacity import ACTION_TYPES  # noqa: E402
+from chiro.care import CareReports  # noqa: E402
 from chiro.agent import run_agent  # noqa: E402
 from chiro.config import Settings  # noqa: E402
 from chiro.llm import get_llm_client  # noqa: E402
@@ -43,7 +45,8 @@ st.caption(f"Agents draft, people decide. Signed in as {reviewer}. Data: `{setti
 try:
     k = tools.get_kpis()
     cols = st.columns(6)
-    cols[0].metric("Open leads", k.get("open_leads"))
+    cols[0].metric("Open leads (30d)", k.get("open_leads"), help=f"{k.get('stale_open_leads')} older open leads "
+                   "are out of the triage queue (nurture instead).")
     cols[1].metric("Lead conversion (180d)", f"{(k.get('lead_conversion_rate_180d') or 0):.0%}")
     cols[2].metric("Active patients", k.get("active_patients"))
     cols[3].metric("High-risk patients", k.get("high_risk_patients"))
@@ -53,8 +56,10 @@ except Exception as e:
     st.error(f"Could not load KPIs - has the setup job run and access been granted? {e}")
     st.stop()
 
-tab_chat, tab_analytics, tab_leads, tab_ret, tab_price, tab_brief = st.tabs(
-    ["💬 Copilot", "📊 Analytics", "🧲 Lead queue", "🔁 Retention queue", "💲 Price approvals", "📰 Briefing"])
+tab_chat, tab_analytics, tab_leads, tab_ret, tab_price, tab_cap, tab_care, tab_brief = st.tabs(
+    ["💬 Copilot", "📊 Analytics", "🧲 Lead queue", "🔁 Retention queue", "💲 Price approvals", "🏥 Capacity",
+     "📝 Care plans", "📰 Briefing"])
+URGENCY_ICON = {"emergency": "🚨", "urgent": "🔴", "soon": "🟠", "routine": "⚪"}
 
 with tab_chat:
     for m in st.session_state.chat:
@@ -99,8 +104,10 @@ with tab_analytics:
             st.bar_chart(df, x="ai_intent", y="leads")
 
 
-def review_queue(kind: str, title_fn, body_fn):
+def review_queue(kind: str, title_fn, body_fn, order=None):
     items = tools.pending(kind)
+    if order:
+        items.sort(key=order)
     if not items:
         st.info("Nothing waiting for review.")
         return
@@ -119,17 +126,62 @@ def review_queue(kind: str, title_fn, body_fn):
 
 
 with tab_leads:
+    sla = tools.get_sla_report(14)
+    st.subheader("Response times (last 14 days)")
+    st.caption("Responded = staff approved the first outreach. Targets: " + ", ".join(
+        f"{t} {h:g}h" for t, h in sla["respond_within_hours"].items()))
+    if sla["by_tier"]:
+        cols = st.columns(len(sla["by_tier"]))
+        for c, r in zip(cols, sla["by_tier"]):
+            rate = r["within_sla_rate"]
+            c.metric(f"{URGENCY_ICON.get(r['urgency'], '')} {r['urgency']}",
+                     "-" if rate is None else f"{rate:.0%} on time",
+                     help=f"{r['leads']} leads, median {r['median_hours_to_response']}h, p90 {r['p90_hours_to_response']}h")
+            if r["overdue_now"]:
+                c.caption(f"⏰ {r['overdue_now']} overdue now ({r['overdue_waiting_on_approval']} waiting on approval)")
+
+    st.subheader("Next up")
+    queue = tools.list_scored_leads(limit=15)
+    if queue:
+        st.dataframe(pd.DataFrame([{
+            "#": q["queue_position"], "lead": q["lead_id"], "urgency": f"{URGENCY_ICON.get(q['urgency'], '')} {q['urgency']}",
+            "deadline": ("overdue " if q["minutes_to_deadline"] < 0 else "in ") + f"{abs(q['minutes_to_deadline'])} min",
+            "p(convert)": q["p_convert"], "value": q["patient_value"], "why": q["urgency_reasons"]} for q in queue]),
+            hide_index=True, use_container_width=True)
+        if st.button("Draft responses for the top of the queue"):
+            from chiro.workflows import run_named_agent
+            with st.spinner("Lead agent is working the queue..."):
+                st.markdown(run_named_agent("lead", db, settings, llm, max_items=5).final_text)
+    else:
+        st.info("No new leads waiting for a first response.")
+
+    st.subheader("Drafts awaiting approval")
     st.caption("Approving marks the draft ready to send (connect your SMS/email provider or front desk here).")
+    pending_ids = [i["lead_id"] for i in tools.pending("lead")]
+    triage = {r["lead_id"]: r for r in db.query(
+        f"""SELECT s.lead_id, s.urgency, s.urgency_reasons, s.respond_within_hours,
+                   timestampadd(MINUTE, CAST(s.respond_within_hours * 60 AS INT), r.created_at) AS respond_by
+            FROM {settings.table('lead_scores')} s JOIN {settings.table('leads_raw')} r USING (lead_id)
+            WHERE array_contains(split(:ids, ','), s.lead_id)""", {"ids": ",".join(pending_ids)})} if pending_ids else {}
+    tier_rank = {"emergency": 0, "urgent": 1, "soon": 2, "routine": 3}
+
+    def lead_order(i):
+        t = triage.get(i["lead_id"]) or {}
+        return tier_rank.get(t.get("urgency"), 4), str(t.get("respond_by") or "9999")
 
     def lead_body(i):
         if i["action_type"] == "refer_out":
             st.error("Red-flag symptoms: call this person now and advise prompt medical evaluation.")
+        t = triage.get(i["lead_id"])
+        if t and t.get("urgency"):
+            st.markdown(f"{URGENCY_ICON.get(t['urgency'], '')} **{t['urgency']}** · respond by "
+                        f"{str(t['respond_by'])[:16].replace('T', ' ')} UTC · {t['urgency_reasons']}")
         st.markdown(f"**{i['channel'].upper()}** · slot `{i.get('proposed_slot_id') or '-'}`")
         st.text(i["message"])
         st.caption(f"Agent reasoning: {i['reasoning']}")
 
-    review_queue("lead", lambda i: f"{'🚨 ' if i['action_type'] == 'refer_out' else ''}{i['lead_id']} · "
-                 f"{i['action_type']} · {i['priority']}", lead_body)
+    review_queue("lead", lambda i: f"{URGENCY_ICON.get((triage.get(i['lead_id']) or {}).get('urgency'), '')} "
+                 f"{i['lead_id']} · {i['action_type']} · {i['priority']}", lead_body, order=lead_order)
 
 with tab_ret:
     def ret_body(i):
@@ -152,6 +204,128 @@ with tab_price:
 
     review_queue("price", lambda i: f"{i['service_id']}: ${i['current_price']:.0f} → ${i['proposed_price']:.0f}",
                  price_body)
+
+with tab_cap:
+    st.caption("Effective capacity = min(room capacity, staffed provider slots). Utilization is benchmarked against "
+               "the network's top quartile. Actions are drafted by the Capacity agent and need approval.")
+
+    @st.cache_data(ttl=1800, show_spinner="Analyzing capacity...")
+    def utilization():
+        return tools.get_utilization()
+
+    u = utilization()
+    if u.get("benchmark_utilization") is not None:
+        a, b = st.columns(2)
+        a.metric("Benchmark utilization (network top quartile)", f"{u['benchmark_utilization']:.0%}")
+        b.metric("Weekly revenue gap vs benchmark", f"${sum(r['weekly_revenue_gap'] or 0 for r in u['locations']):,.0f}")
+    udf = pd.DataFrame(u["locations"])
+    if not udf.empty:
+        udf["problems"] = udf["problems"].map(lambda p: "; ".join(p) or "-")
+        st.dataframe(udf[["location_id", "city", "utilization", "staffed_slot_fill", "room_utilization",
+                          "no_show_rate", "weekly_trend", "weekly_revenue_gap", "problems"]],
+                     hide_index=True, use_container_width=True)
+        loc = st.selectbox("Location detail", udf["location_id"], format_func=lambda x: f"{x} · "
+                           f"{udf.set_index('location_id').loc[x, 'location_name']}")
+        detail = tools.get_location_detail(loc)
+        if "error" not in detail:
+            fc = pd.DataFrame(detail["forecast_next_14_days"])
+            st.markdown(f"**Next 14 days:** about **{detail['projected_idle_slots_14d']:.0f}** slots projected to go "
+                        f"unused (booked now + bookings still expected from the lead-time curve).")
+            if not fc.empty:
+                st.bar_chart(fc.set_index("day")[["booked_now", "expected_final_bookings", "effective_capacity"]],
+                             stack=False)
+            left, right = st.columns(2)
+            left.markdown("**By weekday (trailing 12 weeks)**")
+            left.dataframe(pd.DataFrame(detail["by_weekday"]).drop(columns=["dow"]), hide_index=True,
+                           use_container_width=True)
+            right.markdown("**No-show plan**")
+            right.dataframe(pd.DataFrame(detail["no_show_plan"]), hide_index=True, use_container_width=True)
+            if not fc.empty:
+                idle_days = fc[fc["projected_idle_slots"] > 0].sort_values("projected_idle_slots", ascending=False)
+                if not idle_days.empty:
+                    day = st.selectbox("Fill list for", idle_days["day"], format_func=lambda d: f"{d} · "
+                                       f"{idle_days.set_index('day').loc[d, 'projected_idle_slots']:.0f} idle slots")
+                    cands = tools.get_fill_candidates(loc, day, 25)
+                    st.caption(f"{len(cands['candidates'])} recoverable patients; at an assumed "
+                               f"{cands['assumed_response_rate']:.0%} response rate ≈ {cands['expected_bookings']} bookings.")
+                    st.dataframe(pd.DataFrame(cands["candidates"]), hide_index=True, use_container_width=True)
+    if st.button("Run capacity review now"):
+        from chiro.workflows import run_named_agent
+        with st.spinner("Capacity agent is reviewing locations..."):
+            res = run_named_agent("capacity", db, settings, llm, max_items=3)
+        st.markdown(res.final_text)
+
+    def cap_body(i):
+        st.markdown(f"**{ACTION_TYPES.get(i['action_type'], i['action_type'])}** · "
+                    f"+{i['expected_weekly_visits']:.0f} visits/wk · ${i['expected_weekly_revenue']:,.0f}/wk")
+        if i.get("targets"):
+            st.caption(f"Fill campaign for {i['target_date']}: {len(i['targets'].split(','))} patients - on approval "
+                       "the Retention agent drafts each invitation with a slot that day.")
+        st.write(i["details"])
+        st.caption(f"Agent reasoning: {i['reasoning']}")
+
+    review_queue("capacity", lambda i: f"{i['location_id']} · {i['action_type']}", cap_body)
+
+    impact = tools.get_capacity_impact()
+    if impact:
+        st.subheader("Approved actions: impact so far")
+        st.dataframe(pd.DataFrame(impact), hide_index=True, use_container_width=True)
+        st.caption("Measured as utilization since approval vs the location's utilization when it was approved; "
+                   "give an action 2-4 weeks before judging it.")
+
+with tab_care:
+    st.caption("Care notes are follow-through advice and what happens if it's skipped - not diagnoses. "
+               "Reports are drafted from your notes and shown to the patient (portal) only after approval.")
+    care = CareReports(db, settings)
+    pid = st.text_input("Patient ID", placeholder="e.g. PT0009863").strip()
+    if pid:
+        profile = tools.get_patient_profile(pid)
+        if "error" in profile:
+            st.error(profile["error"])
+        else:
+            recs = tools.get_care_recommendations(pid)
+            st.markdown(f"**{profile['first_name']}** · {profile['insurance_type']} · dropout risk "
+                        f"{(profile.get('churn_risk') or 0):.0%} · {profile.get('days_since_last_visit')} days since last visit")
+            if "error" not in recs:
+                st.markdown(f"**Theme:** {recs['theme']}  \n{recs['theme_description']}")
+                st.caption(f"Care settings that similar patients who stayed in care used ({recs['peers']} peers, "
+                           f"{recs['peer_active_rate']:.0%} still active):")
+                st.dataframe(pd.DataFrame(recs["recommendations"])[
+                    ["aspect", "current", "recommended", "lift", "support", "evidence"]],
+                    hide_index=True, use_container_width=True)
+            for n in care.notes(pid):
+                st.markdown(f"> {n['note']}  \n> — {n['author']}, {str(n['created_at'])[:10]}")
+            with st.form("note", clear_on_submit=True):
+                note = st.text_area("Add a care note", placeholder="e.g. Not doing the daily hip stretches tends to "
+                                    "bring the stiffness back and means extra visits to get back on track.")
+                if st.form_submit_button("Save note"):
+                    out = care.add_note(pid, reviewer, note)
+                    if "error" in out:
+                        st.error(out["error"])
+                    else:
+                        st.rerun()
+            if st.button("Draft guidance report", type="primary"):
+                with st.spinner("Drafting from your notes..."):
+                    out = care.draft(llm, settings.llm_endpoint, profile, None if "error" in recs else recs)
+                if "error" in out:
+                    st.error(out["error"])
+                else:
+                    st.success("Draft queued for review below.")
+            with st.expander("Link a patient-portal account to this patient"):
+                email = st.text_input("Portal account email")
+                if st.button("Link account") and email:
+                    db.execute(f"UPDATE {settings.table('patient_accounts')} SET patient_id = :pid "
+                               "WHERE email = :email", {"pid": pid, "email": email.strip().lower()})
+                    st.success("Linked - approved reports will show in their portal.")
+
+    def care_body(i):
+        left, right = st.columns(2)
+        left.markdown("**Staff version**")
+        left.markdown(i["staff_report"])
+        right.markdown("**Patient version**")
+        right.markdown(i["patient_report"])
+
+    review_queue("care", lambda i: f"{i['patient_id']} · care guidance report", care_body)
 
 with tab_brief:
     rows = db.query(f"SELECT briefing_date, content FROM {settings.table('daily_briefings')} "

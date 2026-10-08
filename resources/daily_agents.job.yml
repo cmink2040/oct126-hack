@@ -50,12 +50,18 @@ resources:
           notebook_task:
             notebook_path: ../src/notebooks/10_run_agent.py
             base_parameters: {agent: pricing}
+        - task_key: capacity_agent
+          depends_on: [{task_key: refresh_models}]
+          notebook_task:
+            notebook_path: ../src/notebooks/10_run_agent.py
+            base_parameters: {agent: capacity}
 
         - task_key: briefing_agent
           depends_on:
             - {task_key: lead_agent}
             - {task_key: retention_agent}
             - {task_key: pricing_agent}
+            - {task_key: capacity_agent}
           run_if: ALL_DONE  # brief the owner even if one agent failed
           notebook_task:
             notebook_path: ../src/notebooks/10_run_agent.py

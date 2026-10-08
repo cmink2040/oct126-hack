@@ -145,3 +145,12 @@ def test_agents_get_analytics_tools():
     t = tools_for(lead=LEAD)
     for reg in (t.pricing_registry(), t.briefing_registry(), t.copilot_registry()):
         assert {"query_metrics", "forecast_demand", "get_cohort_retention"} <= set(reg.names)
+
+
+def test_truncated_reply_is_an_error_not_a_silent_completion():
+    class Truncated(FakeLLM):
+        def create(self, **kw):
+            return NS(choices=[NS(message=NS(content="", tool_calls=None), finish_reason="length")])
+
+    res = run_agent(Truncated([]), "m", "sys", "go", ToolRegistry())
+    assert res.status == "error" and "LLM_MAX_TOKENS" in res.final_text

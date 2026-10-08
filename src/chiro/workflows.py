@@ -18,6 +18,8 @@ AGENTS = {
                   "Work today's at-risk patient list now."),
     "pricing": (prompts.PRICING_AGENT, ClinicTools.pricing_registry,
                 "Run this week's cash-price review now."),
+    "capacity": (prompts.CAPACITY_AGENT, ClinicTools.capacity_registry,
+                 "Run this week's capacity review now."),
     "briefing": (prompts.BRIEFING_AGENT, ClinicTools.briefing_registry,
                  "Write today's briefing."),
 }
@@ -28,15 +30,15 @@ def new_run_id(agent: str) -> str:
 
 
 def run_named_agent(agent: str, db: SqlRunner, settings: Settings, client, max_items: int = 10,
-                    max_steps: int = 40) -> AgentResult:
-    template, registry_factory, instruction = AGENTS[agent]
+                    max_steps: int = 40, instruction: str | None = None) -> AgentResult:
+    template, registry_factory, default_instruction = AGENTS[agent]
     tools = ClinicTools(db, settings, new_run_id(agent))
     started = dt.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
     try:
         result = run_agent(
             client, settings.llm_endpoint,
             system=prompts.render(template, settings.clinic_name, max_items),
-            user=instruction, registry=registry_factory(tools), max_steps=max_steps,
+            user=instruction or default_instruction, registry=registry_factory(tools), max_steps=max_steps,
         )
     except Exception as e:
         result = AgentResult(f"{type(e).__name__}: {e}", "error", 0)

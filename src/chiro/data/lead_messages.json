@@ -1,0 +1,1502 @@
+[
+ {
+  "message": "hey need someone to look at my lower back pain asap im also having trouble holding my pee and its leaking all the time\nhow much is the first visit? do u take medicaid?",
+  "tier": "emergency",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Hi there, I am a marathon runner and I have severe lower back pain. I also feel like my legs are getting weaker and I keep fainting during training. Is this normal? Do you have parking on site?",
+  "tier": "emergency",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "My dad has lower back pain and a fever with chills\nhe says its just age but he lost 10lbs last week\nwhat are your hours?",
+  "tier": "emergency",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Lower back hurts so bad cant move\nalso got a sudden headache worst i ever had\nchest feels tight too\ncan i come in now? is there a waiting fee?",
+  "tier": "emergency",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "hey do you take medicare? my neck is killing me and i cant feel my legs anymore plus i keep wetting the bed which is so embarrassing. need to know if u can see me today or if i should just go to the hospital?",
+  "tier": "emergency",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "i am a construction worker and i have been having the worst headache of my life after lifting heavy beams today. also my arms feel weak. do you have parking in front? how much is the visit?",
+  "tier": "emergency",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "my 12 year old soccer player son has severe neck pain after a tackle. he says he feels dizzy and his left arm went numb. does your clinic accept Aetna? are you open on weekends? we need to know if this is just a sprain or something more.",
+  "tier": "emergency",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hi I'm a nurse and I've been dealing with lower back pain for weeks but today my left leg went completely numb and I can't feel my toes. Also getting really weak in both legs now. Do you take Aetna insurance? Need to know if I can come in tonight before things get worse.",
+  "tier": "emergency",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "yo just pulled a muscle lifting boxes at work but now I have this crazy headache and my chest feels tight and heavy like I cant breathe. its been 2 days. how much is the first visit? is there parking nearby?",
+  "tier": "emergency",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "My 70 year old father started losing weight without trying and now has fever and chills along with his back pain. He says he feels dizzy and nearly fainted yesterday. We are worried he might be sick. Are you open on weekends? How do I book him in?",
+  "tier": "emergency",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "hey i twisted my knee playing soccer and now my left leg feels weak and i cant feel my toes. is this bad? also do you take aetna and what are your parking options? its getting really scary down there",
+  "tier": "emergency",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "i am a retired teacher with bad back but today i got a fever and chills after a fall. now i have some weird numbness around my groin area. is this something to worry about? please tell me if i need to go to the hospital first or if i can just come in tomorrow morning. what are your opening hours?",
+  "tier": "emergency",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "worst headache of my life after gym session. also chest pressure and my arms feel tingly and weak. dont know if this is just tension or something else. how much does a consult cost? can i just drop by without an appt? thanks",
+  "tier": "emergency",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "Hi I fell off my bike last week and now my left leg feels really weak and I have trouble controlling my bladder. I think it\u2019s just a sprain though. Do you take Medicare and is there parking nearby? Thx",
+  "tier": "emergency",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Since the car accident I have a headache that feels like it\u2019s exploding and my vision is blurry. I\u2019m scared. Is this normal after whiplash? What are your hours? I need to go today. Please reply fast. I am not sure what to do. It hurts so bad I can barely sit up. Do you have a waiting room or do I go straight in?",
+  "tier": "emergency",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "hey i got hit by a shopping cart at the grocery store. now i feel pressure in my chest when i breathe and my arms are getting numb. i work nights so when do you open? does it cost a lot? i think its just stress but my heart feels weird too. please help. no insurance. cash only?",
+  "tier": "emergency",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "hey my 12yo has weird groin numbness and weak legs after soccer. do you take medicare? need appt asap",
+  "tier": "emergency",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "worst headache ever plus chest pressure since lifting boxes at work. do you have parking nearby and what are your hours?",
+  "tier": "emergency",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "fever and chills with lower back pain. lost 5lbs unexplained. how much is the consult? im a retiree on a fixed income so budget is tight",
+  "tier": "emergency",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "bladder changes and arm weakness spreading. dont know if its serious. can i come in tomorrow morning or do i need a referral?",
+  "tier": "emergency",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "just felt faint at the gym and now my legs feel numb. is this covered by my insurance plan or do i pay cash upfront?",
+  "tier": "emergency",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "hey i slipped on ice two days ago and now i cant stand up straight its killing me please call me back before i pass out from pain",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Hi Dr, I am a nurse and need immediate care. I pulled a muscle lifting a patient 24 hours ago. Pain is 9/10 and I cannot sleep. Do you take Medicare?",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "my back went out after a bad fall yesterday its unbearable i cant walk to the car do you have parking lot access for handicapped?",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "URGENTLY NEED HELP. Severe low back pain started last night after moving couch. Cannot sit or stand. What are your prices for a quick assessment?",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "hello im a retiree who fell in garden two days ago. pain is 8/10 and getting worse. do you have evening appointments? thanks",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I played basketball yesterday and tweaked my lower back. It feels like someone stabbed me. I'm an athlete and need to get back on my feet fast. Do you work with sports injuries?",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "cant type right but my back is wrecked from a car accident yesterday. pain is 10/10. do you accept insurance? need help asap",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Hi, I am a teacher and my lower back has been screaming since I bent over to pick up a student's book two days ago. I cannot sleep. What are your office hours?",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "yo my back is shot. fell off ladder yesterday. pain is so bad i can barely breathe. do you take cash only? need to know cost before i come in",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Dear clinic, I am a new mother and my back went out after lifting my toddler yesterday. It is very painful and I cannot move comfortably. Do you offer weekend slots?",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "i have severe low back pain from a twist injury last night. its 7/10 and worsening. i am a delivery driver and need to know if i can get seen today",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Help. I slipped on wet tile two days ago. My lower back is locked up and I can't sleep or work. Is there a waiting list for new patients?",
+  "tier": "urgent",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Hi, I twisted my neck driving to work yesterday and now I can barely turn my head. Pain is 9/10. Do you take Aetna? Is there parking on site?",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "fellING. fell down stairs last night. neck is locked and i cant sleep. its been 14 hours and its getting worse. do u have slots today?",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "my 45 year old husband was hit by a bike while walking the dog. his neck is swollen and he says it feels like its breaking when he moves. we need help fast. what are your hours?",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "I am a soccer player and took a hard hit to the neck in practice. I can't work my regular job because I can't sit at a desk for more than 5 minutes. Do you accept cash only or insurance?",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "bad whiplash from a rear end collision two days ago. pain is constant 8/10. i cant drive my truck. is there a way to get in before lunch tomorrow?",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "retiree here. slipped on ice yesterday and my neck has been aching so badly i can't rest. its 10/10 when i try to stand up. do you do house calls or do i need to come in?",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "need help. neck pain started after lifting a box at work. its so tight i can't breathe deep. pain is 7/10 and spreading to my shoulders. do you have a waiting room or do we wait in the car?",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "my daughter fell off her bike yesterday. she won't let me touch her neck and she is crying every time she moves. it looks bad. do you take medicaid? we need to see someone now.",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "accident at the gym. dropped a weight on my shoulder/neck area. it feels broken. pain is unbearable. i cant walk straight. do you have an open slot today? how much is the first visit?",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "wrote in because my neck went completely numb and painful after a long car trip. i can't work my shift tomorrow. its been 2 days and it hurts more at night. do you offer evening appointments?",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "severe neck pain after a fall in the yard. i am 70 and i am scared. i can't sleep or eat. the pain is 10/10. do you accept senior discounts? is the location accessible for someone who can't walk far?",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "worker comp question. i hurt my neck at the warehouse yesterday. i can't lift anything or look up. pain is 9/10. do you work with my employer's insurance directly? need to know today.",
+  "tier": "urgent",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hi, I crashed my car yesterday and my head is pounding so hard i cant see straight. It hurts 10/10. Do you take my insurance?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "my daughter fell off the swing set two days ago and now she has a terrible headache and wont eat. she is in constant pain. when can we come in?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "I woke up with the worst migraine of my life last night. I can't get out of bed. It feels like my skull is splitting. Do you have any slots today?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "just had a nasty fall at work. my neck is locked and the headache is blinding. pain is 9/10 and getting worse. can i come in now or do i need an appt?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "hey, im a runner and i twisted my neck badly on the track yesterday. now i have a massive headache that won't go away. i need help before i collapse. how much does a visit cost?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "my husband hit his head on the garage door yesterday. he is dizzy and the pain is severe. we are scared. do you have parking and are you open late?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "i've been working 14 hour shifts and now my tension headache is unbearable. i cant focus at work anymore. i need relief fast. do you accept cash only?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "my mom slipped on ice two days ago. she says her head hurts like crazy and she can't sleep. she is 78 years old. can someone call us back please?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "i got into a minor fender bender last week but the headache started yesterday and its getting worse. i feel like i'm going to pass out. do you handle auto claims?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "im a college student and i have a final in 2 days but my head is pounding so much i cant study. i slept at my desk and woke up in pain. can you see me today?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "my toddler hit his head on the coffee table yesterday. now he has a headache and is acting weird. i am very worried. do you see kids or should i go to the er?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "i was lifting boxes yesterday and felt a pop in my neck. now the headache is excruciating. i can't turn my head. pain is 8/10. do you have a waiting list?",
+  "tier": "urgent",
+  "complaint": "headaches"
+ },
+ {
+  "message": "hi i fell off a ladder two days ago and my left leg is screaming in pain. i cant stand up straight. do you take medicaid? need to know asap.",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "my sciatica pain is at a 9/10. i worked a 12 hour shift and now i can barely walk to the car. is there parking available near the office? i need help before i collapse.",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "hello, my mother (78) twisted her back yesterday. she is in severe agony and cannot sleep at all. does anyone have an appointment slot today? we need immediate relief.",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "i am a runner and pulled a muscle during a race last weekend. now the pain shoots down to my foot. i cannot train. what are your prices for a first visit? cash only?",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "pain level 10. i slept on a weird mattress and woke up unable to move my left side. i have a work deadline tomorrow. do you have any openings this afternoon?",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "yo, my dad slipped on ice yesterday and now his lower back is locked up. he says it feels like an electric shock down his leg. do you guys have late hours? we need to get him seen.",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "i have been in a car accident and the pain in my lower back is unbearable. i cant sit in a chair for more than 5 minutes. do you accept aetna insurance?",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "my baby has been screaming in pain for two days. i think its sciatica from carrying her. i cant sleep or work. is there a waiting list or can i just walk in?",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "i am a retiree and my back went out last night. i cannot get out of bed. the pain is constant and sharp. do you offer sliding scale fees for seniors?",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "just had a bad fall at the gym. my back is spasming so hard i can barely breathe. i need someone to look at me right now. what are your weekend hours?",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "the pain is a solid 8/10 and it started when i lifted a box yesterday. i cant walk to the mailbox without stopping. do you have a waiting room i can use while i wait?",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "i have been in agony since my car crash three days ago. my leg is numb and hot. i need to know if you can see me today. do you have a front desk number?",
+  "tier": "urgent",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Hi, I fell off my bike yesterday and my lower back is in so much pain I can barely stand up. Pain level 9/10. Do you take insurance?",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "my son hurt his knee playing soccer last night. he cant walk on it and its really swollen. need help asap please",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "Hello, I am a construction worker and slipped on ice two days ago. My shoulder feels completely dislocated. I cannot lift anything. What are your weekend hours?",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "I was in a car accident 24 hours ago. My neck is stiff and I have a 10/10 headache. Do you have parking spots available for patients?",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "ran my marathon last sunday and twisted my ankle. it is purple and i cannot sleep. how much does a visit cost out of pocket?",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "I dropped a heavy box on my foot at work yesterday. It is throbbing constantly. Can you see me today? I am off work.",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "retired here. i slipped on the stairs this morning. my hip hurts when i try to walk. is there a waiting room area where i can sit while i wait?",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "My daughter hurt her back doing gymnastics last night. She is crying in pain. Please tell me if you accept Aetna insurance.",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "i pulled a muscle lifting my baby yesterday. pain is 8/10 and i cant move. do you have open slots later this evening?",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "fell down in the gym two days ago. my shoulder is locked and i cant raise my arm. very painful. what is the cancellation policy?",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "I was hit by a ball during softball practice. My elbow is swollen and stiff. I need to know if I can drive myself to the office tomorrow morning.",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "bad fall on the ski slope yesterday. my lower back is screaming. i am in too much pain to sit at work. do you offer same day appointments?",
+  "tier": "urgent",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "Hi, I got rear-ended in my car yesterday. My neck is completely locked and the pain is a solid 9 out of 10. I can barely turn my head. Do you accept my PIP insurance? What are your hours for new patients?",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "my son fell off his bike last night and hit his back hard. He's screaming in pain and won't let us move him. we need help NOW. is there parking available? how much is the first visit?",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Retired here. Tripped on my front step two days ago. I can't sleep because of the sharp pain in my lower spine. It feels like my back is broken. Do you take Medicare? I need an appointment soon if possible.",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "I work on a construction site and slipped on wet concrete yesterday. My lower back went out with a pop. I can't walk straight and the pain is a 8/10. Need to see someone today. Do you have same day availability?",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "just got into a minor fender bender an hour ago. My shoulder hurts so bad I cant lift my arm. The pain is shooting down to my elbow. 7/10 intensity. Do you work with auto injury insurance? How fast can I get in?",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Played rugby last night and got tackled into the ground. My knee is swollen and i can't bend it. Pain level 10/10 right now. I need to see someone before i lose feeling in my foot. Do you take private insurance? What is your phone number?",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "my mother (72) fell in her bathroom yesterday. She thinks she broke her hip or something. She is in severe pain and cannot stand. We are panicking. Do you do emergency walk-ins? How much does it cost out of pocket?",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Car accident last week. My back was fine but now it's getting worse every day. Pain is 8/10 and I can't sit in my car. Need chiropractic help. Do you accept my health insurance? What are your weekend hours?",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "fell down the stairs two days ago. My ankle is bruised and painful. Can't put weight on it. Pain is 7/10. I have a job interview tomorrow and need to be mobile. Do you have an opening? Do you take credit card?",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "hit my back against a door frame yesterday and now I can't straighten up. The pain is intense, like a 9/10. I have been taking ibuprofen but it's not helping. Do you do same day appointments? Is there parking near your office?",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "my wife got into a slip and fall at the grocery store yesterday. She's crying in pain and can't walk. We need a doctor or chiropractor ASAP. Do you accept insurance for auto and slip fall cases? How much is the deposit?",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "bike accident on the trail last night. I think I broke my collarbone. It hurts when I breathe. Pain is 8/10. I need an x-ray and assessment. Do you work with specialists? What are your rates if I don't have insurance?",
+  "tier": "urgent",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Hi, fell off my bike yesterday and my back is killing me, pain is like a 9/10. Can you see me today? Do you take my insurance?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "just woke up with severe neck pain, cant turn my head. been in bed all day. what are your hours? is there parking nearby?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Need help asap I hurt my lower back lifting boxes at work 48 hours ago. Its making it impossible to sit at my desk. How much does a visit cost?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "my daughter twisted her ankle playing soccer and now her whole spine feels off. its swelling up fast. do you do urgent same day appts?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Retired teacher here, fell on ice last night and hip is stiff and painful. Can I come in tomorrow morning? Is there a fee for the first checkup?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "totally lost feeling in my right arm since the accident 2 days ago. pain is 10/10 when i try to sleep. can you fit me in this afternoon?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Need immediate postural adjustment. Woke up with shooting pain down my leg, 8/10 pain. Do you accept out of network insurance? Where do I park?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "my son dislocated his shoulder playing football. its been 24 hours and the pain is unbearable. can we come in now? what is the price list?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Back spasms started yesterday after a long drive. Pain is 9/10 and I can't stand up straight. Do you have slots open this evening?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "I've been unable to sleep for two nights due to acute lower back pain after a fall. It feels like it's getting worse. How much is a consultation?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Can't move my neck at all since I slept wrong two nights ago. Pain is intense. Do you take cash only or can I use a credit card? Is parking free?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Severe thoracic pain after lifting heavy furniture yesterday. It's affecting my breathing slightly. Can I be seen today? What are your weekend hours?",
+  "tier": "urgent",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Hi I have been having some lower back issues for about 3 days now and it seems to be getting worse every day. I work a desk job so it is very painful to sit. Is it possible to get an appointment this week? I would really appreciate the help.",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "hello, my back hurts. i think i pulled a muscle lifting boxes at work last tuesday. its been 4 days and the pain is moderate but i cant sleep well. do you take insurance? i have blue cross. also is there parking near the office? thanks",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "My name is Sarah. I am 62 years old and I have had a stiff low back for the last two weeks. It flared up after I gardened on Saturday. It is not excruciating but it limits my movement. I would like to be seen by Thursday if possible. Do you offer weekend hours?",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I am a competitive runner and I feel a dull ache in my lower back after long runs. It has been persistent for 5 days and getting slightly worse. I need to get back on track soon. Can I get a slot this week? What is the cost for the first visit if I pay out of pocket?",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Please help, I have a shooting pain in my lower back that started when I bent over to pick up my grandchild three days ago. It is quite bothersome and I am worried about it progressing. I need an appointment ASAP, preferably within the next 48 hours. Is that possible?",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Hi there, I have moderate lower back pain that has been flaring up intermittently for a week. I suspect it is from poor posture while driving. I would like to schedule a check-up this week to see if I need adjustments. Do you accept HSA cards? What are your evening hours?",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "my back is really bothering me lately. it started about 10 days ago after i slept weird. its not terrible but it twinges when i stand up. i want to make sure its nothing serious. can i get an appointment on friday? do you have a waiting room with seating that supports the back?",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I am a construction worker and I tweaked my lower back while lifting a pallet last week. It has been hurting on and off for a few days. I need to make sure I can keep working. Is there a way to see you this week? I can come in between 12 and 1 pm if needed. What is the typical wait time?",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Good morning. I have experienced increased stiffness and moderate pain in the lumbar region for the past five days. It seems to worsen in the morning. I am looking for a provider who can see me this week to address the flare-up. Do you have openings on Tuesday or Wednesday? What is the copay for non-insured patients?",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "hey, i pulled my back moving a couch 2 days ago. its hurting pretty bad when i twist. i want to see a doc before it gets worse. do you have any slots this weekend? i live close by so i can come in the evening if thats when your open. thanks!",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I am a yoga instructor and I have been experiencing discomfort in my lower back for about a week. It started as a mild ache but has become more noticeable during deep bends. I would like to schedule an evaluation this week to prevent further injury. Do you have any availability on Monday? What are your cancellation policies?",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "My back has been acting up for the last three days. I think I strained it while playing basketball. The pain is moderate but it makes running difficult. I need to be back in shape soon. Can I get an appointment this week? Do you offer sports-specific chiropractic care?",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I have a persistent low back pain that flared up after I sat for a long flight two weeks ago. It has not improved and is affecting my daily activities. I would like to be seen as soon as possible, ideally within the next few days. Do you take Medicare? What is the cost for a cash pay patient?",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "hello, i have a dull pain in my lower back that has been going on for 4 days. it seems to get worse when i sit for long periods. i am worried it might become chronic. can i get an appointment this week? do you have a free initial consultation? also, do you have wheelchair access? thanks",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I am a retiree and I have had a nagging pain in my lower back for the past ten days. It is not severe but it is persistent and bothersome. I would like to arrange a visit this week to discuss treatment options. Do you have openings on Thursday morning? What should I bring to my first appointment?",
+  "tier": "soon",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Hi, I've had sharp neck pain for about 5 days after a bad sleep position. It's getting worse and I can't turn my head. Can I be seen this week?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hey there, need help with my neck. It's been stiff and painful for two weeks now, making it hard to work at my desk. Do you take Aetna? Also, what are your hours?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "i need to get in asap. my neck hurts a lot after i twisted it while lifting my toddler last week. its getting worse each day. can i come in tomorrow?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Looking for a quick appointment. I have moderate neck pain that started about 10 days ago from a minor car bump. No major injury but it's very annoying. Do you have parking on site?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hello, I am a retiree and have been dealing with increasing neck stiffness for the past week. It limits my daily activities. What is the cost for a first visit if I pay cash?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hi, I'm a runner and pulled a muscle in my neck during a race two days ago. The pain is moderate but I want to fix it before it gets bad. Is there an opening later this week?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Need a chiro for my neck. Been having flare-ups for 4 days after a long drive. Pain is manageable but I want to prevent it from becoming chronic. Do you accept Medicare?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hello, I need an evaluation for neck pain that started 6 days ago. It feels like a minor strain but it's getting worse. I work nights so what are your early morning hours?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hi, my neck has been hurting for about a week after a fall on my bike. It's not broken but very sore. Can you see me before Friday? I have a big game soon.",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hey, can you help with my neck? It's been tight and painful for 8 days. I tried ice and heat but no luck. How much does a session cost?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hi, I'm a teacher and my neck has been aching for a few days due to posture. It's moderate but I need relief before the school week ends. Do you have slots on Saturdays?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Need to be seen this week for neck pain. Started 3 days ago after lifting heavy boxes at work. It's getting worse and I can barely look up. Thanks.",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hello, I have a persistent neck ache for about two weeks. It flares up when I look at my phone. I want to address this now. Do you have a waiting list?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hi, minor neck injury from a sports tackle last week. Pain is moderate but I need to move freely again. Can I book an appointment for Thursday evening?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hey, neck pain for 5 days now. It's been getting worse since Monday. I need to get back to normal. What insurance do you take?",
+  "tier": "soon",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hi, I've had a dull ache in my temples for three days. It's getting worse each night. Do you have any availability this week? Also, do you accept Aetna insurance?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "Hey, not feeling great. Woke up with a headache that won't go away after my shift at the plant. Been dealing with it for about a week now. Can I come in on Thursday? What are your hours?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "my head is pounding like crazy since i hit my head on the cabinet door last week. its not bad but it keeps coming back. is there a way to get seen soon? thanks",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "Hi there. I am a retiree and have been struggling with a persistent tension headache for the last ten days. It\u2019s affecting my sleep. Is there an opening this weekend? Do you offer payment plans?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "Just wanted to ask about pricing for a first visit. I have a mild headache that started after lifting heavy boxes at work. It\u2019s been nagging at me for four days. Do you have parking on site?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "My 12-year-old has been complaining of a headache after practice yesterday. It\u2019s mild but he seems really off. We need to see someone this week before school ends. Do you take pediatric patients?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "Hello, I've had a throbbing pain on the right side of my head for two days. It flares up when I stress. I need to sort this out before it gets worse. Are you taking new patients this week?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "hey, i got a little whiplash from a fender bender last friday. no major pain but my head hurts when i turn. its been bothering me for a few days. can i come in tuesday? do you accept progressive?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "I\u2019m a runner and have been dealing with a dull pressure behind my eyes for a week. It\u2019s moderate but interfering with my training. I want to be seen this week. What is your cancellation policy?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "Hi, my mother has been suffering from a worsening headache since last Monday. It\u2019s not severe but she is very concerned. Can we get an appointment this week? Is your office wheelchair accessible?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "Need help with a headache that started after a long car ride last week. It\u2019s been coming and going but feels worse today. Do you have any slots left for Friday? How long does a visit take?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "hi, ive been getting these bad migraines every few days for a while but its been worse the last 5 days. its affecting my work. can i get an appt this week? also, do you take cigna?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "I had a minor fall on ice last Tuesday. Nothing broken, but I have a persistent headache since then. It\u2019s moderate but I\u2019m worried it won\u2019t go away. Do you have availability this week?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "Hello, I am looking for relief from a tension headache that has been building up over the last week. It\u2019s becoming quite annoying. Can I be seen before the weekend? What should I bring to the first appointment?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "My kid bumped his head on the playground last week and has had a mild headache since. It\u2019s not constant but we want to check it out. Do you have space this week? Is there a copay?",
+  "tier": "soon",
+  "complaint": "headaches"
+ },
+ {
+  "message": "hi i pulled a muscle lifting a box at work 3 days ago now the pain is shooting down my left leg i need to be seen this week please",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "My 10 year old daughter fell off her bike last friday and has been complaining of sciatic pain ever since. Is she covered under our family plan? Do you take kids?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "i have been dealing with lower back pain for about two weeks it got worse yesterday when i tried to stretch. its moderate but annoying. do you have parking on site?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Retired from construction last month and now my old injuries are flaring up. Pain is moderate but constant. Can I come in Thursday morning? What are your hours?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "played soccer on saturday and twisted my back. now i cant sit down properly. the pain is in my lower back and butt. i need help before i lose more range of motion. is there a wait time?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Hi, I am a nurse working nights. I have sciatic pain that started 5 days ago after bending over. It is getting worse. Do you offer after-hours appointments or can I come in on weekends?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "I can't lift my kids anymore because of the pain. It started two weeks ago after moving furniture. It is moderate but very distracting. Do you accept Blue Cross? What is the cost for a new patient visit?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "back pain came on suddenly after a long drive. now its shooting down my right leg. its not super bad but its keeping me up at night. i want to get it checked this week. do you need a referral?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "My daughter is a track athlete and pulled something during practice last week. She says it hurts when she runs. It is a moderate pain but she is worried it will get worse. Can we book a spot for next Tuesday?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "i hurt my back lifting a heavy bag of dog food. it has been 4 days and the pain is moving down my leg. i dont know if its just a strain. i need to see someone soon. what does the first visit cost?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Moderate lower back pain that started after sleeping wrong. It is getting a bit worse each day. I work in an office so I sit a lot. Do you have appointments available this week? I have my own insurance but do you bill direct?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "I am a retiree and I have been having trouble walking without pain for the last 10 days. It started after I carried some groceries. It is not severe but it is limiting my mobility. Are you open on Saturdays?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "twisted my back playing frisbee with my nephews. now i have a sharp pain in my lower back and hip. its been 3 days and its not going away. i want to get ahead of this. do you take cash only or cards?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "pain started after a minor slip on the ice last week. It is moderate and gets worse when I cough or sneeze. I need to be seen before it becomes a chronic issue. What are your office hours in the afternoon?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "i am a teacher and have been standing all day. back pain flared up 5 days ago and now i feel it in my leg. its getting worse. can i come in friday? is there a copay for new patients?",
+  "tier": "soon",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Hi, I rear-ended a sedan two days ago and my neck is stiff. Can I be seen this week?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "lower back pain after lifting boxes at work 4 days ago. getting worse. do you take medicare?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "slipped on ice yesterday while walking the dog. hip feels tight. parking available?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "my shoulder hurts after a minor fender bender last friday. pain is moderate now. what are your hours?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "I'm a runner and tweaked my knee on the track. It's been 3 days and swelling is down but it aches. Need an appointment soon.",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Woke up with neck pain after sleeping weird in the car during a road trip. It's day 5 and getting tighter. Do you accept Aetna?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Tripped on the stairs at home. Ankle is sore. Been 2 weeks. Want to fix before it gets bad. How much is a consult?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Fell off my bike last weekend. Wrist hurts when I turn. It's a moderate pain but constant. Can you see me tomorrow?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "My kid fell off the monkey bars. Shoulder is limping. It's been 4 days and he's in pain. Need a quick slot this week.",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Twisted my back moving furniture. It's day 3 and I can barely bend. Is there a wait time?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Hit my tailbone on the sidewalk. It stings when I sit. Been a week. Do you have evening appointments?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Neck cricked after driving in traffic last week. It's getting worse. Any spots open for next Tuesday?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "I'm a retiree and fell in the garden. Hip hurts when I walk. It's been 5 days. Do you take senior insurance?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Minor car accident. No visible damage but my low back is tight. It's day 2. Can you help before it gets worse?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Shoulder popped while playing tennis. Sore for 4 days now. Want to get it checked this week. What's the cost out of pocket?",
+  "tier": "soon",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Hi, I've been slouching at my desk for the last 5 days and my neck is killing me. Need to see someone this week before it gets worse. Do you take Aetna?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "my lower back went out after lifting a box on tuesday. its not super bad but its getting annoying. is there parking on site? thanks",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Hello, I am a new mom and my posture has shifted so much in the last two weeks that I can barely stand up straight. I need help quickly. What are your hours on Saturdays?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "I work construction and have been having flare ups in my shoulders for about a week. It is getting in the way of my job. How much is the first visit?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Hi there. I had a minor fumble during a game last weekend and now my upper back feels stiff and sore. It is getting worse every day. Do you see walk-ins?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Good morning, I am a retiree who has been walking with a hunch for the last few days. It is moderate pain but I want to fix it before it becomes a habit. Do you have openings this week?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "my posture is messed up from gaming lately. my neck hurts when i look down. been going on for 4 days. need a quick adjustment. what are the prices like?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Hello, I recently started a new job sitting at a computer and my mid-back is starting to ache. It has been building up over the last week. Can I get an appointment before Friday?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "I strained my lower back slightly while gardening two days ago. The pain is moderate but persistent. I would like to be seen as soon as possible. Do you accept BCBS?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "hi, been slouching so bad my traps are on fire. its been a few days and its not letting up. need to get on the books this week. thanks",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Good afternoon. I am an athlete who noticed my shoulder alignment is off after a long run last weekend. It is causing mild discomfort that is worsening. Do you offer cash pay discounts?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "My back has been tight and sore for about ten days. I think it is from poor posture while sleeping. I need to get this sorted out before it becomes chronic. What is your cancellation policy?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Hello, I have a desk job and my neck has been cramping for the last three days. It is not severe but I am worried it will get worse. Are you open late on weekdays?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "I hurt my back slightly while moving furniture last week. It is a dull ache that comes and goes. I want to make sure it does not turn into something bigger. Do you have any slots next Tuesday?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Hi, my posture has been off since I started lifting weights incorrectly a week ago. My lower back is tight and aching. I need to be seen this week. Do you take Medicare?",
+  "tier": "soon",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Hi I have had lower back pain for 6 months. It gets worse when I sit at my desk for long periods. I tried stretching but it did not help. Do you take Aetna insurance? I am a software engineer and I am worried about my posture affecting my career. Can you tell me if I need an xray first? Also where is the parking lot located? I am usually in the area on weekdays after 5pm. Please let me know if you have openings. Thanks.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "hey, i dont hurt that bad but my lower back feels stiff every morning. i am 65 and retired. just want to keep moving. is it expensive? do you have weekend hours? i do not have any numbness or fever. just want to prevent it from getting worse. can someone call me?",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I am a high school teacher and my lower back has been aching since fall. No fever, no weakness, just discomfort when I bend over to pick up papers. I have tried ice and heat with no luck. Do you offer package deals for multiple visits? I need to know if I can use my HSA card. I am available on Tuesday evenings. Looking forward to hearing from you.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "My 10 year old son plays soccer. He complains of mild lower back tightness after practice. It goes away after a few days of rest. I want to make sure he is not injured but he refuses to see a doctor because he is embarrassed. Can we bring him in for a checkup? Does he need a referral? What are your after school hours? He has no other symptoms, just the tightness.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I am looking for a second opinion. I have had chronic lower back pain for two years. My previous chiro said it was just age, but I feel like I am slipping. I have no numbness in legs, no fever. I want a maintenance plan. How much does a single visit cost? Do you accept out of network? I live in the suburbs so I need to know about parking availability near the entrance.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "just need a quick adjustment. lower back has been clicking and popping for a week. no pain really, just feels out of alignment. i am an athlete and want to stay mobile. do you have same day appointments? what is your cancellation policy? i can come in on friday morning. please text me back. thanks.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I am a stay at home mom and my lower back hurts when I lift my toddler. It is mild but constant. I have no fever or other symptoms. I am worried it will become worse. Do you have slots on weekends? I need to know if I can bring a stroller. Is there a waiting room for kids? How much is the copay with my Blue Cross plan? Please let me know.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Hello, I am a warehouse worker. My lower back aches after shifts. No numbness or fever. I want to prevent injury. Do you offer industrial wellness packages? I need to know if I can schedule during lunch breaks. What are your hours on Mondays? I am looking for affordable options. Can you send me a price list? Thank you.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "my back feels heavy and tired. i have been sitting for 8 hours a day. no sharp pain, just a dull ache in the lower back. i am 40 and want to fix my posture. do you do posture analysis? is it extra cost? i have no other symptoms. can i come in on a thursday night? do you take metlife? please reply.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I have been experiencing mild discomfort in my lower back for three weeks. It started after moving furniture. No fever, no radiating pain. I want to get it sorted before it becomes a problem. Do you have a waiting list? How long is the average wait time? I am flexible with my schedule. I need to know if I need to bring any previous records. Thanks.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Hi there. I am a runner and my lower back gets tight after long runs. It is not painful, just restricted. I want to maintain my range of motion. Do you have a membership plan? Is there a discount for students? I am looking for evening appointments. No other symptoms like fever or weakness. Can you tell me if I need to wear athletic wear? Thanks.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I am a retiree who walks every day. My lower back has been stiff for a month. No fever, no numbness. I just want to keep walking. Is your clinic accessible for wheelchairs? Do you have a ramp? I need to know if I can park in the disabled spot. How much does a consultation cost? I am on a fixed income. Please let me know your office hours.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Lower back pain for 3 days. It is mild but annoying. I am a nurse and on my feet all day. No fever or other symptoms. I want to make sure it is not serious. Do you have slots tomorrow? I need to know if I can use my FSA card. Is there a coffee shop nearby? I can wait an hour. Please call me back. Thanks.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "I am a dancer and my lower back has been feeling unstable. No pain really, just a lack of support. I want to prevent injury. Do you work with athletes? I need to know if I can schedule around my classes. What are your hours on Sundays? I have no other symptoms. Can you tell me if I need to bring a specific type of insurance card? Thanks.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "my back has been aching for a week. no fever, no numbness. i am a truck driver. i sit for long hours. i want to feel better. do you have late night hours? i finish work at 9pm. how much does it cost? i dont have insurance. do you have cash pay rates? please let me know. thanks.",
+  "tier": "routine",
+  "complaint": "low_back_pain"
+ },
+ {
+  "message": "Hi, I have been dealing with stiff neck for months. No numbness or fever. Do you take Aetna insurance?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "hey looking for someone to help with my posture. i sit at a desk all day. neck gets tight by 3pm. what are your hours?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "My 10 year old needs a check up for mild neck tightness after football. He says no pain really just stiffness. Do you have parking in front?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "I am a retiree with chronic mild neck pain. Nothing serious just want to maintain mobility. What is the cost for a new patient consult?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "neck hurts when i turn my head. no dizziness or weakness. been like this for 2 weeks. do you see patients on weekends?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "wife has neck pain from bad pillow. says it is manageable but annoying. need someone who can work on alignment. do you accept cash only?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Athlete here. Neck feels tight after swimming. No injuries just tension. Looking for maintenance care. How much is a session?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "I have a very mild neck ache that comes and goes. No fever or tingling. Just want to be proactive. Do you have late evening slots?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hi my neck is stiff from phone use. Nothing hurts badly but it is annoying. Is there a parking lot nearby? And what time do you close on Fridays?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Parent here. My teenager has neck pain from gaming. No symptoms of injury just tension. Do you offer packages for young adults?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "long time neck stiffness. no numbness in arms. just want to feel better. do you take medicare? also what are your weekend hours?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "I just want a wellness check. My neck feels okay mostly but I want to keep it that way. How much is the first visit?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Mild neck pain after long car trips. No fever or redness. Just stiff. Do you have a waiting list? And is the office accessible by bus?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Worker here. Desk job neck pain. No sharp pain just dull ache. Do you take Blue Cross? I need evening appointments.",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "My neck has been off for weeks. Nothing wrong really just feels unbalanced. Do you do adjustments for mild cases? What is the price?",
+  "tier": "routine",
+  "complaint": "neck_pain"
+ },
+ {
+  "message": "Hi, I have had tension headaches for about two years now. I am a teacher and sit at a desk all day. Do you accept Blue Cross? How much is the first visit?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "lowercase here because i type on my phone. headaches keep coming back mostly on the right side. no numbness or fever just pain. do you have parking on site?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "My 12 year old soccer player has been complaining of dull head aches after practice. I just want to check his posture and alignment. Is he covered under our family plan?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "I am a retired engineer. Nothing is hurting badly but I feel stiff and get mild throbbing between my eyes. I would like to start some maintenance care. What are your weekend hours?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "hello. I need help with chronic tension headaches. I have tried ibuprofen but it is not enough. Please confirm if you take my Cigna insurance and if I need a referral.",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "I've been getting pressure headaches at work for months. I type constantly. I want to make sure it is just posture related and not something else. No dizziness or visual changes. Thanks.",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "Can you see someone on a Tuesday evening? I have mild recurring headaches and I just want to keep things in check. I am on a tight budget so what is the cash price?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "My husband is a construction worker and his neck is always tight which leads to headaches. He says it is manageable but I am worried about long term damage. Do you offer payment plans?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "I am experiencing a dull ache behind my eyes that has lasted for three weeks. I am an athlete so I want to prevent this from affecting my performance. No weakness in arms. When are you open?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "just checking if you have availability this week. i have mild headaches from stress and poor posture. i don t have any fever or numbness just need some adjustments. what is the cost?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "I have been suffering from occasional headaches for a decade. I am looking for a long term care plan to manage this. Please let me know if you accept Aetna and what the co-pay is.",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "My mom has headaches that get worse when she is tired. She is 68 and mostly healthy otherwise. I want to make sure her spine is not the issue. Is there a senior discount?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "I have a tight neck and mild headache that comes and goes. I am a software developer so I sit a lot. I just want to fix my posture. Do you offer same day appointments?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "hello there. i have had tension headaches for a while now. no red flag symptoms like fever or numbness. just want to see if chiropractic can help. do you have late night hours?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "I am looking for a provider who can help with my chronic mild headaches. I have been to a doctor and they said it is muscular. I want to try adjustments. How long do appointments usually take?",
+  "tier": "routine",
+  "complaint": "headaches"
+ },
+ {
+  "message": "Hi, I have had lower back pain radiating down my left leg for three months. It gets worse when I sit at my desk. Do you take Blue Cross? What are your hours?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "my back hurts but not bad. just tight. want to fix my posture before it gets worse. do you do cash pay? how much is a visit?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Retired teacher here. Knees and back are stiff. No fever or numbness, just general aches. I want to stay mobile for my grandkids. Is there parking near the office?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "I'm a construction worker. Lifted something heavy last week and now my right leg feels tingley. Not paralyzed but annoying. Do you accept HSA cards?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "hello. I have mild sciatica symptoms. They come and go. I just want to maintain wellness and prevent it from becoming chronic. What is your cancellation policy?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Running marathon in two months. I have a tight piriformis causing leg pain. No weakness in the foot. Just need it sorted out fast. Do you offer evening appointments?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "mom of two. I have back pain when I pick up the kids. It goes down my leg but I can still walk. No loss of bladder control. Just need some help with daily life. Is it expensive?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Been dealing with this for years. It\u2019s not terrible but it\u2019s always there. I want to try chiropractic to see if it helps. Do you work with my specific insurance plan, Aetna?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "I sit all day. My lower back aches and shoots into my thigh. It\u2019s not urgent but it\u2019s distracting at work. Do you have a waiting room that isn\u2019t too crowded?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "New patient. I have intermittent leg pain on the right side. No numbness or tingling, just discomfort. I want to prevent it from getting worse. What are your weekend hours?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Hi, I have a history of disc issues. Currently having a flare up. Pain is manageable but I want to get ahead of it. Do you require referrals from my primary care doctor?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Worker in the service industry. Standing all day leads to lower back pain radiating to the calf. It\u2019s not severe but it affects my shift. Do you have a membership plan?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "I\u2019m an athlete. I have tightness in my lower back that limits my range of motion. No red flags like fever or weakness. Just need some adjustments. Is there a discount for first visit?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Hello. I have some discomfort in my lower back that sometimes travels down my leg. It\u2019s very mild. I\u2019m just curious if chiropractic would help with general wellness. What is the cost per session?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "Long-standing issue with my back. It\u2019s been bothering me for five years. It\u2019s not an emergency but I want to improve my posture and reduce the pain. Do you accept Medicare?",
+  "tier": "routine",
+  "complaint": "sciatica"
+ },
+ {
+  "message": "hey can you fix my knee? i play soccer every weekend and it clicks when i run. not in much pain just sore. do you take blue cross blue shield?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "I have been dealing with a dull ache in my lower back for about six months. It\u2019s manageable but gets worse after long days at my desk. Do you offer any packages for ongoing maintenance care?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "my son twisted his ankle playing basketball last night. it\u2019s swollen but he can walk. no fever or weird tingling. when is the next opening? also do you have parking behind the building?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "Hi, I'm a new retiree and want to start seeing a chiro to keep my spine healthy. I don't have any acute injuries, just want to improve posture and flexibility. What are your office hours on weekends?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "Shoulder hurts after lifting heavy boxes at work. Been going on for two weeks. Not paralyzed or anything crazy. Just tight. How much does the first visit cost if I don't use insurance?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "i hurt my back jumping into a pool. its been 3 days. not bad but stiff. no numbness in legs. can i come in tomorrow? what times are you open in the evening?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "Looking for a place to help with chronic neck tension. I spend 10 hours a day on a computer. No sharp pains, just constant discomfort. Do you accept out-of-network claims?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "Twisted my ankle hiking last weekend. Swelling went down but still limps a bit. No broken bones. Just want it sorted out. Do you have a parking lot or do I need street parking?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "I want to maintain my alignment. I had an accident years ago and just want to keep things moving well. No current pain. Is there a monthly fee for non-medical adjustments?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "back is aching from sitting in a car for 6 hours. mild pain. no fever. no weakness in legs. just need some adjustment. what are your weekend hours? do you take walk-ins?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "my daughter pulled a muscle in gym class. not a big deal she says but she wants to see someone. she has no swelling or bruising. how much is a co-pay? do you take medicare?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "I feel stiff after running. No injury exactly, just tightness in hamstrings and lower back. Want to prevent future issues. Do you offer massage or just adjustments? What is the price for a new patient?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "wrist hurt from typing too much. its been a month. not broken. no numbness. just sore. can i come in after 5pm? do you have a waiting area with chairs?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "I am a construction worker and my back is starting to act up. It\u2019s a nagging pain, not sudden. I have no fever or loss of bladder control. Just want to check it out. Do you have a free initial consultation?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "neck hurts from sleeping wrong. been going on for a week. mild stiffness. no dizziness. just want to move better. what are your office hours on tuesdays? do you accept cash only?",
+  "tier": "routine",
+  "complaint": "sports_injury"
+ },
+ {
+  "message": "Hi, I got rear ended last week and my neck still feels tight. I have Aetna insurance. Do you take walk-ins on Saturdays?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "my back is acting up after the crash, no numbness or fever just soreness. how much for a consult? is there parking behind the building?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Hi! I am a high school athlete and tweaked my shoulder in practice. Not really hurting but I want to make sure it is right. Do you do sports maintenance?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "after the fender bender my lower back has been stiff for two months. I am a retiree so I wonder if you have sliding scale pricing? also what are your evening hours?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "I need help with posture after a work injury. No pain just feeling off. Do you accept my HMO plan? Is there a waitlist?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "hi mom is 68 and fell out of the car seat during a hard stop. she says no pain but is moving stiffly. is this something you see? any insurance requirements?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "recently got into a minor accident and my sciatica is back. no fever or weakness. just need some adjustments. what is the cost for the first visit?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "I am a truck driver and my back hurt after a bump on the road. I need to get back to work. Do you see patients quickly? Any cash discount options?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "my knee has been clicking since the collision last year. not painful but annoying. i have medicaid. do you take it? thanks",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Hi, I am an office worker and my neck hurts from the whiplash after the crash. I don't have any red symptoms like dizziness. Just need a checkup. What are your weekend hours?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "I need a second opinion on my shoulder after the auto accident. I am an athlete so I want to avoid long recovery. Do you work with orthopedic docs? Price range?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "the car accident was months ago but my hip still aches. I am a new parent and can't sleep. no swelling or fever. Do you have slots for late afternoon?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "Hi, I got hit by a cyclist and my back is tender. I am not in pain but want to prevent future issues. Do you offer maintenance packages? What is the price?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "I am a nurse and got into a fender bender. My lower back is stiff. I need to know if you take my Blue Cross plan. Also, do you have parking validation?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "my dog got hit in the car and now I have a weird back spasm. no injury to the dog thankfully. just my back. is this covered under auto insurance? how much do you charge?",
+  "tier": "routine",
+  "complaint": "auto_injury"
+ },
+ {
+  "message": "hi i sit at a desk all day my neck feels stiff but not in pain. do you take aetna? how much for a first visit? thx",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "Looking for posture correction for my 12yo. No injuries, just wants to stand straighter. Do you have weekend hours? Is there parking near the entrance?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "been hunching for 10 yrs. nothing hurts but want to fix it before it gets bad. what insurance do you accept? also is there a waiting list right now?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "hello my back is fine mostly just want maintenance. i am a runner so keep my body in check. do you do cash pay only? what are your afternoon hours?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "my posture is wrecked from carrying my toddler. no pain just tired shoulders. does medicare cover this? how long is a typical session? ty",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "i have mild stiffness in the upper back. no numbness or fever just want to feel better. is the clinic open on fridays? how much does a checkup cost?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "worker here. standing all day at the plant. knees and back ache a little. want to prevent injury. do you take state workers comp? where do i park?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "retired teacher. my spine is curving a bit. no pain just want to stay active. do you accept senior discounts? are you open in the morning?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "i don't hurt but i feel off. slouching habit. want a checkup. do you accept hsa cards? is the building accessible for wheelchairs? thanks",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "athlete here. no acute injury but want to optimize alignment for season. does it cost extra for sports assessment? what are your evening hours?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "my shoulders are forward. no pain just cosmetic worry. do you have a payment plan? is the first consult free? also do you do telehealth options?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "long time patient of other chiro but want a new place. mild lower back tightness. no red flags like tingling. do you take cigna? how long do visits take?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "just want a posture check. i sit a lot. no pain at all. is there a membership program? how do i pay the bill online? are you closed on holidays?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "mild discomfort in neck after sleeping wrong. nothing serious. just want to keep it from getting worse. do you accept out of network claims? where is the entrance?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ },
+ {
+  "message": "parent of 3. my back is wrecked from lifting. no fever or numbness just tired. do you have a kids play area? what are your saturday hours?",
+  "tier": "routine",
+  "complaint": "posture_wellness"
+ }
+]

@@ -15,8 +15,10 @@ import datetime as dt
 import mlflow
 import pandas as pd
 
-from chiro import models
+from chiro import models, urgency
 from chiro.config import Settings
+from chiro.llm import get_llm_client
+from chiro.priority import ACTIVE_LEAD_DAYS
 from chiro.tracing import setup_experiment
 
 settings = Settings.from_widgets(dbutils)
@@ -58,7 +60,12 @@ def log_model(model, X_example, name, metrics):
 with mlflow.start_run(run_name=f"refresh-{today}"):
     lead_model, lead_metrics = models.train_lead_model(leads)
     log_model(lead_model, models.lead_features(leads)[lead_model.feature_columns_], "lead_scoring", lead_metrics)
-    write("lead_scores", models.score_leads(lead_model, leads))
+    # LLM second opinion on urgency for leads still in the active window (older ones are nurture, not triage).
+    active = leads[(leads["status"] == "new")
+                   & (pd.to_datetime(leads["created_at"]) >= pd.Timestamp.now() - pd.Timedelta(days=ACTIVE_LEAD_DAYS))]
+    llm = urgency.llm_triage_many(get_llm_client(), settings.llm_endpoint, dict(zip(active["lead_id"], active["message"])))
+    mlflow.log_metric("llm_triage_failures", sum(v is None for v in llm.values()))
+    write("lead_scores", models.score_leads(lead_model, leads, llm))
 
     churn_model, churn_metrics = models.train_churn_model(patients, visits, today)
     churn_X = models.churn_features(patients, visits, today)[models.CHURN_FEATURES].astype(float)

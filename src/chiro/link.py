@@ -99,7 +99,9 @@ def link_statements(s: Settings) -> list[tuple[str, str]]:
       (pmod(hash(concat(lead_id, 'c')), 100) < 93 AND pmod(hash(concat(lead_id, 's')), 100) < 80) AS consent_sms,
       (pmod(hash(concat(lead_id, 'c')), 100) < 93 AND pmod(hash(concat(lead_id, 'e')), 100) < 90) AS consent_email,
       first_response_hours,
-      CASE status WHEN 'Converted' THEN 'booked' WHEN 'Lost' THEN 'lost' ELSE 'new' END AS status,
+      -- Contacted / Qualified leads are already being worked: not awaiting a first response.
+      CASE status WHEN 'Converted' THEN 'booked' WHEN 'Lost' THEN 'lost' WHEN 'New' THEN 'new'
+                  ELSE 'contacted' END AS status,
       CASE status WHEN 'Converted' THEN true WHEN 'Lost' THEN false ELSE CAST(NULL AS BOOLEAN) END AS converted,
       num_touchpoints,
       assigned_location_id
@@ -211,5 +213,9 @@ def link_statements(s: Settings) -> list[tuple[str, str]]:
          (SELECT provider_id FROM {S('providers')} WHERE active_flag),
          (SELECT explode(sequence(1, 16)) AS slot)"""
 
+    # Operational appointment history (location, outcome, booking lead time) for capacity analysis.
+    appointments = f"CREATE OR REPLACE TABLE {T('appointments')} AS SELECT * FROM {S('appointments')}"
+
     return [("leads_raw", leads), ("patients_raw", patients), ("visits_raw", visits),
-            ("services", services), ("price_history", price_history), ("appointment_slots", slots)]
+            ("services", services), ("price_history", price_history), ("appointment_slots", slots),
+            ("appointments", appointments)]
