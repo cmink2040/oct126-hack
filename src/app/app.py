@@ -113,7 +113,7 @@ def review_queue(kind: str, title_fn, body_fn, order=None):
         st.info("Nothing waiting for review.")
         return
     st.write(f"**{len(items)}** item(s) waiting.")
-    key = "rec_id" if kind == "price" else "action_id"
+    key = tools.id_column(kind)
     for item in items:
         with st.expander(title_fn(item), expanded=item.get("priority") == "high"):
             body_fn(item)

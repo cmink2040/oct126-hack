@@ -609,6 +609,9 @@ class ClinicTools:
         "care": ("care_reports", "report_id"),
     }
 
+    def id_column(self, kind: str) -> str:
+        return self._REVIEW[kind][1]
+
     def pending(self, kind: str) -> list[dict]:
         table, _ = self._REVIEW[kind]
         return self.db.query(f"SELECT * FROM {self.t(table)} WHERE status = 'pending_review' ORDER BY created_at DESC")
