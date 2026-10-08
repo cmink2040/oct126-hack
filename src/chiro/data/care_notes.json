@@ -1,0 +1,1535 @@
+[
+ {
+  "category": "home_exercise",
+  "complaint": "low_back_pain",
+  "advice": "Perform cat-cow stretches for two minutes every morning before starting daily activities to maintain spinal mobility.",
+  "if_ignored": "Stiffness often returns by midday, which may require an extra visit to restore range of motion.",
+  "importance": "medium"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "low_back_pain",
+  "advice": "Do glute bridges for three sets of ten reps every evening to support core stability and reduce strain.",
+  "if_ignored": "Progress may slow without consistent strengthening, potentially leading to recurring low-back discomfort during weekly check-ins.",
+  "importance": "high"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "low_back_pain",
+  "advice": "Gently stretch the hamstrings for thirty seconds on each side after sitting for more than one hour.",
+  "if_ignored": "Tension tends to build up, which might cause flare-ups during long workdays or daily routines.",
+  "importance": "low"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "low_back_pain",
+  "advice": "Engage in a five-minute walk daily to keep blood flowing and prevent stiffness from prolonged sitting.",
+  "if_ignored": "Symptoms may linger longer without regular movement, often necessitating a re-check sooner than scheduled.",
+  "importance": "medium"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "neck_pain",
+  "advice": "Perform gentle neck stretches for two minutes, three times daily, specifically in the morning and before bed.",
+  "if_ignored": "Stiffness often returns quickly without daily movement, potentially slowing overall progress and requiring more frequent check-ins.",
+  "importance": "high"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "neck_pain",
+  "advice": "Do chin tucks every hour while working at a desk, holding each for ten seconds to maintain alignment.",
+  "if_ignored": "Postural drift may increase tension between visits, leading to recurring flare-ups that disrupt your recovery schedule.",
+  "importance": "medium"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "neck_pain",
+  "advice": "Strengthen shoulder muscles with light resistance bands for ten minutes, five days a week, to support neck stability.",
+  "if_ignored": "Weakened support muscles tend to cause recurring strain, often necessitating extra visits to manage persistent discomfort.",
+  "importance": "high"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "neck_pain",
+  "advice": "Roll out a foam roller under the upper back for five minutes after long sitting sessions to release tension.",
+  "if_ignored": "Tightness in the upper back may pull on the neck, potentially slowing progress and causing minor flare-ups.",
+  "importance": "low"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "headaches",
+  "advice": "Perform gentle neck stretches for 10 seconds, repeating three times daily upon waking and before bed.",
+  "if_ignored": "Headaches often return quickly if daily stretching is skipped, potentially requiring extra adjustment visits to maintain relief.",
+  "importance": "high"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "headaches",
+  "advice": "Use a pillow that supports natural neck curvature during sleep to keep your spine aligned overnight.",
+  "if_ignored": "Poor sleep posture may lead to morning stiffness and recurring tension, slowing down your overall progress between appointments.",
+  "importance": "medium"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "headaches",
+  "advice": "Take a short walk for five minutes every hour while working to prevent prolonged static postures.",
+  "if_ignored": "Sitting too long tends to stiffen the upper back and neck, which may increase headache frequency and intensity later in the day.",
+  "importance": "medium"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "headaches",
+  "advice": "Stre",
+  "if_ignored": "Neglecting core strengthening may reduce spinal stability, often leading to compensatory strain and more frequent flare-ups of tension.",
+  "importance": "low"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "sciatica",
+  "advice": "Perform 90/90 hip stretches daily for two minutes each side before bed to maintain mobility.",
+  "if_ignored": "Hip tightness tends to return quickly, which may aggravate leg pain and slow recovery progress.",
+  "importance": "high"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "sciatica",
+  "advice": "Do glute bridges three times a week for ten reps to strengthen the core and back muscles.",
+  "if_ignored": "Weaker support muscles often lead to recurring flare-ups, potentially requiring additional follow-up appointments.",
+  "importance": "high"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "sciatica",
+  "advice": "Walk for fifteen minutes daily to keep blood flowing and prevent stiffness from prolonged sitting.",
+  "if_ignored": "Sedentary periods may increase discomfort, making it harder to manage symptoms between scheduled visits.",
+  "importance": "medium"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "sciatica",
+  "advice": "Practice cat-cow stretches in the morning for one minute to gently mobilize the spine before activity.",
+  "if_ignored": "Stiffness often builds up overnight, which can make initial movement uncomfortable and slow progress.",
+  "importance": "medium"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "sports_injury",
+  "advice": "Perform gentle hamstring stretches twice daily, holding each for 30 seconds, to maintain flexibility.",
+  "if_ignored": "Stiffness often returns, potentially slowing your recovery and requiring additional adjustment sessions.",
+  "importance": "high"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "sports_injury",
+  "advice": "Do light ankle circles and calf raises every morning to support joint stability during your return to sport.",
+  "if_ignored": "Weakness may develop, increasing the risk of minor setbacks or needing a re-check soon.",
+  "importance": "medium"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "sports_injury",
+  "advice": "Use a warm compress on the affected area for 15 minutes before stretching to ease muscle tension.",
+  "if_ignored": "Tightness tends to persist, which can make daily movements feel uncomfortable and limit your progress.",
+  "importance": "low"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "auto_injury",
+  "advice": "Perform gentle neck stretches daily, holding each for 20 seconds. Focus on slow, controlled movements to maintain flexibility.",
+  "if_ignored": "Neck stiffness often returns quickly. You may notice reduced range of motion, potentially requiring additional adjustment sessions.",
+  "importance": "high"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "auto_injury",
+  "advice": "Do core strengthening exercises three times a week. Start with two sets of ten reps to support spinal stability during daily activities.",
+  "if_ignored": "Weak core support may lead to recurring lower back discomfort. Progress could slow down, extending the overall recovery timeline.",
+  "importance": "medium"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "auto_injury",
+  "advice": "Apply ice packs to sore areas for fifteen minutes, twice daily. Use this especially after physical activity or long periods of sitting.",
+  "if_ignored": "Inflammation may persist longer than expected. This can make muscles feel tighter, interfering with your ability to perform stretches.",
+  "importance": "low"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "auto_injury",
+  "advice": "Take five-minute walking breaks every hour while at work. Keep your posture upright and move gently to prevent joint stiffness.",
+  "if_ignored": "Prolonged sitting often aggravates auto-injury symptoms. You may experience increased pain, necessitating a re-check before the next scheduled visit.",
+  "importance": "medium"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "posture_wellness",
+  "advice": "Perform chest-opening stretches at your desk every hour for one minute to maintain thoracic mobility.",
+  "if_ignored": "Neck tension often returns quickly, potentially requiring additional corrective adjustments to restore alignment.",
+  "importance": "high"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "posture_wellness",
+  "advice": "Do three sets of ten glute bridges daily to support pelvic stability and reduce lower back strain.",
+  "if_ignored": "Lower back discomfort may resurface, slowing your progress and possibly necessitating a sooner follow-up visit.",
+  "importance": "medium"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "posture_wellness",
+  "advice": "Stretch hip flexors for thirty seconds each side in the morning to counteract prolonged sitting.",
+  "if_ignored": "Stiffness often builds up throughout the day, limiting your range of motion and comfort.",
+  "importance": "low"
+ },
+ {
+  "category": "home_exercise",
+  "complaint": "posture_wellness",
+  "advice": "Practice wall angels slowly twice a day to reinforce proper scapular positioning and posture.",
+  "if_ignored": "Shoulder rounding may reappear, reducing the effectiveness of previous adjustments and increasing daily fatigue.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "low_back_pain",
+  "advice": "Set a timer to stand and stretch for two minutes every 30 minutes while working at your desk.",
+  "if_ignored": "Static postures may cause stiffness to return, often slowing progress and requiring more frequent adjustments.",
+  "importance": "high"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "low_back_pain",
+  "advice": "Hold your phone at eye level instead of looking down for more than two minutes at a time.",
+  "if_ignored": "Neck strain from looking down tends to transfer to the low back, potentially causing flare-ups during the week.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "low_back_pain",
+  "advice": "Place a small folded towel under your lower back when sitting in your car or office chair.",
+  "if_ignored": "Losing natural curve support may lead to increased tension, often making the next adjustment less effective.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "low_back_pain",
+  "advice": "Switch to standing for ten minutes every hour during your workday to vary your spinal load.",
+  "if_ignored": "Continuous sitting tends to weaken core support, which may result in slower recovery and recurring discomfort.",
+  "importance": "low"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "neck_pain",
+  "advice": "Set a timer to stand and stretch your neck every 30 minutes while working at your desk.",
+  "if_ignored": "Neck tension tends to build up, often requiring more frequent adjustments to maintain progress.",
+  "importance": "high"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "neck_pain",
+  "advice": "Hold your phone at eye level to avoid hunching forward during daily screen use.",
+  "if_ignored": "Forward head posture may persist, potentially slowing recovery from current neck discomfort symptoms.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "neck_pain",
+  "advice": "Adjust your monitor height so the top edge aligns with your eyes before starting work.",
+  "if_ignored": "Continuous downward gaze often leads to recurring stiffness, which may need extra re-checks.",
+  "importance": "high"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "neck_pain",
+  "advice": "Take brief walking breaks every two hours to reset your spinal alignment and reduce static load.",
+  "if_ignored": "Prolonged static sitting tends to aggravate existing discomfort, potentially leading to temporary flare-ups.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "headaches",
+  "advice": "Set your monitor so the top edge aligns with eye level. Adjust this daily before starting work.",
+  "if_ignored": "Neck tension may return, often leading to recurring headaches and slowing your progress toward comfort.",
+  "importance": "high"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "headaches",
+  "advice": "Hold your phone at eye level using your elbows for support. Avoid letting your neck drop forward.",
+  "if_ignored": "Strain in the upper back tends to build up, which can trigger new flare-ups of head pain.",
+  "importance": "high"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "headaches",
+  "advice": "Stand up and stretch for two minutes every thirty minutes while sitting at your desk.",
+  "if_ignored": "Stiffness often accumulates in the shoulders, potentially requiring additional visits to maintain relief.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "headaches",
+  "advice": "Sit with your back against the chair and feet flat. Check this position hourly during work.",
+  "if_ignored": "Posture drift may cause headaches to reappear, often necessitating a re-check to adjust your care plan.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "sciatica",
+  "advice": "Stand up and walk for two minutes every 30 minutes while working at your desk to reset your posture.",
+  "if_ignored": "Stiffness may return quickly, potentially slowing down your progress and requiring additional re-checks.",
+  "importance": "high"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "sciatica",
+  "advice": "Keep your phone at eye level when reading to prevent repeated forward head posture during daily use.",
+  "if_ignored": "Neck and upper back tension often builds up, which can aggravate your lower back symptoms over time.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "sciatica",
+  "advice": "Use a small pillow behind your lower back when sitting in your car to support your spine.",
+  "if_ignored": "You may experience increased discomfort after long drives, leading to flare-ups that interrupt your recovery plan.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "sciatica",
+  "advice": "Shift your weight from one foot to the other every few minutes when standing at work.",
+  "if_ignored": "Static standing tends to increase pressure on the lower back, which may cause pain to return between visits.",
+  "importance": "low"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "sports_injury",
+  "advice": "Stand up and stretch your neck every 30 minutes while working at your desk.",
+  "if_ignored": "Neck stiffness may return, potentially slowing down your recovery progress.",
+  "importance": "high"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "sports_injury",
+  "advice": "Keep your phone at eye level instead of looking down for more than five minutes.",
+  "if_ignored": "Upper back tension often increases, which might require additional adjustment sessions.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "sports_injury",
+  "advice": "Adjust your chair height so your feet are flat and knees are at ninety degrees.",
+  "if_ignored": "Posture habits may revert, leading to recurring discomfort during long sitting periods.",
+  "importance": "high"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "sports_injury",
+  "advice": "Take a two-minute walking break every hour to reset your standing alignment.",
+  "if_ignored": "Muscle imbalances tend to persist, which can delay the full resolution of symptoms.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "auto_injury",
+  "advice": "Sit with feet flat on the floor and back supported every hour during work.",
+  "if_ignored": "Neck stiffness may return, potentially requiring extra visits to maintain alignment progress.",
+  "importance": "high"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "auto_injury",
+  "advice": "Hold your phone at eye level instead of looking down for breaks every 30 minutes.",
+  "if_ignored": "Upper back tension often builds up, which can slow down your overall recovery speed.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "auto_injury",
+  "advice": "Stand up and stretch gently for two minutes every 45 minutes while seated at your desk.",
+  "if_ignored": "Joints may stiffen up, leading to flare-ups that require additional re-check appointments.",
+  "importance": "high"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "auto_injury",
+  "advice": "Use a lumbar roll or cushion to support your lower back when sitting in your car.",
+  "if_ignored": "Posture issues tend to resurface during long drives, possibly causing a recurrence of initial discomfort.",
+  "importance": "low"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "posture_wellness",
+  "advice": "Set a timer for 30 minutes to stand, stretch your shoulders, and reset your posture during work blocks.",
+  "if_ignored": "Neck stiffness may return quickly, often requiring more frequent visits to maintain comfort and progress.",
+  "importance": "high"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "posture_wellness",
+  "advice": "Raise your laptop screen to eye level using a stand or books when working at your desk.",
+  "if_ignored": "Forward head posture tends to recur, which may slow down overall improvements in upper back alignment.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "posture_wellness",
+  "advice": "Hold your phone at chest height rather than looking down at it while reading or texting.",
+  "if_ignored": "Cervical strain often flares up without this habit, potentially leading to temporary headaches or tension.",
+  "importance": "medium"
+ },
+ {
+  "category": "posture_ergonomics",
+  "complaint": "posture_wellness",
+  "advice": "Take a two-minute walk every hour to break up long periods of sitting at your workstation.",
+  "if_ignored": "Muscle tightness may persist longer between appointments, often necessitating a re-check for continued progress.",
+  "importance": "low"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "low_back_pain",
+  "advice": "Take a five-minute walking break every hour while working at your desk to keep your spine mobile.",
+  "if_ignored": "Stiffness tends to build up, often leading to increased soreness and slower recovery progress.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "low_back_pain",
+  "advice": "Avoid heavy lifting until cleared, but continue gentle daily walks for twenty minutes to maintain circulation.",
+  "if_ignored": "Deconditioning may occur, often making the eventual return to normal activity levels more difficult.",
+  "importance": "medium"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "low_back_pain",
+  "advice": "Stop playing contact sports until pain-free, but focus on low-impact stretching exercises three times weekly.",
+  "if_ignored": "Premature return to impact activities tends to trigger flare-ups, often requiring additional adjustment visits.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "low_back_pain",
+  "advice": "Limit prolonged sitting to no more than forty minutes at a stretch, then stand up and move around.",
+  "if_ignored": "Muscle fatigue may develop, often resulting in evening stiffness and a need for more frequent care.",
+  "importance": "medium"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "neck_pain",
+  "advice": "Pause heavy overhead lifting for two weeks. Resume only when pain-free, starting with light resistance to test tolerance.",
+  "if_ignored": "Repetitive strain often causes flare-ups, slowing recovery and potentially requiring additional adjustment sessions to manage recurring tension.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "neck_pain",
+  "advice": "Take a two-minute walk every hour while working. Sit upright and gently roll shoulders to release tension during breaks.",
+  "if_ignored": "Prolonged static postures tend to stiffen neck muscles, making daily movements uncomfortable and reducing the effectiveness of future adjustments.",
+  "importance": "medium"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "neck_pain",
+  "advice": "Limit driving to under thirty minutes at a time. Use a supportive pillow and take breaks to stretch the neck gently.",
+  "if_ignored": "Vibration and sustained head positioning may aggravate sensitive tissues, leading to fatigue and a slower return to full range of motion.",
+  "importance": "medium"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "neck_pain",
+  "advice": "Ease back into running slowly. Start with walking intervals for one week, gradually increasing time only if no new symptoms appear.",
+  "if_ignored": "Returning too quickly often triggers muscle guarding, which can stall progress and extend the timeline for returning to normal sport activities.",
+  "importance": "low"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "headaches",
+  "advice": "Take a 5-minute walk every hour to reset posture and reduce sustained tension in the neck and shoulders.",
+  "if_ignored": "Headaches may return more frequently, potentially requiring additional visits to manage recurring flare-ups effectively.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "headaches",
+  "advice": "Limit continuous screen time to 45 minutes, then look at distant objects for 10 minutes to relax eye strain.",
+  "if_ignored": "Tension headaches often resurface quickly without regular breaks, slowing overall progress and comfort recovery.",
+  "importance": "medium"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "headaches",
+  "advice": "Resume desk work gradually by starting with 2-hour blocks before extending to full shifts next week.",
+  "if_ignored": "Skipping the gradual return may trigger a recurrence of pain, necessitating a re-check appointment soon.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "headaches",
+  "advice": "Avoid heavy lifting or intense gym sessions for three days, then reintroduce weights slowly at low intensity.",
+  "if_ignored": "Ignoring this step tends to cause muscle flare-ups, which often delays the timeline for full activity resumption.",
+  "importance": "medium"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "sciatica",
+  "advice": "Sit for no more than 30 minutes at a time, then stand and walk for two minutes during work hours.",
+  "if_ignored": "Prolonged sitting often increases pressure on the lower back, which may lead to recurring pain and slower recovery.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "sciatica",
+  "advice": "Resume light jogging only after two pain-free days, starting with ten minutes every other morning to gauge tolerance.",
+  "if_ignored": "Returning to running too quickly can trigger flare-ups, often requiring additional adjustments and delaying full return to sport.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "sciatica",
+  "advice": "Avoid heavy lifting above waist height for the next week; use your legs to lift items from the floor.",
+  "if_ignored": "Ignoring lifting restrictions may strain the lower back muscles, potentially extending the recovery period and causing new discomfort.",
+  "importance": "medium"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "sciatica",
+  "advice": "Take a short walk around your home or office every hour to keep the spine mobile throughout the day.",
+  "if_ignored": "Staying static for long periods tends to stiffen the area, which may make morning stiffness worse and reduce overall progress.",
+  "importance": "medium"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "sports_injury",
+  "advice": "Stop heavy lifting for two weeks. Resume light desk work only if pain stays below three out of ten.",
+  "if_ignored": "Returning too soon often irritates the injury again, slowing progress and requiring extra adjustment visits.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "sports_injury",
+  "advice": "Walk ten minutes daily instead of running. This keeps blood flow up without stressing the healing tissue.",
+  "if_ignored": "Skipping low-impact movement may cause stiffness and soreness, making it harder to return to sport later.",
+  "importance": "medium"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "sports_injury",
+  "advice": "Avoid repetitive overhead motions for one week. Switch to side-arming drills when you feel ready.",
+  "if_ignored": "Ignoring this limit tends to trigger flare-ups during practice, often leading to a longer recovery period.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "sports_injury",
+  "advice": "Stretch the affected area gently for five minutes before and after work shifts. Do not hold beyond comfort.",
+  "if_ignored": "Neglecting these stretches may result in persistent tightness and aches, potentially extending the time off sport.",
+  "importance": "low"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "auto_injury",
+  "advice": "Take two five-minute breaks from sitting every hour to stand and gently stretch your neck and shoulders.",
+  "if_ignored": "Stiffness often returns by evening, potentially slowing recovery and requiring more frequent adjustments.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "auto_injury",
+  "advice": "Limit heavy lifting at work to under ten pounds for the next two weeks while you heal.",
+  "if_ignored": "Aggressive lifting may trigger a flare-up, delaying your full return to normal duties and increasing soreness.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "auto_injury",
+  "advice": "Walk for ten minutes daily, building up to twenty minutes gradually over the next week.",
+  "if_ignored": "Prolonged inactivity can make muscles stiffer, making the transition back to full activity feel harder later.",
+  "importance": "medium"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "auto_injury",
+  "advice": "Ease back into sport by starting with light jogging or swimming for twenty minutes, three times a week.",
+  "if_ignored": "Returning to intense sport too quickly often leads to re-injury symptoms, necessitating a re-check visit.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "posture_wellness",
+  "advice": "Stretch hip flexors for 30 seconds twice daily, specifically in the morning and after sitting for four hours.",
+  "if_ignored": "Tightness often returns quickly, potentially causing lower back discomfort and slowing your overall progress toward better posture.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "posture_wellness",
+  "advice": "Take a two-minute walk every 45 minutes while working to reset spinal alignment and prevent static muscle loading.",
+  "if_ignored": "Stiffness may accumulate, leading to increased soreness by evening and possibly requiring an earlier follow-up adjustment.",
+  "importance": "medium"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "posture_wellness",
+  "advice": "Gradually return to running by walking first for two weeks, adding only 10% mileage per week to allow tissue adaptation.",
+  "if_ignored": "Ignoring this gradual ramp-up often triggers flare-ups of pain, which may force a complete halt in activity for several days.",
+  "importance": "high"
+ },
+ {
+  "category": "activity_modification",
+  "complaint": "posture_wellness",
+  "advice": "Set a timer to check shoulder position every hour during desk work, ensuring ears align over shoulders.",
+  "if_ignored": "Neglecting this habit tends to reinforce old patterns, potentially causing recurring neck tension and diminishing the benefits of adjustments.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "low_back_pain",
+  "advice": "Keep bending at the knees and hips, keeping your back straight when lifting objects off the floor.",
+  "if_ignored": "Skipping this form often leads to muscle strain, causing pain to return quickly after heavy lifting tasks.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "low_back_pain",
+  "advice": "Hold items close to your body when carrying them, avoiding twisting your spine while moving.",
+  "if_ignored": "Twisting while carrying heavy loads may aggravate joint stress, often resulting in a need for extra re-check visits.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "low_back_pain",
+  "advice": "Pause and rest your lower back with a gentle stretch every 30 minutes during prolonged sitting or standing.",
+  "if_ignored": "Neglecting these breaks tends to increase stiffness, which can slow down your overall progress in reducing discomfort.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "low_back_pain",
+  "advice": "Use a step stool or reacher to grab high items instead of stretching upward or twisting.",
+  "if_ignored": "Reaching high without support often causes flare-ups, potentially requiring additional adjustments to manage recurring symptoms.",
+  "importance": "low"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "neck_pain",
+  "advice": "Lift with bent knees and keep the load close to your torso. Practice this technique daily for one week.",
+  "if_ignored": "Neck pain may return quickly, often requiring additional visits to reset alignment and slow down overall progress.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "neck_pain",
+  "advice": "Avoid twisting while lifting. Turn your whole body with your feet instead. Do this every time you lift objects.",
+  "if_ignored": "Twisting can strain the neck again, tending to cause flare-ups that interrupt your current healing timeline.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "neck_pain",
+  "advice": "Keep your head neutral when bending to pick up items. Do not tilt your chin up or down. Practice twice daily.",
+  "if_ignored": "Poor head position may increase tension in the upper neck, often leading to recurring stiffness and discomfort.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "neck_pain",
+  "advice": "Use both hands to carry heavy bags, keeping them at hip level. Avoid single-shoulder carrying for long periods.",
+  "if_ignored": "Uneven weight distribution tends to pull the neck out of balance, which may slow recovery and cause asymmetry.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "headaches",
+  "advice": "Squat to lift objects below the waist, keeping the back straight and item close to the body.",
+  "if_ignored": "Headaches may return sooner, often requiring additional visits to address recurring neck strain.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "headaches",
+  "advice": "Pause to rest every ten minutes when carrying heavy items to prevent sustained upper back tension.",
+  "if_ignored": "Progress often slows down, potentially leading to frequent flare-ups that interrupt daily activities.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "headaches",
+  "advice": "Keep elbows tucked close to the ribs when holding groceries or bags while walking.",
+  "if_ignored": "Tension headaches tend to recur more frequently, making it harder to maintain steady relief.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "headaches",
+  "advice": "Engage core muscles before bending forward to pick up items from the floor or low shelves.",
+  "if_ignored": "Symptoms may persist longer, often necessitating a re-check to adjust the treatment plan.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "sciatica",
+  "advice": "Bend at knees, keep back straight, and hold loads close to your body when picking up items.",
+  "if_ignored": "Ignoring proper lifting form often leads to recurring sciatic pain and slower recovery progress.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "sciatica",
+  "advice": "Avoid twisting your spine while lifting; turn your feet and hips instead to pivot safely.",
+  "if_ignored": "Twisting under load may aggravate nerve irritation, causing flare-ups that require additional adjustment visits.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "sciatica",
+  "advice": "Split heavy loads into smaller pieces and carry them in two hands rather than one side.",
+  "if_ignored": "Carrying uneven weight can create muscle imbalances, often resulting in persistent one-sided discomfort later.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "sciatica",
+  "advice": "Pause and reset your posture before lifting anything heavier than a bag of groceries.",
+  "if_ignored": "Skipping the reset step may increase strain on the lower back, potentially slowing down your overall healing.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "sports_injury",
+  "advice": "Keep hugging heavy loads close to your torso during all daily lifting tasks to maintain core stability.",
+  "if_ignored": "Back strain often returns quickly, potentially requiring additional adjustment visits to correct the recurring stress.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "sports_injury",
+  "advice": "Practice bending at the knees and hips, not the waist, every time you pick up items from the floor.",
+  "if_ignored": "Poor form may lead to muscle flare-ups, slowing down recovery and making future lifting feel significantly more painful.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "sports_injury",
+  "advice": "Engage your core muscles before lifting light objects, such as groceries or laundry, to support your spine.",
+  "if_ignored": "Skipping this habit tends to weaken spinal support over time, often resulting in stiffness after prolonged standing or sitting.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "sports_injury",
+  "advice": "Twist your entire body, rather than just your waist, when changing direction while carrying boxes or bags.",
+  "if_ignored": "Isolated twisting may irritate the area, often causing sharp twinges that require a re-check to ensure no new strain.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "auto_injury",
+  "advice": "Keep lifting with straight legs and bent knees. Check this habit every time you pick up items at home.",
+  "if_ignored": "Skipping this may cause back strain to return, often leading to stiffness and a need for extra adjustment sessions.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "auto_injury",
+  "advice": "Hold objects close to your body while carrying. Remind yourself to keep your core tight daily during chores.",
+  "if_ignored": "Carrying away from the body tends to stress the lower spine, potentially slowing healing and causing recurring pain.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "auto_injury",
+  "advice": "Hinge at the hips to bend, rather than rounding your back. Practice this motion slowly once a day.",
+  "if_ignored": "Rounding the back often aggravates discs, which may result in flare-ups and a longer recovery period than expected.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "auto_injury",
+  "advice": "Pause and shift your stance before lifting heavy items. Take a moment to align your shoulders over your feet.",
+  "if_ignored": "Rushing this step can lead to awkward posture, often causing muscle tightness that requires follow-up care to resolve.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "posture_wellness",
+  "advice": "Keep bending at the hips and knees, not the waist, when picking up items from the floor or low shelves.",
+  "if_ignored": "Lumbar strain symptoms tend to return quickly, potentially requiring additional adjustments to relieve recurring tension.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "posture_wellness",
+  "advice": "Remember to hug heavy boxes close to your body while carrying them, keeping your back straight.",
+  "if_ignored": "Postural fatigue often builds up faster, which may slow down your overall progress in maintaining better spinal alignment.",
+  "importance": "medium"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "posture_wellness",
+  "advice": "Before lifting, always twist your entire body using your legs rather than rotating just your spine.",
+  "if_ignored": "Disc irritation may flare up during routine tasks, often leading to the need for an earlier re-check appointment.",
+  "importance": "high"
+ },
+ {
+  "category": "lifting_technique",
+  "complaint": "posture_wellness",
+  "advice": "Practice splitting heavy loads into smaller, manageable parts and avoid twisting while carrying weight across your body.",
+  "if_ignored": "Muscle tightness tends to reappear in the shoulders and back, which may reduce the benefits of your current wellness plan.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "low_back_pain",
+  "advice": "Apply ice to the lower back for 15 minutes, three times daily, for the next 48 hours.",
+  "if_ignored": "Swelling may persist, potentially slowing progress and requiring a re-check sooner.",
+  "importance": "high"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "low_back_pain",
+  "advice": "Use a heating pad on the lower back for 20 minutes in the evening to relax tight muscles.",
+  "if_ignored": "Muscle tension often returns, which can limit range of motion and delay comfort.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "low_back_pain",
+  "advice": "Take a short, gentle walk every few hours today to prevent stiffness from prolonged sitting.",
+  "if_ignored": "Stiffness tends to build up, making the next adjustment less effective or comfortable.",
+  "importance": "high"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "low_back_pain",
+  "advice": "Sleep with a pillow between your knees tonight to keep your spine aligned comfortably.",
+  "if_ignored": "Pain may flare up upon waking, often requiring extra visits to regain alignment.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "neck_pain",
+  "advice": "Apply ice packs to the neck for 15 minutes, three times daily, using a cloth barrier to protect the skin.",
+  "if_ignored": "Inflammation may linger, causing stiffness to persist and potentially slowing your overall recovery progress.",
+  "importance": "high"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "neck_pain",
+  "advice": "Take gentle neck range-of-motion exercises every few hours throughout the day to keep the area mobile and loose.",
+  "if_ignored": "Stiffness often returns quickly, making movement uncomfortable and possibly requiring an additional adjustment visit soon.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "neck_pain",
+  "advice": "Use a heating pad on low heat for 20 minutes before bed to relax tight muscles and ease tension.",
+  "if_ignored": "Muscle tightness may remain, leading to recurring pain at night and disrupting your sleep quality this week.",
+  "importance": "low"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "neck_pain",
+  "advice": "Keep your screen at eye level and take short breaks to stretch your shoulders and neck every 30 minutes.",
+  "if_ignored": "Prolonged static postures tend to aggravate the area, often resulting in a flare-up of symptoms within a few days.",
+  "importance": "high"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "headaches",
+  "advice": "Apply ice packs to the back of your neck for 15 minutes, three times daily, starting tonight.",
+  "if_ignored": "Headache tension may linger longer, often requiring an extra follow-up visit to assess progress.",
+  "importance": "high"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "headaches",
+  "advice": "Use a warm compress on your shoulders for 20 minutes before bed each night for the next week.",
+  "if_ignored": "Muscle stiffness tends to return quickly, which may slow your overall recovery and comfort levels.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "headaches",
+  "advice": "Gently stretch your neck for five minutes every two hours while sitting at your desk today.",
+  "if_ignored": "Pain often flares up after long periods of stillness, making it harder to maintain daily activities.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "headaches",
+  "advice": "Sleep on your back with a supportive pillow under your neck for the next two nights.",
+  "if_ignored": "Morning headaches may recur, potentially extending the timeline needed to resolve your current discomfort.",
+  "importance": "low"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "sciatica",
+  "advice": "Apply ice packs for 15 minutes every 3 hours during the day to manage residual inflammation and discomfort.",
+  "if_ignored": "Inflammation may persist, causing stiffness that often requires an additional adjustment session to restore mobility.",
+  "importance": "high"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "sciatica",
+  "advice": "Use heat for 20 minutes before gentle walking to relax muscles and maintain flexibility after today's treatment.",
+  "if_ignored": "Muscles may remain tight, potentially slowing progress and leading to recurring tension in the lower back region.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "sciatica",
+  "advice": "Take short, frequent walks of five minutes throughout the day instead of sitting for long periods.",
+  "if_ignored": "Prolonged sitting can aggravate symptoms, often resulting in flare-ups that may delay the expected improvement timeline.",
+  "importance": "high"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "sciatica",
+  "advice": "Gently stretch the hamstrings in the evening for two minutes to prevent overnight stiffness from settling.",
+  "if_ignored": "Stiffness may develop overnight, often making the next morning difficult and potentially necessitating a re-check visit.",
+  "importance": "low"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "sports_injury",
+  "advice": "Apply ice to the sore area for 15 minutes every 3 hours today to manage inflammation.",
+  "if_ignored": "Swelling may increase overnight, potentially slowing recovery and requiring an earlier follow-up check.",
+  "importance": "high"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "sports_injury",
+  "advice": "Take five-minute walks every two hours tomorrow to keep joints moving without straining the injury.",
+  "if_ignored": "Stiffness often returns quickly, making the next session less effective and extending overall recovery time.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "sports_injury",
+  "advice": "Use a heating pad on the lower back for 20 minutes before bed to relax tight muscles.",
+  "if_ignored": "Muscle tension may persist, leading to discomfort during sleep and reduced range of motion upon waking.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "sports_injury",
+  "advice": "Gently stretch the affected limb for ten minutes each morning to maintain flexibility gained during treatment.",
+  "if_ignored": "Progress may plateau, often resulting in a need for additional visits to address lingering tightness.",
+  "importance": "low"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "auto_injury",
+  "advice": "Apply ice packs to the neck for 15 minutes every 3 hours today to reduce inflammation.",
+  "if_ignored": "Swelling may persist into tomorrow, potentially slowing down initial recovery progress.",
+  "importance": "high"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "auto_injury",
+  "advice": "Keep moving gently throughout the day; stand up and walk for two minutes every hour.",
+  "if_ignored": "Stiffness often returns quickly, making tomorrow\u2019s adjustment less effective.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "auto_injury",
+  "advice": "Use heat on the lower back for twenty minutes in the evening to relax tight muscles.",
+  "if_ignored": "Muscle tension may linger, causing mild soreness during sleep tonight.",
+  "importance": "low"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "auto_injury",
+  "advice": "Avoid heavy lifting or bending at the waist for the next two days.",
+  "if_ignored": "Symptoms may flare up, requiring an extra re-check appointment next week.",
+  "importance": "high"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "posture_wellness",
+  "advice": "Apply heat to your neck for 15 minutes, three times daily, to relax tight muscles.",
+  "if_ignored": "Stiffness may linger longer, potentially slowing recovery and requiring an extra follow-up visit.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "posture_wellness",
+  "advice": "Stand up and walk for five minutes every hour to maintain good spinal alignment throughout the day.",
+  "if_ignored": "Posture habits might revert quickly, causing tension to return and reducing the benefits of this session.",
+  "importance": "high"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "posture_wellness",
+  "advice": "Gentle chin tucks every two hours, holding for ten seconds, to retrain your head position over shoulders.",
+  "if_ignored": "Muscle imbalances often persist without consistent practice, which may lead to recurring headaches or neck discomfort.",
+  "importance": "medium"
+ },
+ {
+  "category": "aftercare",
+  "complaint": "posture_wellness",
+  "advice": "Sleep with a supportive pillow that keeps your neck neutral, avoiding excessive bending or twisting.",
+  "if_ignored": "Awakening with soreness is common without proper support, which can interfere with daily comfort and mobility.",
+  "importance": "low"
+ },
+ {
+  "category": "sleep",
+  "complaint": "low_back_pain",
+  "advice": "Place a pillow between your knees when sleeping on your side to maintain spinal alignment.",
+  "if_ignored": "Pain may return by morning, potentially slowing progress and requiring additional adjustments or re-checks.",
+  "importance": "high"
+ },
+ {
+  "category": "sleep",
+  "complaint": "low_back_pain",
+  "advice": "Keep your mattress firm enough to support your spine without excessive sinking or pressure points.",
+  "if_ignored": "Morning stiffness often worsens, leading to reduced mobility and a slower recovery timeline overall.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "low_back_pain",
+  "advice": "Try sleeping on your back with a small pillow under your knees for gentle lumbar relief.",
+  "if_ignored": "Symptoms tend to linger longer, which may increase the frequency of visits needed for maintenance care.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "low_back_pain",
+  "advice": "Avoid stomach sleeping to prevent unnecessary twisting and strain on your lower back muscles.",
+  "if_ignored": "Muscle tension may build up, often causing flare-ups that interrupt the healing process.",
+  "importance": "low"
+ },
+ {
+  "category": "sleep",
+  "complaint": "neck_pain",
+  "advice": "Use a supportive cervical pillow that keeps your neck neutral during sleep. Check its condition monthly for flattening or support loss.",
+  "if_ignored": "Neck stiffness may return in the morning, often requiring extra adjustment visits to restore comfort and range of motion.",
+  "importance": "high"
+ },
+ {
+  "category": "sleep",
+  "complaint": "neck_pain",
+  "advice": "Sleep on your back or side. Avoid stomach sleeping, which twists the neck. If side-sleeping, place a pillow between your knees.",
+  "if_ignored": "Postural strain tends to build up, potentially slowing progress and causing recurring flare-ups during daily activities.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "neck_pain",
+  "advice": "Perform gentle neck stretches for 30 seconds each direction before bed. Do this routine every night to maintain flexibility and relaxation.",
+  "if_ignored": "Muscle tension may accumulate overnight, often leading to increased morning discomfort and a need for more frequent check-ins.",
+  "importance": "low"
+ },
+ {
+  "category": "sleep",
+  "complaint": "neck_pain",
+  "advice": "Ensure your mattress provides adequate support. If it is over seven years old and sagging, consider replacing it to maintain spinal alignment.",
+  "if_ignored": "Poor support may contribute to ongoing discomfort, often necessitating additional therapeutic sessions to manage persistent symptoms.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "headaches",
+  "advice": "Use a medium-firm pillow that keeps your neck neutral while sleeping on your back every night.",
+  "if_ignored": "Headache frequency may increase, potentially requiring more frequent visits to manage recurring tension and discomfort.",
+  "importance": "high"
+ },
+ {
+  "category": "sleep",
+  "complaint": "headaches",
+  "advice": "Sleep on your side with a pillow filling the space between your head and mattress to align your spine.",
+  "if_ignored": "Neck strain often returns, which can slow progress and lead to new flare-ups during the week.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "headaches",
+  "advice": "Replace your old mattress with a supportive one to prevent your spine from curving while you rest.",
+  "if_ignored": "Discomfort may persist, often resulting in a need for extra re-checks to address ongoing alignment issues.",
+  "importance": "high"
+ },
+ {
+  "category": "sleep",
+  "complaint": "headaches",
+  "advice": "Avoid sleeping with your head propped up on multiple pillows, keeping your neck straight instead.",
+  "if_ignored": "Tension headaches tend to recur quickly, making it harder to maintain the relief we achieved in therapy.",
+  "importance": "low"
+ },
+ {
+  "category": "sleep",
+  "complaint": "sciatica",
+  "advice": "Sleep on your side with a firm pillow between your knees to keep your hips aligned and reduce spinal strain.",
+  "if_ignored": "Misalignment may increase pressure on the lower back, often leading to recurring stiffness or slower progress in relief.",
+  "importance": "high"
+ },
+ {
+  "category": "sleep",
+  "complaint": "sciatica",
+  "advice": "Place a thin pillow under your knees when sleeping on your back to maintain natural spine curvature and reduce tension.",
+  "if_ignored": "Losing support under the knees can cause the lower back to arch excessively, potentially triggering flare-ups or discomfort.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "sciatica",
+  "advice": "Avoid sleeping on your stomach; instead, rotate to your side or back to prevent twisting the neck and lower spine overnight.",
+  "if_ignored": "Prone sleeping twists the pelvis and spine, which may aggravate nerve irritation and cause morning stiffness or pain.",
+  "importance": "high"
+ },
+ {
+  "category": "sleep",
+  "complaint": "sciatica",
+  "advice": "Keep your mattress firm enough to support your spine without excessive sinking, ensuring your hips and shoulders stay level.",
+  "if_ignored": "An overly soft mattress can cause the hips to dip, often leading to uneven spinal alignment and persistent morning aches.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "sports_injury",
+  "advice": "Sleep on your side with a firm pillow between your knees to keep your spine neutral.",
+  "if_ignored": "Morning stiffness may increase, potentially slowing recovery and requiring additional adjustment visits.",
+  "importance": "high"
+ },
+ {
+  "category": "sleep",
+  "complaint": "sports_injury",
+  "advice": "Use a cervical roll under your neck when sleeping flat to maintain natural curvature.",
+  "if_ignored": "Neck tension often returns, which can flare up back pain and limit range of motion.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "sports_injury",
+  "advice": "Place a small pillow under your knees when sleeping on your back to reduce strain.",
+  "if_ignored": "Lower back discomfort may persist, making it harder to maintain daily activity levels without pain.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "sports_injury",
+  "advice": "Avoid sleeping on your stomach; try switching to side or back positions for better alignment.",
+  "if_ignored": "Twisting the neck overnight tends to aggravate soreness, possibly delaying overall progress in your treatment plan.",
+  "importance": "low"
+ },
+ {
+  "category": "sleep",
+  "complaint": "auto_injury",
+  "advice": "Sleep on your side using a firm pillow to keep your neck neutral. Do this every night before bed.",
+  "if_ignored": "Neck stiffness often returns, slowing recovery and potentially requiring additional adjustment visits to maintain alignment.",
+  "importance": "high"
+ },
+ {
+  "category": "sleep",
+  "complaint": "auto_injury",
+  "advice": "Place a small pillow under your knees when sleeping on your back tonight to reduce spinal strain.",
+  "if_ignored": "Lower back tension may linger, causing morning stiffness that interferes with daily movement and prolongs recovery time.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "auto_injury",
+  "advice": "Use a supportive pillow that keeps your head level with your spine. Avoid sleeping without pillow support.",
+  "if_ignored": "Jaw and neck tightness tend to recur, which can limit range of motion and delay overall progress in therapy.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "auto_injury",
+  "advice": "Keep your mattress firm enough to support your spine. Consider adding a thin topper if it feels too soft.",
+  "if_ignored": "Poor support may lead to recurring aches, making it harder to maintain consistency and potentially extending treatment duration.",
+  "importance": "low"
+ },
+ {
+  "category": "sleep",
+  "complaint": "posture_wellness",
+  "advice": "Keep using the firm pillow under your knees when sleeping on your back to maintain neutral spine alignment nightly.",
+  "if_ignored": "Lower back tension may return, often requiring additional adjustments or a re-check within two weeks to manage stiffness.",
+  "importance": "high"
+ },
+ {
+  "category": "sleep",
+  "complaint": "posture_wellness",
+  "advice": "Continue replacing your worn-out side-sleeping pillow every six months to ensure consistent head and neck support during rest.",
+  "if_ignored": "Neck stiffness tends to recur, potentially slowing recovery progress and leading to frequent morning discomfort that limits daily movement.",
+  "importance": "medium"
+ },
+ {
+  "category": "sleep",
+  "complaint": "posture_wellness",
+  "advice": "Maintain your current mattress rotation schedule every three months to prevent uneven sinkage that alters your natural sleep posture.",
+  "if_ignored": "Posture-related aches may flare up, often necessitating extra visits to address accumulated stress on the joints from poor support.",
+  "importance": "low"
+ },
+ {
+  "category": "sleep",
+  "complaint": "posture_wellness",
+  "advice": "Keep avoiding stomach sleeping and use a thin pillow instead to reduce the twisting strain on your cervical spine at night.",
+  "if_ignored": "Headache frequency may increase, often disrupting sleep quality and causing lingering neck tightness that requires targeted care later.",
+  "importance": "medium"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "low_back_pain",
+  "advice": "Continue daily 10-minute stretches, focusing on hip flexors and hamstrings, ideally in the morning before work.",
+  "if_ignored": "Stiffness may return, potentially slowing progress and requiring additional adjustment sessions to maintain mobility.",
+  "importance": "high"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "low_back_pain",
+  "advice": "Keep walking 20 minutes daily at a comfortable pace, avoiding sitting for more than 45 minutes at a time.",
+  "if_ignored": "Inactivity often leads to muscle tightness, which can trigger recurring low back discomfort and disrupt the healing rhythm.",
+  "importance": "medium"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "low_back_pain",
+  "advice": "Maintain the scheduled bi-weekly check-ins to monitor alignment and ensure the treatment plan remains on track.",
+  "if_ignored": "Skipping appointments may delay detection of minor setbacks, often resulting in a need for more frequent future visits.",
+  "importance": "high"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "low_back_pain",
+  "advice": "Practice proper lifting techniques by bending knees and keeping the back straight during daily tasks.",
+  "if_ignored": "Improper mechanics may contribute to flare-ups, often requiring extra time for recovery and potentially extending the overall treatment duration.",
+  "importance": "medium"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "headaches",
+  "advice": "Perform gentle neck stretches daily, holding each position for thirty seconds after waking and before bed.",
+  "if_ignored": "Headache frequency may increase, often requiring additional visits to regain previous progress and manage recurring tension.",
+  "importance": "high"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "headaches",
+  "advice": "Take a two-minute break every thirty minutes to stand up, roll shoulders, and look away from screens.",
+  "if_ignored": "Stiffness tends to build up, potentially slowing recovery and leading to more frequent flare-ups between scheduled appointments.",
+  "importance": "medium"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "headaches",
+  "advice": "Keep your computer monitor at eye level to avoid tilting your head up or down throughout the workday.",
+  "if_ignored": "Postural strain may return, often causing headaches to resurface and necessitating a re-check sooner than planned.",
+  "importance": "high"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "headaches",
+  "advice": "Sleep on your back or side, using a pillow that keeps your neck aligned with your spine.",
+  "if_ignored": "Morning stiffness may persist, potentially slowing overall improvement and requiring extra sessions to address recurring discomfort.",
+  "importance": "medium"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "sciatica",
+  "advice": "Stretch piriformis muscles daily for five minutes in the morning before starting work tasks.",
+  "if_ignored": "Tension may build up, potentially slowing recovery and requiring additional adjustment visits.",
+  "importance": "high"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "sciatica",
+  "advice": "Stand up and walk for two minutes every hour while working at your desk.",
+  "if_ignored": "Prolonged sitting often re-irritates the nerve, causing symptoms to return by the next scheduled visit.",
+  "importance": "medium"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "sciatica",
+  "advice": "Perform gentle spinal rotations every evening for ten minutes to maintain mobility.",
+  "if_ignored": "Stiffness may develop, making it harder to maintain progress between your regular weekly check-ins.",
+  "importance": "medium"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "sciatica",
+  "advice": "Keep using a supportive pillow while sleeping on your side to align the spine.",
+  "if_ignored": "Poor alignment overnight tends to increase morning discomfort, which can delay full symptom resolution.",
+  "importance": "low"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "sports_injury",
+  "advice": "Perform gentle shoulder rotations twice daily, morning and night, for ten minutes each session.",
+  "if_ignored": "Stiffness may persist longer, potentially requiring additional adjustment sessions to restore full range of motion.",
+  "importance": "high"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "sports_injury",
+  "advice": "Apply ice to the knee for fifteen minutes after any physical activity or symptom flare-up.",
+  "if_ignored": "Swelling often increases, which can slow healing and make the next scheduled visit less effective.",
+  "importance": "medium"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "sports_injury",
+  "advice": "Keep walking for twenty minutes daily, avoiding hills or uneven terrain until cleared by your provider.",
+  "if_ignored": "Muscle atrophy may develop, leading to weaker support for the joint and slower overall recovery progress.",
+  "importance": "high"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "sports_injury",
+  "advice": "Use a heat pack on the lower back for ten minutes before bed to relax tight muscles.",
+  "if_ignored": "Muscle tension may remain elevated, often resulting in discomfort the next morning and reduced flexibility during therapy.",
+  "importance": "low"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "auto_injury",
+  "advice": "Continue daily 10-minute gentle neck stretches in the morning to maintain mobility and prevent stiffness.",
+  "if_ignored": "Neck stiffness may return, potentially slowing progress and requiring additional adjustment sessions to restore range of motion.",
+  "importance": "high"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "auto_injury",
+  "advice": "Take a 5-minute walking break every hour while working to reduce static postural strain on the spine.",
+  "if_ignored": "Muscle tightness often builds up, which can lead to flare-ups and make upcoming adjustments less effective.",
+  "importance": "medium"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "auto_injury",
+  "advice": "Keep up with your scheduled visits every two weeks to track healing and adjust care as needed.",
+  "if_ignored": "Gaps in care may allow old patterns to re-emerge, potentially extending the total treatment timeline.",
+  "importance": "high"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "auto_injury",
+  "advice": "Perform two minutes of pelvic tilts before bed to support spinal alignment and reduce overnight discomfort.",
+  "if_ignored": "Morning stiffness might increase, which could necessitate a re-check to ensure no regression in spinal alignment.",
+  "importance": "low"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "posture_wellness",
+  "advice": "Set phone alarms to stand and stretch for one minute every hour during your workday.",
+  "if_ignored": "Posture fatigue may return, often requiring extra mid-cycle visits to reset alignment and manage stiffness.",
+  "importance": "high"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "posture_wellness",
+  "advice": "Perform gentle neck rolls and shoulder shrugs for two minutes each morning before starting your day.",
+  "if_ignored": "Morning stiffness tends to linger, potentially slowing your progress and making daily movements feel less fluid.",
+  "importance": "medium"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "posture_wellness",
+  "advice": "Keep your monitor at eye level and sit with feet flat on the floor at work.",
+  "if_ignored": "Upper back tension may build up, often leading to recurring discomfort that interrupts your planned healing rhythm.",
+  "importance": "high"
+ },
+ {
+  "category": "visit_rhythm",
+  "complaint": "posture_wellness",
+  "advice": "Walk for fifteen minutes after lunch to reset your posture and encourage natural spinal movement.",
+  "if_ignored": "Evening soreness may increase, sometimes necessitating a re-check sooner than scheduled to address new tension.",
+  "importance": "low"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "low_back_pain",
+  "advice": "Stand up and walk for two minutes every 30 minutes of sitting to keep your hips mobile.",
+  "if_ignored": "Stiffness may return, often requiring extra adjustment visits to restore range of motion.",
+  "importance": "high"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "low_back_pain",
+  "advice": "Take a gentle ten-minute walk after lunch daily to prevent postural fatigue from building up.",
+  "if_ignored": "Symptoms may flare in the evening, often slowing down overall progress toward recovery goals.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "low_back_pain",
+  "advice": "Perform hip flexor stretches in the morning before starting your first work shift of the day.",
+  "if_ignored": "Morning stiffness might linger longer, potentially needing re-checks to adjust your home care plan.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "low_back_pain",
+  "advice": "Alternate walking with light bodyweight exercises, like squats, twice a week to maintain core stability.",
+  "if_ignored": "Recurring low-back tension tends to appear, often necessitating more frequent adjustments for relief.",
+  "importance": "low"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "neck_pain",
+  "advice": "Stand up and gently stretch your neck every 30 minutes while working at a desk to maintain mobility.",
+  "if_ignored": "Stiffness often returns quickly, potentially requiring more frequent adjustments to maintain relief from neck pain.",
+  "importance": "high"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "neck_pain",
+  "advice": "Take a five-minute walk during your lunch break to promote blood flow and reduce muscle tension in the upper back.",
+  "if_ignored": "Prolonged sitting may lead to recurring tightness, often slowing down the recovery process and limiting daily range of motion.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "neck_pain",
+  "advice": "Perform gentle chin tucks while watching TV or reading to keep your neck aligned without straining the muscles.",
+  "if_ignored": "Neglecting alignment exercises tends to allow old postural habits to resurface, which may cause occasional flare-ups of discomfort.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "neck_pain",
+  "advice": "Keep your phone at eye level instead of looking down while scrolling to avoid straining the cervical spine.",
+  "if_ignored": "Constant downward gaze often contributes to muscle fatigue, which may necessitate a re-check if pain persists after the current plan.",
+  "importance": "low"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "headaches",
+  "advice": "Walk for ten minutes every two hours during your workday to reset posture and reduce neck tension.",
+  "if_ignored": "Neck stiffness may return, potentially causing headaches to linger and slowing your overall recovery progress.",
+  "importance": "high"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "headaches",
+  "advice": "Stand up and stretch your neck and shoulders for two minutes at the start of each break.",
+  "if_ignored": "Muscle tightness often accumulates, which may lead to frequent flare-ups requiring additional follow-up visits.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "headaches",
+  "advice": "Incorporate light daily walks for twenty minutes to keep muscles loose and improve overall circulation.",
+  "if_ignored": "Prolonged inactivity can lead to recurring tension headaches, often making it harder to maintain steady improvement.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "headaches",
+  "advice": "Take a short, brisk walk immediately after sitting for more than forty-five minutes to prevent stiffness.",
+  "if_ignored": "You may experience increased discomfort in the upper back, which often correlates with a return of headache symptoms.",
+  "importance": "low"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "sciatica",
+  "advice": "Stand up and walk for two minutes every thirty minutes of sitting to prevent stiffness.",
+  "if_ignored": "Symptoms often return if you stay seated too long, potentially slowing your overall recovery progress.",
+  "importance": "high"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "sciatica",
+  "advice": "Take a gentle ten-minute walk daily, ideally after lunch, to keep your legs moving comfortably.",
+  "if_ignored": "Stiffness may build up without regular movement, which tends to increase discomfort during the evening.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "sciatica",
+  "advice": "Pause your work to stretch your hamstrings gently for one minute whenever you feel tight.",
+  "if_ignored": "Ignoring this cue often leads to flare-ups, meaning you might need an extra adjustment visit sooner.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "sciatica",
+  "advice": "Avoid prolonged sitting in soft chairs; use firm support and stand up frequently throughout the day.",
+  "if_ignored": "Poor posture habits may cause symptoms to linger, requiring a re-check to adjust your home routine.",
+  "importance": "high"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "sports_injury",
+  "advice": "Walk for ten minutes every two hours to prevent stiffness and maintain joint mobility.",
+  "if_ignored": "Stiffness may return, often slowing your recovery and requiring additional adjustment sessions.",
+  "importance": "high"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "sports_injury",
+  "advice": "Gently stretch your legs for five minutes before starting your morning commute.",
+  "if_ignored": "Morning tightness tends to persist, which may limit your range of motion throughout the day.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "sports_injury",
+  "advice": "Stand up and shift your weight for a minute during long breaks at work.",
+  "if_ignored": "Fatigue may increase, often leading to compensatory movements that irritate the injured area.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "sports_injury",
+  "advice": "Take short, frequent walks around the house instead of sitting for extended periods.",
+  "if_ignored": "Swelling tends to accumulate, which may cause discomfort and delay your progress toward full activity.",
+  "importance": "high"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "auto_injury",
+  "advice": "Take a two-minute walk every hour while working to prevent stiffness and maintain joint mobility.",
+  "if_ignored": "Morning stiffness often lingers longer, potentially slowing recovery progress and requiring more frequent adjustments.",
+  "importance": "high"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "auto_injury",
+  "advice": "Gently stretch your hamstrings and hip flexors for five minutes each morning before starting your day.",
+  "if_ignored": "Muscle tightness may return, leading to increased discomfort during daily activities and less stable movement patterns.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "auto_injury",
+  "advice": "Avoid sitting for more than thirty minutes at a time; stand up and shift your weight regularly.",
+  "if_ignored": "Prolonged static positioning can aggravate soreness, often necessitating a re-check to address recurring tension.",
+  "importance": "high"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "auto_injury",
+  "advice": "Incorporate light, low-impact walking for ten minutes daily to keep your spine moving through its natural range.",
+  "if_ignored": "Reduced activity may cause joint stiffness to persist, potentially extending the timeline for returning to normal routines.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "posture_wellness",
+  "advice": "Take a two-minute walk every hour to reset posture and reduce static load on your back.",
+  "if_ignored": "Muscle stiffness tends to accumulate, often causing stiffness to return by end of day and slowing progress.",
+  "importance": "high"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "posture_wellness",
+  "advice": "Stand up and gently stretch your hip flexors for thirty seconds whenever you stand up from your desk.",
+  "if_ignored": "Tightness may persist, potentially leading to lower back discomfort and requiring more frequent check-ins.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "posture_wellness",
+  "advice": "Walk for ten minutes during your lunch break to maintain movement and counteract prolonged sitting.",
+  "if_ignored": "Posture issues often resurface without regular movement breaks, which may limit the long-term benefits of treatment.",
+  "importance": "medium"
+ },
+ {
+  "category": "daily_movement",
+  "complaint": "posture_wellness",
+  "advice": "Set a timer to nudge you to change positions every forty-five minutes while working at your computer.",
+  "if_ignored": "You may experience recurring tightness in the neck or shoulders, often necessitating additional adjustment sessions.",
+  "importance": "low"
+ }
+]

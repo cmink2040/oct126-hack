@@ -50,6 +50,11 @@ resources:
           notebook_task:
             notebook_path: ../src/notebooks/10_run_agent.py
             base_parameters: {agent: pricing}
+        - task_key: care_reports
+          depends_on: [{task_key: refresh_models}]
+          notebook_task:
+            notebook_path: ../src/notebooks/11_care_reports.py
+
         - task_key: capacity_agent
           depends_on: [{task_key: refresh_models}]
           notebook_task:

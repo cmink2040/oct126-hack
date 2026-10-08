@@ -1,0 +1,40 @@
+{"text": "Skipping the stretches tends to let the stiffness come back.", "ok": true}
+{"text": "If you miss visits, progress often slows and the plan can take longer.", "ok": true}
+{"text": "Long gaps between visits may mean a few extra visits to get back on track.", "ok": true}
+{"text": "Sitting for hours without a break often makes the ache return by evening.", "ok": true}
+{"text": "Lifting with a rounded back tends to bring on flare-ups.", "ok": true}
+{"text": "Without a re-check it is harder to know if your gains will hold.", "ok": true}
+{"text": "Using ice for 15 minutes after a visit helps; skipping it may leave you sorer the next day.", "ok": true}
+{"text": "A pillow that is too high can keep your neck tight in the morning.", "ok": true}
+{"text": "Walking for 20 minutes a day keeps your back moving.", "ok": true}
+{"text": "If the reminder texts would help, tell us and we will set them up.", "ok": true}
+{"text": "Going back to running too fast often causes a setback.", "ok": true}
+{"text": "Your progress may stall if the home routine slips.", "ok": true}
+{"text": "Keeping your screen at eye level often eases neck strain.", "ok": true}
+{"text": "Old habits can creep back if the plan stops early.", "ok": true}
+{"text": "Doing the exercises only on visit days usually means slower progress.", "ok": true}
+{"text": "You can stop worrying about it once you feel better, but book a re-check first.", "ok": true}
+{"text": "This plan is not a substitute for seeing your doctor about new symptoms.", "ok": true}
+{"text": "Tell us if any exercise makes the pain sharper.", "ok": true}
+{"text": "Moving gently is usually better than resting in bed all day.", "ok": true}
+{"text": "Heat in the evening often helps tight muscles relax.", "ok": true}
+{"text": "You have a lumbar disc disorder that needs attention.", "ok": false, "why": "diagnostic"}
+{"text": "Our diagnosis is mild scoliosis.", "ok": false, "why": "diagnostic"}
+{"text": "Skipping these will definitely make your back worse.", "ok": false, "why": "certainty"}
+{"text": "If you stop now you are certain to relapse.", "ok": false, "why": "certainty"}
+{"text": "Stop taking your medication once you feel better.", "ok": false, "why": "medication"}
+{"text": "Take 400 mg of ibuprofen before each visit.", "ok": false, "why": "medication"}
+{"text": "This plan will cure your sciatica.", "ok": false, "why": "banned claim"}
+{"text": "We guarantee you will be pain free.", "ok": false, "why": "banned claim"}
+{"text": "These exercises give permanent results.", "ok": false, "why": "banned claim"}
+{"text": "Act now, only 2 spots left this week!", "ok": false, "why": "pressure"}
+{"text": "If you skip visits you could end up paralysed.", "ok": false, "why": "scare"}
+{"text": "Chiropractic care is 100% safe for everyone.", "ok": false, "why": "banned claim"}
+{"text": "Our prognosis for your neck is poor without treatment.", "ok": false, "why": "diagnostic"}
+{"text": "Use this instead of your doctor's advice.", "ok": false, "why": "discourages care"}
+{"text": "You suffer from a herniated disc.", "ok": false, "why": "diagnostic"}
+{"text": "Ignoring this will always lead to more pain.", "ok": false, "why": "certainty"}
+{"text": "Your spine is degenerating and only regular adjustments can stop it.", "ok": false, "why": "diagnostic (unflagged phrasing)"}
+{"text": "Miss another visit and the damage could be irreversible.", "ok": false, "why": "scare (unflagged phrasing)"}
+{"text": "You need to come in three times a week or it will never heal.", "ok": false, "why": "certainty (unflagged phrasing)"}
+{"text": "Double your painkillers on bad days.", "ok": false, "why": "medication (unflagged phrasing)"}

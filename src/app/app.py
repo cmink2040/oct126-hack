@@ -4,6 +4,7 @@ Chat with the Copilot agent, and approve / reject what the scheduled agents queu
 Runs as the app's service principal; reads/writes Unity Catalog through a SQL warehouse
 and reasons with a Foundation Model API endpoint (both declared as app resources in the bundle).
 """
+import json
 import os
 import sys
 import uuid
@@ -15,7 +16,7 @@ import streamlit as st  # noqa: E402
 
 from chiro import prompts  # noqa: E402
 from chiro.capacity import ACTION_TYPES  # noqa: E402
-from chiro.care import CareReports  # noqa: E402
+from chiro.care import CATEGORIES as CARE_CATEGORIES, CareReports  # noqa: E402
 from chiro.agent import run_agent  # noqa: E402
 from chiro.config import Settings  # noqa: E402
 from chiro.llm import get_llm_client  # noqa: E402
@@ -274,9 +275,24 @@ with tab_cap:
                    "give an action 2-4 weeks before judging it.")
 
 with tab_care:
-    st.caption("Care notes are follow-through advice and what happens if it's skipped - not diagnoses. "
-               "Reports are drafted from your notes and shown to the patient (portal) only after approval.")
+    st.caption("Care guidance = practical advice and what tends to happen if it's ignored - not a risk assessment, "
+               "not a diagnosis. Drafted from your care notes and the patient's attendance, every item cites its "
+               "source, and patients see it in their portal only after you approve it.")
     care = CareReports(db, settings)
+    due, helps = care.due(50), care.help_requests(20)
+    a, b, c = st.columns(3)
+    a.metric("Patients due a guidance update", len(due), help="Care notes changed since their last report")
+    b.metric("Drafts awaiting approval", len(tools.pending("care")))
+    c.metric("Patients asking for help", len(helps))
+    if helps:
+        with st.expander(f"🙋 {len(helps)} patient(s) said they need help with an item", expanded=True):
+            st.dataframe(pd.DataFrame(helps)[["patient_id", "first_name", "advice", "comment", "at"]], hide_index=True,
+                         use_container_width=True)
+    if due and st.button(f"Draft guidance for {min(len(due), 5)} due patient(s)"):
+        with st.spinner("Drafting from care notes and attendance..."):
+            results = care.draft_due(llm, settings.llm_endpoint, tools, limit=5)
+        st.dataframe(pd.DataFrame(results), hide_index=True, use_container_width=True)
+
     pid = st.text_input("Patient ID", placeholder="e.g. PT0009863").strip()
     if pid:
         profile = tools.get_patient_profile(pid)
@@ -284,48 +300,71 @@ with tab_care:
             st.error(profile["error"])
         else:
             recs = tools.get_care_recommendations(pid)
-            st.markdown(f"**{profile['first_name']}** · {profile['insurance_type']} · dropout risk "
-                        f"{(profile.get('churn_risk') or 0):.0%} · {profile.get('days_since_last_visit')} days since last visit")
+            st.markdown(f"**{profile['first_name']}** · {profile['insurance_type']} · plan of "
+                        f"{profile.get('care_plan_visits')} visits · dropout risk {(profile.get('churn_risk') or 0):.0%}")
             if "error" not in recs:
-                st.markdown(f"**Theme:** {recs['theme']}  \n{recs['theme_description']}")
-                st.caption(f"Care settings that similar patients who stayed in care used ({recs['peers']} peers, "
-                           f"{recs['peer_active_rate']:.0%} still active):")
-                st.dataframe(pd.DataFrame(recs["recommendations"])[
-                    ["aspect", "current", "recommended", "lift", "support", "evidence"]],
-                    hide_index=True, use_container_width=True)
-            for n in care.notes(pid):
-                st.markdown(f"> {n['note']}  \n> — {n['author']}, {str(n['created_at'])[:10]}")
+                st.caption(f"Theme: {recs['theme']} — {recs['theme_description']}")
+            signals = care.signals(pid, profile.get("care_plan_visits"))
+            if signals:
+                st.markdown("**Follow-through signals** (from attendance)")
+                for sig in signals:
+                    st.markdown(f"- **{sig['name'].replace('_', ' ')}** ({sig['importance']}): {sig['fact']}")
+            notes = care.notes(pid)
+            st.markdown(f"**Care notes** ({len(notes)})")
+            for n in notes:
+                st.markdown(f"- _{n['category'].replace('_', ' ')} · {n['importance']}_ — **{n['advice']}**  \n"
+                            f"  If ignored: {n['if_ignored'] or '—'}  \n  <small>{n['author']}, "
+                            f"{str(n['created_at'])[:10]}</small>", unsafe_allow_html=True)
             with st.form("note", clear_on_submit=True):
-                note = st.text_area("Add a care note", placeholder="e.g. Not doing the daily hip stretches tends to "
-                                    "bring the stiffness back and means extra visits to get back on track.")
+                st.markdown("**Add a care note** — one piece of advice and what tends to happen if it's ignored")
+                cat = st.selectbox("Category", list(CARE_CATEGORIES), format_func=lambda k: k.replace("_", " "))
+                advice = st.text_input("Advice", placeholder="e.g. Do the two hip stretches every morning, 30 seconds each")
+                ignored = st.text_input("If ignored", placeholder="e.g. The stiffness tends to come back by the "
+                                        "afternoon, and progress between visits slows")
+                imp = st.radio("Importance", ["high", "medium", "low"], index=1, horizontal=True)
                 if st.form_submit_button("Save note"):
-                    out = care.add_note(pid, reviewer, note)
+                    out = care.add_note(pid, reviewer, advice, ignored, cat, imp)
                     if "error" in out:
                         st.error(out["error"])
                     else:
                         st.rerun()
-            if st.button("Draft guidance report", type="primary"):
-                with st.spinner("Drafting from your notes..."):
+            if st.button("Draft guidance now", type="primary"):
+                with st.spinner("Drafting from notes and attendance..."):
                     out = care.draft(llm, settings.llm_endpoint, profile, None if "error" in recs else recs)
                 if "error" in out:
                     st.error(out["error"])
                 else:
-                    st.success("Draft queued for review below.")
+                    st.success(f"Version {out['version']} queued for review below (reading grade "
+                               f"{out['quality']['reading_grade']}).")
+            history = care.history_of_reports(pid)
+            if history:
+                st.markdown("**Guidance history**")
+                st.dataframe(pd.DataFrame(history).drop(columns=["quality"]), hide_index=True, use_container_width=True)
+                answers = care.responses(pid)
+                if answers:
+                    st.caption("Patient answers: " + ", ".join(f"{v['response']}" + (f" ('{v['comment']}')"
+                                                                                       if v["comment"] else "")
+                                                               for v in answers.values()))
             with st.expander("Link a patient-portal account to this patient"):
                 email = st.text_input("Portal account email")
                 if st.button("Link account") and email:
                     db.execute(f"UPDATE {settings.table('patient_accounts')} SET patient_id = :pid "
                                "WHERE email = :email", {"pid": pid, "email": email.strip().lower()})
-                    st.success("Linked - approved reports will show in their portal.")
+                    st.success("Linked - approved guidance will show in their portal.")
 
     def care_body(i):
+        q = json.loads(i["quality"]) if i.get("quality") else {}
+        if q:
+            st.caption(f"Version {i.get('version')} · reading grade {q.get('reading_grade')} · grounding "
+                       f"{q.get('mean_grounding')} (min {q.get('min_grounding')}) · drafted in {q.get('attempts')} "
+                       "attempt(s). Approving replaces the patient's current guidance.")
         left, right = st.columns(2)
-        left.markdown("**Staff version**")
+        left.markdown("**Staff version (items with their sources)**")
         left.markdown(i["staff_report"])
-        right.markdown("**Patient version**")
+        right.markdown("**What the patient will see**")
         right.markdown(i["patient_report"])
 
-    review_queue("care", lambda i: f"{i['patient_id']} · care guidance report", care_body)
+    review_queue("care", lambda i: f"{i['patient_id']} · care guidance v{i.get('version') or 1}", care_body)
 
 with tab_brief:
     rows = db.query(f"SELECT briefing_date, content FROM {settings.table('daily_briefings')} "

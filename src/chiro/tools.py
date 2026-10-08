@@ -626,6 +626,10 @@ class ClinicTools:
             f"WHERE {key} = :id", {"d": decision, "who": reviewer, "id": item_id})
         if decision == "approved":
             item = rows[0]
+            if kind == "care":  # the newest approved guidance replaces the patient's previous one
+                self.db.execute(f"UPDATE {self.t('care_reports')} SET status = 'superseded' WHERE patient_id = :pid "
+                                "AND status = 'approved' AND report_id <> :id",
+                                {"pid": item["patient_id"], "id": item_id})
             if kind == "capacity":
                 self.db.execute(f"UPDATE {self.t('capacity_actions')} SET baseline_utilization = :u WHERE action_id = :id",
                                 {"u": self._location_utilization(item["location_id"]) or 0.0, "id": item_id})

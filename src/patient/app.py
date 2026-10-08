@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import streamlit as st  # noqa: E402
 
-from chiro.care import CareReports  # noqa: E402
+from chiro.care import RESPONSES, CareReports  # noqa: E402
 from chiro.config import Settings  # noqa: E402
 from chiro.intake import COMPLAINTS, INSURANCE, Intake, IntakeError, process_inquiry  # noqa: E402
 from chiro.llm import get_llm_client  # noqa: E402
@@ -128,13 +128,40 @@ with st.form("inquiry", clear_on_submit=True):
             st.error(str(e))
 
 if account.get("patient_id"):
-    report = CareReports(db, settings).latest_approved(account["patient_id"])
+    care = CareReports(db, settings)
+    report = care.latest_approved(account["patient_id"])
     if report:
+        care.mark_viewed(report["report_id"])
+        answers = care.responses(account["patient_id"])
         with st.container(border=True):
             st.markdown("**Your care plan: what to keep doing**")
-            st.markdown(report["patient_report"])
             st.caption(f"From your care team, {str(report['reviewed_at'])[:10]}. This is guidance on following "
                        "your plan, not a medical assessment - ask us at your next visit if anything is unclear.")
+            if not report["items"]:  # guidance approved before item-level answers existed
+                st.markdown(report["patient_report"])
+            else:
+                st.write(report["items"]["intro"])
+                for item in report["items"]["items"]:
+                    with st.container(border=True):
+                        st.markdown(f"**{item['advice']}**")
+                        st.markdown(f"If this slips: {item['if_ignored']}")
+                        if item.get("why_now"):
+                            st.caption(item["why_now"])
+                        answer = answers.get(item["key"])
+                        if answer:
+                            st.caption(f"Your answer: {RESPONSES[answer['response']]}"
+                                       + (f" - \"{answer['comment']}\"" if answer["comment"] else ""))
+                        cols = st.columns(3)
+                        for col, (code, label) in zip(cols, RESPONSES.items()):
+                            if col.button(label, key=f"{item['key']}-{code}"):
+                                st.session_state["answering"] = (item["key"], code)
+                        if st.session_state.get("answering", ("",))[0] == item["key"]:
+                            code = st.session_state["answering"][1]
+                            note = st.text_input("Anything we should know? (optional)", key=f"{item['key']}-note")
+                            if st.button("Send answer", key=f"{item['key']}-send", type="primary"):
+                                care.respond(report["report_id"], account["patient_id"], item["key"], code, note)
+                                del st.session_state["answering"]
+                                st.rerun()
 
 st.markdown("**Your inquiries**")
 rows = intake.my_inquiries(account["account_id"])

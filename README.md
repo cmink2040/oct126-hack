@@ -152,7 +152,7 @@ tests/                         local tests: guardrails, pricing, models, agent l
 | Urgency triage | Every lead gets a tier (emergency / urgent / soon / routine) and a respond-by deadline. An LLM classifies (primary); negation-aware rules are a safety floor and the fallback; the final tier is the more severe of the two. Urgency sets response speed only, never price. | `chiro/urgency.py`, `scripts/eval_triage.py` |
 | Lead prioritization + SLA | Queue order: tier, then deadline pressure (overdue first), then expected value = P(convert) x patient value by payer, with P(convert) shrunk toward the base rate by the lead model's measured AUC. 30-day active window. A lead's tier is assigned once, the first time it is seen, and kept across refreshes (its deadline never moves; answered leads keep the tier they arrived with). Response-time report per tier (on-time rate, median/p90, overdue, waiting on approval). | `chiro/priority.py`, Lead queue |
 | Capacity agent | Effective capacity = min(rooms, staffed slots). Diagnoses each location (staffing-constrained, high no-shows, declining, weekday imbalance, low demand), forecasts idle slots 14 days out from the forward book and booking lead-time curve, sizes overbooking / standby lists from no-show rates, builds ranked fill lists of lapsed patients for specific days. Approved fill campaigns hand off to the Retention agent, which drafts each invitation with a slot; impact is tracked against the baseline at approval. | `chiro/capacity.py`, Capacity tab |
-| Care guidance reports | Staff write care notes (advice + what happens if it's skipped, not diagnoses); a staff report and a plain-language patient report are drafted, language-checked, approved, then shown in the patient portal. | `chiro/care.py`, Care plans tab |
+| Care guidance | Practical advice plus what tends to happen if it's ignored (not a risk score, not diagnostic). Sources: structured staff care notes (advice, if ignored, category, importance) and follow-through signals from attendance (visits spreading, missed bookings, behind the plan's pace, nearly finished, on track). Every patient item cites its sources; code rejects drafts that cite nothing, drift from their sources, add outcomes staff never wrote, use diagnostic/certain/medication language, or read above ~8th grade. Versioned, approved by staff, drafted daily for patients whose notes changed; patients answer each item in the portal (on it / need help / not relevant) and help requests surface in Copilot. | `chiro/care.py`, Care plans tab, portal |
 | Treatment themes + care-settings recommender | Clusters patients by service mix and visit rhythm; recommends non-medical settings (weekday, cadence, payment option, booking channel, add-ons, provider) from similar patients who stayed in care, with evidence strength. | `chiro/themes.py`, Care plans tab |
 | Patient portal | Sign up, send an inquiry (scored and drafted by the Lead agent in seconds), see approved care guidance. | `src/patient/app.py` |
 
@@ -172,14 +172,22 @@ roughly a tenth of the latency, so use it for batch triage. Rules overfit their 
 LLM is primary. The holdout set later informed the red-flag
 lexicon, so it no longer measures the rules cleanly; write a fresh set before quoting rules-only numbers again.
 
+### Care guidance quality
+
+`python scripts/eval_care.py [--drafts N]` scores the language checker on labelled sentences
+(`tests/data/care_language.jsonl`, a development set) and, with `--drafts`, generates guidance for N patients with
+care notes (not saved) and reports first-pass rate, rejection reasons, reading grade and grounding.
+
 ### Demo scenario
 
 The linked dataset is uniform (every location, weekday and lead behaves alike), so the triage, SLA and capacity
 features have nothing to find in it. `scripts/load_scenario.py` writes a labelled scenario into the operational
 schema only (never the source): the last 12 weeks of appointments with weekday shape, staffing limits, booking lead
 times and one planted problem per profiled location (`chiro/scenario.py: PROFILES`), a consistent forward slot
-book, ~3 weeks of leads from an LLM-written message corpus (`GEN-` ids), and simulated staff responses
-(`run_id = 'scenario'`).
+book, ~3 weeks of leads from an LLM-written message corpus (`GEN-` ids), simulated staff responses
+(`run_id = 'scenario'`), and a care-plan cohort of 160 patients (weekly plans with an adherence pattern each:
+steady, drifting, no-show-prone, stalled, finishing) with 2-4 staff care notes each from an LLM-written note corpus.
+A demo portal account (`demo.patient@example.com`) is linked to a stalled patient.
 
 ## Local development
 

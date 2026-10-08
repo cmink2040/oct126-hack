@@ -3,7 +3,7 @@ the source dataset. Safe to re-run: appointments and the slot book are rebuilt, 
 only appended when missing (leads_raw is the pipeline's append-only streaming source).
 
     DATABRICKS_CONFIG_PROFILE=... DATABRICKS_WAREHOUSE_ID=... CHIRO_SCHEMA=chiro_dev \
-    [OPENAI_BASE_URL=... LLM_ENDPOINT=... LLM_MAX_TOKENS=8192] python scripts/load_scenario.py [--llm] [--pipeline]
+    [OPENAI_BASE_URL=... LLM_ENDPOINT=... LLM_MAX_TOKENS=8192] python scripts/load_scenario.py [--llm] [--pipeline] [--care-only]
 """
 from __future__ import annotations
 
@@ -62,11 +62,41 @@ def insert(db, table: str, rows: list[dict], schema: str, overwrite: bool = Fals
                    {"j": json.dumps(chunk, default=str)})
 
 
+NOTE_SCHEMA = ("note_id STRING, patient_id STRING, author STRING, note STRING, created_at TIMESTAMP, category STRING, "
+               "advice STRING, if_ignored STRING, importance STRING")
+DEMO_EMAIL, DEMO_PASSWORD = "demo.patient@example.com", "northside-demo"
+
+
+def load_care(db, s, providers: dict[str, list[str]], today: dt.date, seed: int, size: int = 160) -> None:
+    """Care-plan cohort: weekly plans with an adherence pattern each, staff notes, and a demo portal account."""
+    cohort = db.query(
+        f"""SELECT op.patient_id, sp.home_location_id AS location_id, op.primary_complaint AS complaint,
+                   op.care_plan_visits AS plan_visits
+            FROM {s.table('patients')} op JOIN {s.source_table('patients')} sp USING (patient_id)
+            WHERE op.consent_email OR op.consent_sms
+            ORDER BY xxhash64(op.patient_id, {int(seed)}) LIMIT {int(size)}""")
+    appts, notes, patterns = scenario.care_cohort(cohort, providers, json.load(open(scenario.CARE_CORPUS)), today, seed)
+    db.execute(f"DELETE FROM {s.table('appointments')} WHERE appointment_id LIKE 'GC%'")
+    insert(db, s.table("appointments"), appts, APPOINTMENT_SCHEMA)
+    db.execute(f"DELETE FROM {s.table('care_notes')} WHERE note_id LIKE 'CN-GEN%'")
+    insert(db, s.table("care_notes"), notes, NOTE_SCHEMA)
+    counts = pd.Series(patterns).value_counts().to_dict()
+    print(f"care cohort: {len(patterns)} patients {counts}, {len(appts)} visits, {len(notes)} staff notes")
+    stalled = next(pid for pid, pat in patterns.items() if pat == "stalled")
+    intake = Intake(db, s)
+    if not intake.log_in(DEMO_EMAIL, DEMO_PASSWORD):
+        intake.create_account(DEMO_EMAIL, DEMO_PASSWORD, "Demo", "", True, True, True)
+    db.execute(f"UPDATE {s.table('patient_accounts')} SET patient_id = :p WHERE email = :e",
+               {"p": stalled, "e": DEMO_EMAIL})
+    print(f"demo portal account {DEMO_EMAIL} / {DEMO_PASSWORD} -> {stalled} (stalled plan)")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--llm", action="store_true", help="LLM second-opinion triage for the scenario leads")
     ap.add_argument("--pipeline", action="store_true", help="start a pipeline update so silver tables pick up the leads")
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--care-only", action="store_true", help="only (re)load the care-plan cohort")
     args = ap.parse_args()
     s, db = Settings.from_env(), WarehouseSql(os.environ["DATABRICKS_WAREHOUSE_ID"])
     now = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None, microsecond=0)
@@ -85,6 +115,10 @@ def main() -> None:
     for r in db.query(f"SELECT patient_id, home_location_id FROM {s.source_table('patients')} ORDER BY 1"):
         patients.setdefault(r["home_location_id"], []).append(r["patient_id"])
 
+    if args.care_only:
+        load_care(db, s, providers, today, args.seed)
+        return
+
     start = today - dt.timedelta(weeks=scenario.SCENARIO_WEEKS)
     appts = scenario.appointments(locs, providers, patients, start, today - dt.timedelta(days=1), args.seed)
     db.execute(f"CREATE OR REPLACE TABLE {s.table('appointments')} AS SELECT * FROM {s.source_table('appointments')} "
@@ -93,6 +127,8 @@ def main() -> None:
     print(f"appointments: linked history before {start}, {len(appts)} scenario rows {start}..{today}")
     for lid, prof in scenario.PROFILES.items():
         print(f"   {lid}: {prof.problem}")
+
+    load_care(db, s, providers, today, args.seed)
 
     slots = scenario.slot_book(locs, providers, today, 14, start, args.seed)
     insert(db, s.table("appointment_slots"), slots, SLOT_SCHEMA, overwrite=True)

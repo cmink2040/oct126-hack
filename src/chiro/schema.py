@@ -17,10 +17,15 @@ ACTION_TABLES = {
         action_id STRING, patient_id STRING, location_id STRING, target_date DATE, status STRING,
         retention_action_id STRING, created_at TIMESTAMP""",
     "care_notes": """
-        note_id STRING, patient_id STRING, author STRING, note STRING, created_at TIMESTAMP""",
+        note_id STRING, patient_id STRING, author STRING, note STRING, created_at TIMESTAMP, category STRING,
+        advice STRING, if_ignored STRING, importance STRING""",
     "care_reports": """
         report_id STRING, run_id STRING, patient_id STRING, staff_report STRING, patient_report STRING,
-        status STRING, created_at TIMESTAMP, reviewed_by STRING, reviewed_at TIMESTAMP""",
+        status STRING, created_at TIMESTAMP, reviewed_by STRING, reviewed_at TIMESTAMP, items STRING,
+        version INT, quality STRING, viewed_at TIMESTAMP""",
+    "care_report_responses": """
+        response_id STRING, report_id STRING, patient_id STRING, item_key STRING, response STRING,
+        comment STRING, created_at TIMESTAMP""",
     "account_leads": """
         account_id STRING, lead_id STRING, submitted_at TIMESTAMP""",
     "lead_actions": """
@@ -48,7 +53,9 @@ COMMENTS = {
     "capacity_actions": "Corrective actions for under-used capacity drafted by the Capacity agent; pending review.",
     "campaign_targets": "Patients in approved fill campaigns, worked by the Retention agent (to_contact -> drafted).",
     "care_notes": "Staff care notes: follow-through advice and consequences of skipping it. Not diagnostic.",
-    "care_reports": "Care guidance reports drafted from care notes; shown to the patient only after approval.",
+    "care_reports": "Care guidance drafted from care notes and attendance; shown to the patient only after approval. "
+                    "A newer approved version supersedes the old one.",
+    "care_report_responses": "Patient answers per guidance item (on_it / need_help / not_relevant), from the portal.",
     "lead_actions": "Outreach drafted by the Lead agent. Nothing is sent until a human approves it in the App.",
     "retention_actions": "Re-engagement drafted by the Retention agent; pending human review.",
     "price_recommendations": "Cash-pay price changes proposed by the Pricing agent; applied only on approval.",
@@ -64,6 +71,7 @@ CLUSTER_KEYS = {
     "campaign_targets": "status, location_id",
     "care_notes": "patient_id",
     "care_reports": "status, patient_id",
+    "care_report_responses": "patient_id",
     "lead_actions": "status, lead_id",
     "retention_actions": "status, patient_id",
     "price_recommendations": "status, service_id",

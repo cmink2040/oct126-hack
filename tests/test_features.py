@@ -305,12 +305,76 @@ def test_medicare_patients_get_no_payment_steering():
 
 
 # ---------------------------------------------------------------- care guidance
-GOOD = {"staff_summary": "Sam is 6 of 12 visits in; home stretches are the main gap. Raise it next visit.",
-        "patient_intro": "Hi Sam, here's what will help you get the most from your plan.",
-        "items": [{"advice": "Do your hip stretches every morning",
-                   "if_skipped": "The stiffness often comes back and it can take extra visits to regain progress."}]}
-PROFILE = {"patient_id": "P1", "first_name": "Sam", "days_since_last_visit": 9, "care_plan_visits": 12,
-           "plan_progress": 0.5, "churn_risk": 0.4, "recent_visits": [{"status": "no_show"}]}
+import datetime as _dt  # noqa: E402
+
+NOTE = {"note_id": "N1", "author": "PRV1", "created_at": "2026-10-01", "category": "home_exercise",
+        "advice": "Do the two hip stretches every morning, 30 seconds each side",
+        "if_ignored": "The stiffness tends to come back by the afternoon and progress between visits slows",
+        "importance": "high"}
+PROFILE = {"patient_id": "P1", "first_name": "Sam", "care_plan_visits": 8}
+GOOD = {"staff_summary": "Sam has stopped coming in. Stretches are the main gap. Raise both at the next call.",
+        "patient_intro": "Hi Sam. Here is what helps most right now.",
+        "items": [{"advice": "Do your two hip stretches every morning, 30 seconds each side.",
+                   "if_ignored": "The stiffness tends to come back by the afternoon.", "sources": ["note:N1"]},
+                  {"advice": "Book your next visit soon to get back to your usual rhythm.",
+                   "if_ignored": "Long gaps often let stiffness creep back, so it can take extra visits.",
+                   "sources": ["signal:visits_spreading"]}]}
+
+
+def _history(*pairs):
+    return [{"appointment_date": d, "status": st_} for d, st_ in pairs]
+
+
+TODAY = _dt.date(2026, 10, 8)
+
+
+def test_signals_describe_attendance():
+    weekly = _history(*[(str(TODAY - _dt.timedelta(days=7 * k + 2)), "Completed") for k in range(5)])
+    assert [s["name"] for s in care.follow_through_signals(weekly, 12, TODAY)] == ["on_track"]
+    stalled = _history(("2026-08-01", "Completed"), ("2026-08-08", "Completed"), ("2026-08-15", "Completed"))
+    names = [s["name"] for s in care.follow_through_signals(stalled, 8, TODAY)]
+    assert "visits_spreading" in names and "plan_behind" in names
+    spreading = care.follow_through_signals(stalled, 8, TODAY)[0]
+    assert spreading["fact"] == "Last visit 54 days ago; visits are usually 7 days apart."
+    flaky = _history(("2026-09-01", "Completed"), ("2026-09-08", "No-Show"), ("2026-09-15", "Completed"),
+                     ("2026-09-22", "No-Show"), ("2026-10-06", "Completed"))
+    assert "missed_visits" in [s["name"] for s in care.follow_through_signals(flaky, 8, TODAY)]
+    nearly = _history(*[(str(TODAY - _dt.timedelta(days=7 * k + 1)), "Completed") for k in range(7)])
+    assert "near_finish" in [s["name"] for s in care.follow_through_signals(nearly, 8, TODAY)]
+    assert care.follow_through_signals([], 8, TODAY) == []
+
+
+def test_fixed_signal_wording_passes_its_own_checks():
+    for sig in care.SIGNALS.values():
+        text = sig["advice"].format(gap=7) + " " + sig["if_ignored"]
+        assert not care.check_care_language(text), text
+        assert care.reading_grade(text) <= care.MAX_GRADE + 1, text
+
+
+def test_validation_grounding_escalation_and_readability():
+    stalled = _history(("2026-08-01", "Completed"), ("2026-08-08", "Completed"))
+    sources = {"note:N1": {"id": "note:N1", "kind": "note", **NOTE}}
+    sources |= {s["id"]: s for s in care.follow_through_signals(stalled, 8, TODAY)}
+    problems, quality = care.validate(GOOD, sources)
+    assert problems == [] and quality["min_grounding"] >= care.MIN_GROUNDING
+    made_up = {**GOOD, "items": [{"advice": "Drink eight glasses of water and buy new running shoes.",
+                                  "if_ignored": "Your energy dips.", "sources": ["note:N1"]}]}
+    assert any("drifts" in p for p in care.validate(made_up, sources)[0])
+    uncited = {**GOOD, "items": [dict(GOOD["items"][0], sources=["note:NOPE"])]}
+    assert any("cites no known source" in p for p in care.validate(uncited, sources)[0])
+    scary = {**GOOD, "items": [dict(GOOD["items"][0], if_ignored="The stiffness tends to come back and you may "
+                                                                 "need surgery.")]}
+    assert any("adds outcomes" in p and "surgery" in p for p in care.validate(scary, sources)[0])
+    jargon = {**GOOD, "patient_intro": "Consequently, comprehensive biomechanical rehabilitation necessitates "
+                                       "uninterrupted periodicity notwithstanding occupational considerations."}
+    assert any("reads at grade" in p for p in care.validate(jargon, sources)[0])
+
+
+def test_care_language_checks():
+    assert care.check_care_language("You have a disc disorder that will definitely get worse")
+    assert care.check_care_language("This will cure your back")
+    assert care.check_care_language("If you skip this you could end up paralysed")
+    assert not care.check_care_language("Skipping stretches tends to bring the stiffness back.")
 
 
 class LLM:
@@ -323,28 +387,65 @@ class LLM:
         return NS(choices=[NS(message=NS(content=self.replies.pop(0)))])
 
 
-def test_care_language_checks():
-    assert care.check_care_language("You have a disc disorder that will definitely get worse")
-    assert care.check_care_language("This will cure your back")
-    assert not care.check_care_language("Skipping stretches tends to bring the stiffness back.")
+class CareDB(DB):
+    def __init__(self, notes=(NOTE,), history=None, version=0):
+        super().__init__({"FROM `workspace`.`chiro`.`care_notes` WHERE": list(notes),
+                          "appointment_date, status": history or _history(("2026-08-01", "Completed"),
+                                                                          ("2026-08-08", "Completed")),
+                          "max(version)": [{"v": version}]})
 
 
-def test_care_report_retries_then_queues_for_review():
-    bad = dict(GOOD, items=[{"advice": "Keep going", "if_skipped": "You will definitely need surgery"}])
-    db = DB({"care_notes": [{"note": "Hip stretches daily; skipping tends to bring stiffness back"}]})
-    llm = LLM([json.dumps(bad), "Here you go:\n" + json.dumps(GOOD)])
+def test_draft_retries_on_violations_then_queues_ranked_items_with_keys():
+    bad = {**GOOD, "items": [dict(GOOD["items"][0], if_ignored="You will definitely need surgery.")]}
+    db = CareDB(version=2)
+    llm = LLM([json.dumps(bad), "Here:\n" + json.dumps(GOOD)])
     out = care.CareReports(db, Settings()).draft(llm, "m", PROFILE)
-    assert out["ok"] and len(llm.calls) == 2 and "certainty" in llm.calls[1][-1]["content"]
+    assert out["ok"] and out["version"] == 3 and out["quality"]["attempts"] == 2
+    assert "surgery" in llm.calls[1][-1]["content"]
     sql, p = db.writes[-1]
-    assert "care_reports" in sql and "If this slips" in p["patient"] and "no shows in last 8 bookings 1" in p["staff"]
+    items = json.loads(p["items"])["items"]
+    # Both high importance; the item about current behaviour (a signal) ranks first.
+    assert items[0]["sources"] == ["signal:visits_spreading"] and all(len(i["key"]) == 10 for i in items)
+    assert "If this slips" in p["patient"] and "_from signal:" in p["staff"]
 
 
-def test_care_report_needs_staff_notes_and_rejects_persistent_violations():
-    assert "care note" in care.CareReports(DB(), Settings()).draft(LLM([]), "m", PROFILE)["error"]
-    db = DB({"care_notes": [{"note": "x" * 20}]})
-    bad = json.dumps(dict(GOOD, staff_summary="Diagnosis: lumbar disorder"))
+def test_draft_needs_staff_notes_and_rejects_persistent_violations():
+    assert "care note" in care.CareReports(CareDB(notes=()), Settings()).draft(LLM([]), "m", PROFILE)["error"]
+    db = CareDB()
+    bad = json.dumps({**GOOD, "staff_summary": "Diagnosis: lumbar disorder"})
     assert "rejected" in care.CareReports(db, Settings()).draft(LLM([bad, bad]), "m", PROFILE)["error"]
     assert not db.writes
+
+
+def test_structured_notes_are_validated():
+    c = care.CareReports(DB({"FROM `workspace`.`chiro`.`patients`": [{"x": 1}]}), Settings())
+    assert "if this is ignored" in c.add_note("P1", "dr", "Stretch daily please", "", "home_exercise")["error"]
+    assert "category" in c.add_note("P1", "dr", "Stretch daily please", "Stiffness comes back", "yoga")["error"]
+    assert "not diagnoses" in c.add_note("P1", "dr", "Stretch daily please", "You have a disc disorder",
+                                         "home_exercise")["error"]
+    assert c.add_note("P1", "dr", "Stretch daily please", "Stiffness tends to come back", "home_exercise", "high")["ok"]
+
+
+def test_patients_can_only_answer_items_on_their_current_guidance():
+    items = {"intro": "Hi", "items": [{"key": "k1", "advice": "a", "if_ignored": "b", "sources": ["note:N1"]}]}
+    db = DB({"status = 'approved'": [{"report_id": "R1", "items": json.dumps(items), "patient_report": "",
+                                      "reviewed_at": None, "viewed_at": None}]})
+    c = care.CareReports(db, Settings())
+    assert "current guidance" in c.respond("R0", "P1", "k1", "on_it")["error"]
+    assert "current guidance" in c.respond("R1", "P1", "nope", "on_it")["error"]
+    assert "response" in c.respond("R1", "P1", "k1", "whatever")["error"]
+    assert c.respond("R1", "P1", "k1", "need_help", "the stretch hurts")["ok"]
+    assert db.writes[-1][1]["resp"] == "need_help"
+
+
+def test_item_keys_are_stable_across_versions():
+    assert care.item_key({"sources": ["b", "a"]}) == care.item_key({"sources": ["a", "b"]})
+
+
+def test_approving_guidance_supersedes_the_previous_version():
+    db = DB({"`care_reports` WHERE report_id": [{"report_id": "R2", "patient_id": "P1", "status": "pending_review"}]})
+    assert ClinicTools(db, Settings(), "t").review("care", "R2", "approved", "dr")["ok"]
+    assert any("superseded" in q and p["pid"] == "P1" for q, p in db.writes if p)
 
 
 # ---------------------------------------------------------------- lead_scores refresh
@@ -390,3 +491,32 @@ def test_only_untriaged_leads_in_the_window_go_to_the_llm():
                           _lead("ANCIENT", days_ago=90)])
     todo = models.leads_needing_triage(previous, leads, 30, now)
     assert sorted(todo["lead_id"]) == ["BRAND_NEW", "UNTRIAGED"]
+
+
+def test_care_cohort_patterns_show_up_as_signals():
+    import datetime as dt
+
+    from chiro import scenario
+    today = dt.date(2026, 10, 8)
+    corpus = [{"category": c, "complaint": "neck_pain", "advice": f"advice {c}", "if_ignored": f"ignored {c}",
+               "importance": "medium"} for c in care.CATEGORIES]
+    patients = [{"patient_id": f"P{i}", "location_id": "L1", "complaint": "neck_pain", "plan_visits": 8}
+                for i in range(200)]
+    appts, notes, patterns = scenario.care_cohort(patients, {"L1": ["PRV1", "PRV2"]}, corpus, today)
+    assert all(dt.date.fromisoformat(a["appointment_date"]) <= today for a in appts)
+    assert all(dt.date.fromisoformat(a["appointment_date"]).weekday() != 6 for a in appts)
+    assert {n["patient_id"] for n in notes} == set(patterns) and all(2 <= sum(n["patient_id"] == p for n in notes) <= 4
+                                                                     for p in list(patterns)[:20])
+    by_patient: dict[str, list] = {}
+    for a in appts:
+        by_patient.setdefault(a["patient_id"], []).append(a)
+    hits = {pat: 0 for pat in scenario.ADHERENCE}
+    totals = dict.fromkeys(scenario.ADHERENCE, 0)
+    expect = {"steady": "on_track", "finishing": "near_finish", "stalled": "visits_spreading",
+              "no_show_prone": "missed_visits", "drifting": "visits_spreading"}
+    for pid, pat in patterns.items():
+        names = [s["name"] for s in care.follow_through_signals(by_patient[pid], 8, today)]
+        totals[pat] += 1
+        hits[pat] += expect[pat] in names
+    for pat in scenario.ADHERENCE:
+        assert hits[pat] >= 0.6 * totals[pat], (pat, hits[pat], totals[pat])

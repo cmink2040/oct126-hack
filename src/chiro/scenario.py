@@ -226,3 +226,82 @@ def leads(corpus: list[dict], now: dt.datetime, locations: list[str], days: int 
                 "reviewed_at": responded.isoformat()})
         lead_rows.append(lead)
     return lead_rows, action_rows
+
+
+# ---------------------------------------------------------------- care-plan cohort
+CARE_CORPUS = os.path.join(os.path.dirname(__file__), "data", "care_notes.json")
+# Adherence patterns in an active care plan, with their share of the cohort.
+ADHERENCE = {"steady": 0.35, "drifting": 0.2, "no_show_prone": 0.15, "stalled": 0.15, "finishing": 0.15}
+
+
+def _visit_days(start: dt.date, gaps: list[int]) -> list[dt.date]:
+    days, d = [], start
+    for g in [0] + gaps:
+        d += dt.timedelta(days=g)
+        if d.weekday() == 6:  # closed on Sunday
+            d += dt.timedelta(days=1)
+        days.append(d)
+    return days
+
+
+def care_cohort(patients: list[dict], providers: dict[str, list[str]], corpus: list[dict], today: dt.date,
+                seed: int = 7) -> tuple[list[dict], list[dict], dict[str, str]]:
+    """Weekly care plans for `patients` ({patient_id, location_id, complaint, plan_visits}) with an adherence
+    pattern each, plus 2-4 staff notes from the corpus dated on their visits.
+    Returns (appointments, care_notes, {patient_id: pattern})."""
+    rng = np.random.default_rng(seed + 3)
+    names, weights = list(ADHERENCE), np.array(list(ADHERENCE.values()))
+    appts, notes, patterns = [], [], {}
+    for n, p in enumerate(patients):
+        provs = providers.get(p["location_id"]) or []
+        if not provs:
+            continue
+        pattern = names[int(rng.choice(len(names), p=weights / weights.sum()))]
+        plan = int(p["plan_visits"] or 8)
+        jitter = lambda: int(rng.integers(-1, 2))  # noqa: E731
+        if pattern == "steady":
+            done = int(rng.integers(3, plan))
+            days = _visit_days(today - dt.timedelta(days=7 * done - 3), [7 + jitter() for _ in range(done - 1)])
+            statuses = ["Completed"] * done
+        elif pattern == "drifting":
+            gaps = [7, 7, 10, 14, 21][: int(rng.integers(3, 6))]
+            start = today - dt.timedelta(days=sum(gaps) + int(rng.integers(18, 30)))
+            days, statuses = _visit_days(start, gaps), ["Completed"] * (len(gaps) + 1)
+        elif pattern == "no_show_prone":
+            booked = int(rng.integers(6, 10))
+            days = _visit_days(today - dt.timedelta(days=7 * booked - 2), [7 + jitter() for _ in range(booked - 1)])
+            statuses = ["No-Show" if rng.random() < 0.4 else "Completed" for _ in days]
+            statuses[0] = "Completed"
+        elif pattern == "stalled":
+            done = int(rng.integers(2, 5))
+            start = today - dt.timedelta(days=7 * done + int(rng.integers(21, 40)))
+            days, statuses = _visit_days(start, [7 + jitter() for _ in range(done - 1)]), ["Completed"] * done
+        else:  # finishing
+            done = plan - 1
+            days = _visit_days(today - dt.timedelta(days=7 * done - 4), [7 + jitter() for _ in range(done - 1)])
+            statuses = ["Completed"] * done
+        prov = provs[n % len(provs)]
+        for i, (day, status) in enumerate(zip(days, statuses)):
+            if day > today:
+                continue
+            appts.append({"appointment_id": f"GC{seed:02d}{n:04d}{i:02d}", "patient_id": p["patient_id"],
+                          "provider_id": prov, "location_id": p["location_id"], "appointment_date": day.isoformat(),
+                          "appointment_type": "Initial Consultation" if i == 0 else "Spinal Adjustment",
+                          "booked_channel": "Phone", "status": status, "lead_time_days": 7})
+        visit_days = [d for d, s in zip(days, statuses) if s == "Completed" and d <= today]
+        pool = [c for c in corpus if c["complaint"] == p["complaint"]] or corpus
+        by_cat: dict[str, list[dict]] = {}
+        for c in pool:
+            by_cat.setdefault(c["category"], []).append(c)
+        cats = sorted(by_cat)
+        chosen = rng.choice(len(cats), size=min(int(rng.integers(2, 5)), len(cats)), replace=False)
+        picked = [by_cat[cats[i]][int(rng.integers(len(by_cat[cats[i]])))] for i in chosen]
+        for j, c in enumerate(picked):
+            at = visit_days[min(j, len(visit_days) - 1)]
+            notes.append({"note_id": f"CN-GEN{seed:02d}{n:04d}{j}", "patient_id": p["patient_id"], "author": prov,
+                          "note": f"{c['advice']} If ignored: {c['if_ignored']}",
+                          "created_at": dt.datetime.combine(at, dt.time(10 + j)).isoformat(),
+                          "category": c["category"], "advice": c["advice"], "if_ignored": c["if_ignored"],
+                          "importance": c["importance"]})
+        patterns[p["patient_id"]] = pattern
+    return appts, notes, patterns
